@@ -1,0 +1,39 @@
+깃은 리눅스 환경 명령어 유사하다
+
+init                                     =>.git 생성 되면서 git diretory productiongit status                             
+                                                           => file add commit 여부를 보여준다   
+
+git add "filename"                    =>add filename
+                        .                => add all file
+
+git commit -m "version name"  => create version
+              -am "version name" => add+commit 한번도 add 안한 file 은 제외
+
+git log                               =>  show version
+                -p
+git log --stat                       =>commit 된 문서를 볼수있음
+
+git diff                               => working tree  에 file 과  최신 commit file 차이점 보여준다
+           --staged                  => staging area  에 올려진 file  과   최신 commit file 차이점 보여준다
+
+git  reset  filename                => working tree  와 staging area 내용을 지운다
+            --hard "version name"  => 해당 버전 이후 master version 까지 삭제  
+
+git log -p                           => 버전별 차이점을 보여줌
+
+git checkout "commit id"        => 현재 최신 버전은 head master 에 있다 전 버전으로 갈려면 그
+                                            버전의 commit 아이디를 복사해서 실행하면 그당시 로 되돌아감 (해당 폴더 파일도 사라짐)
+
+git checkout master               => 가장 최신 버전 master 버전으로 되돌려줌
+
+git copy 는  ct+insert   git paste 는 shift +insert 
+
+git branch                             => now showing branch stats
+
+git branch  "name"                  => create "name" users
+
+git checkout "name"                 => changeing "name" users 
+
+git log --all --graph --oneline      => who branch tree
+
+git merge "branch name"            => now branch other branch plus
