@@ -37,3 +37,5 @@ git checkout "name"                 => changeing "name" users
 git log --all --graph --oneline      => who branch tree
 
 git merge "branch name"            => now branch other branch plus
+
+여기까지
