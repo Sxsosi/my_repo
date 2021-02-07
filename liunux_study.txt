@@ -1,0 +1,21 @@
+system configuration       => /etc/profile  user logname mail hostname 
+                                     /etc/bashrc   umask 
+
+user configuration          =>.bash_profile  shell PATH  configuration
+                                 =>.bashrc         alias funtion configuration
+
+chmod +x "Shell name"    => file empower,. authorize 
+
+
+create "Shell name" .sh     =>create shell
+
+./"Shell name"                => Shell name  run, execute  
+sh "Shell name"                   ( if PATH not cofitguration =>local variable)
+
+export PATH = $PATH:"(shell location directory)" =>PATH configuration ( PATH execute front line first) 
+                                                                  after execute #"shellname"
+
+PATH = $(sed -e " s/:\home\/isec_admin\/isec_bin//" <<< $PATH)
+                                        
+
+sort -t: -k 3 -n /etc/passwd  =>  /etc/passwd  UID sort
