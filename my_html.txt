@@ -1,0 +1,26 @@
+<!doctye html>
+<meta charset="utf-8">         한글로 읽어라!!
+<html>
+    <head>
+        <title>"title name"</title>  
+    </head>
+
+    <body>
+        <a href="url"> text </a>           link   h ref = hiper reference 
+        <a target="_blank">                 new tap open html
+        <a target="">                       now page open html
+        <a title="specification">           link 설명!!!
+        <p></p>               Paragraph 단락 
+
+        <h1></h1> ~ <h6></h6> heading 1.big ---- 6.small 
+
+        <ol>                  ordered  list ( number have)
+        <ul>                unordered  list
+            <li></li>                  list
+        <ul>
+        <ol>
+
+        <img src=" root " alt ="img informaction" height=" x % , x pixels" 
+        width=" x % , x pixels">   pixels 생략가능
+    </body>
+</html>
