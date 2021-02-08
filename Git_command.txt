@@ -39,3 +39,13 @@ git log --all --graph --oneline      => who branch tree
 git merge "branch name"            => now branch other branch plus
 
 여기까지
+
+git remote -v                           =>remote repository list
+               add nickname "url"      => add remote repository url
+
+git push                                  =>nickname orgin repository send version
+           nickname                      =>nickname repository send version
+
+git clone  "repository url"             =>down ( uselless init)
+
+git pull    "repository url"             =>
