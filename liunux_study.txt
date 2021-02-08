@@ -15,7 +15,82 @@ sh "Shell name"                   ( if PATH not cofitguration =>local variable)
 export PATH = $PATH:"(shell location directory)" =>PATH configuration ( PATH execute front line first) 
                                                                   after execute #"shellname"
 
-PATH = $(sed -e " s/:\home\/isec_admin\/isec_bin//" <<< $PATH)
+PATH= echo $PATH | sed -e 's/:\/home\/isec\/isec_bin\/$//' <<< $PATH)
                                         
 
 sort -t: -k 3 -n /etc/passwd  =>  /etc/passwd  UID sort
+
+cat /etc/shadow | grep isec   
+            passwd -n 7 isec     
+            passwd -x 90 isec
+            passwd -W 5 isec
+            passwd -S  isec
+
+pwunconv
+            ls -l /etc/shadow
+            tail -1 /etc/passwd
+ pwconv
+            tail -1 /etc/passwd
+tau
+ tail -1 /etc/passwd
+             useradd -u 1100 test1
+             useradd -g isec test2
+             useradd -G test1 test3
+ tail -3 /etc/group
+            useradd -c goodbye test4
+ tail -1 /etc/passwd
+
+사용자 id 는 ihd , 홈 디렉토리는 /home/ihd 기본그룹은 ihd 보조그룹은 isec 이다 useradd -G ihd
+   
+
+ useradd admin -u 0 -g 0
+useradd -o admin -u 0 -g 0
+cat /etc/passwd | grep admin
+
+passwd -S test4
+ passwd test4
+passwd -S test4
+usermod -L test4
+passwd -S test4
+passwd -u test4
+ cat /etc/passwd | grep test4
+usermod -u 1010 -c good -s /bin/tcsh test4
+cat /etc/passwd | grep test4
+
+useradd ktuser
+ls -l /home
+usermod -l skuser -d /home/skuser -m ktuser
+
+userdel test4
+tail -5 /etc/passwd
+tail -5 /etc/shadow
+tail -5 /etc/group
+tail -5 /etc/gshadow
+ls-l /home
+ls-l /var/spool/mail
+
+userdel -r test3
+tail -5 /etc/passwd
+tail -5 /etc/shadow
+tail -5 /etc/group
+tail -5 /etc/gshadow
+ls-l /home
+ls-l /var/spool/mail
+
+ groupadd group1
+ groupmod -g 2000 group1
+ groupdel group1
+
+ gpasswd -a isec root
+cat /etc/group | grep root
+gpasswd -M isec,test1,test2  root
+gpasswd -d isec root
+vi /etc/group
+
+vi /etc/default/useradd
+
+
+
+
+
+
