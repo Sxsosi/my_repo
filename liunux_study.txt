@@ -112,6 +112,16 @@ file 666 -value
 
 umask -S   
 
+chmod 777 a
+chmod 4705 a
+chmod u-s a
+
+chmod g+s a
+chmod g+x a
+
+
+ 
+
   
             
 
