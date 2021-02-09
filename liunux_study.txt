@@ -89,6 +89,32 @@ vi /etc/group
 
 vi /etc/default/useradd
 
+ permission        r =4 , w=2, x=1
+chmod 777 
+         a+rwx,u+rwx,g+rwx 
+
+chmod a=x  a.txt   권한준건빼곤 없다
+
+useradd user1
+passwd user1
+
+chown user1.user1 a.txt
+         user1:user1 
+
+chgrp user a.txt  = chown  .user  a.txt
+                                   :user a.txt 
+dir 777 file 666 
+
+umask permission configuration
+umask value 
+dir  777 - value
+file 666 -value
+
+umask -S   
+
+  
+            
+
 
 
 
