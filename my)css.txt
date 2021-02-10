@@ -1,0 +1,59 @@
+
+<!-- -->               주석 
+<style>
+
+a tag [  class=" " id = " "  id color > class color > tag color
+                             구체적인 것이 포괄적인 것을 이긴다
+
+       #"idname"{               아이디값은 하나로 하는게 좋다 
+       color:"black";
+}   
+
+       ."classname" {                class groudping
+       color: gray ;         declaration
+}
+
+       ."classname2" {          클래스가 많을 나중에 선언한 것이 적용된다
+       color: red ;       ( classname  classname2)=> red             
+}
+
+       h1 , a {                 declaration 같다면 selecter1,selecter2 표기가능 
+       color: value ;        
+}      (property)
+
+       
+       
+       
+]
+
+block level element   화면 전체를 쓰는 element(CSS 에선 tag 를 element 부름 ) 
+                     <h1>
+inline level element  자기 크기만큼만 쓰는 element
+                      <a>
+display:[block or inline or none(banesh)]   고를수있음   
+(property)
+
+
+
+h1{  CSS box model
+       
+       border-size:5px       =  border:5px red ....
+       border-color:red
+       .
+       .
+       padding:
+       margin:
+       .
+       .
+       
+}
+
+<h1>lala</h1>
+
+</style>
+
+font-size: 45px;
+text-align: center;
+
+
+css  text center  property ? 다외우지말고 검색하고 써보자 시간낭비다
