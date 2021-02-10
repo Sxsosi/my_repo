@@ -29,7 +29,7 @@ cat /etc/shadow | grep isec
 pwunconv
             ls -l /etc/shadow
             tail -1 /etc/passwd
- pwconv
+pwconv
             tail -1 /etc/passwd
 tau
  tail -1 /etc/passwd
@@ -43,12 +43,12 @@ tau
 사용자 id 는 ihd , 홈 디렉토리는 /home/ihd 기본그룹은 ihd 보조그룹은 isec 이다 useradd -G ihd
    
 
- useradd admin -u 0 -g 0
+useradd admin -u 0 -g 0
 useradd -o admin -u 0 -g 0
 cat /etc/passwd | grep admin
 
 passwd -S test4
- passwd test4
+passwd test4
 passwd -S test4
 usermod -L test4
 passwd -S test4
@@ -81,7 +81,7 @@ ls-l /var/spool/mail
  groupmod -g 2000 group1
  groupdel group1
 
- gpasswd -a isec root
+gpasswd -a isec root
 cat /etc/group | grep root
 gpasswd -M isec,test1,test2  root
 gpasswd -d isec root
@@ -89,7 +89,7 @@ vi /etc/group
 
 vi /etc/default/useradd
 
- permission        r =4 , w=2, x=1
+permission        r =4 , w=2, x=1
 chmod 777 
          a+rwx,u+rwx,g+rwx 
 
@@ -119,10 +119,21 @@ chmod u-s a
 chmod g+s a
 chmod g+x a
 
+yum -y install gcc   c 언어 컴파일 
 
+file    shell name    file 정보 보여줘
+strings shell name   명령어 보여줘
 
-  
-            
+ssh "id"@"ip"         ip 접속 
+cp -p "filename" location  -p 퍼미션 까지복사
+
+chattr               file attribute 부여
+       -i  "filename" read only
+        -a  "filename"  read append only
+
+ getfacl "filename" = ls -l "filename"
+
+ 
 
 
 
