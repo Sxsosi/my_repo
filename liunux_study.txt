@@ -20,18 +20,35 @@ PATH= echo $PATH | sed -e 's/:\/home\/isec\/isec_bin\/$//' <<< $PATH)
 
 sort -t: -k 3 -n /etc/passwd  =>  /etc/passwd  UID sort
 
-cat /etc/shadow | grep isec   
-            passwd -n 7 isec     
-            passwd -x 90 isec
-            passwd -W 5 isec
-            passwd -S  isec
 
-pwunconv
+
+cat /etc/shadow | grep isec   
+
+isec:$6 $9dkfj $ djflkjsdflkjsdflkj: n(18488)  : b(7) : c(90) :d(x) :e(z) :
+
+ $6 => 암호 알고리즘
+ $9 => 비번의 salt 값 
+ $lsdfkljdlkjf => 암호 된 비번
+ a => 암호 변경 일수 1970 기준   
+ n => 암호 변경 유지 최소일수             passwd -n 7 isec 
+ c => 암호 지속시간 최대일수              passwd -x 90 isec
+ d => 암호 지속시간 만료후 계정이 잠기는 기간  chage -I x isec
+ e => 사용자 계정 만기일                        chage -E z isec
+
+passwd -S  isec =>암호상태 알려줌 
+usermod -L  isec => 비번잠금
+usermod -U isec => 비번 풀음
+
+pwunconv                                shadow file use O or X
             ls -l /etc/shadow
             tail -1 /etc/passwd
 pwconv
             tail -1 /etc/passwd
-tau
+
+
+isec : x : 1000 : 1000 : isec : /home/isec: /bin/bash
+            -u    -g      -c      -d            -s
+
  tail -1 /etc/passwd
              useradd -u 1100 test1
              useradd -g isec test2
@@ -40,22 +57,21 @@ tau
             useradd -c goodbye test4
  tail -1 /etc/passwd
 
-사용자 id 는 ihd , 홈 디렉토리는 /home/ihd 기본그룹은 ihd 보조그룹은 isec 이다 useradd -G ihd
+사용자 id 는 ihd , 홈 디렉토리는 /home/ihd 기본그룹은 ihd 보조그룹은 isec 이다 
+useradd -G ihd
    
 
 useradd admin -u 0 -g 0
-useradd -o admin -u 0 -g 0
-cat /etc/passwd | grep admin
+useradd -o admin -u 0 -g 0  ==> UID same GID same  
 
-passwd -S test4
-passwd test4
-passwd -S test4
-usermod -L test4
-passwd -S test4
-passwd -u test4
- cat /etc/passwd | grep test4
+
+
+
+
+
 usermod -u 1010 -c good -s /bin/tcsh test4
 cat /etc/passwd | grep test4
+
 
 useradd ktuser
 ls -l /home
@@ -69,7 +85,7 @@ tail -5 /etc/gshadow
 ls-l /home
 ls-l /var/spool/mail
 
-userdel -r test3
+userdel -r test3          =< clean 
 tail -5 /etc/passwd
 tail -5 /etc/shadow
 tail -5 /etc/group
@@ -87,9 +103,27 @@ gpasswd -M isec,test1,test2  root
 gpasswd -d isec root
 vi /etc/group
 
-vi /etc/default/useradd
+vi /etc/default/useradd   =>> 사용자 계정설정 기준 
+
+useradd -D   config change
+
+GROUP  useradd -D -g      => group 
+HOME useradd -D -b      => dir
+INACTIVE  useradd -D -f [0or -1]  =>암호만료일 사용자 사용 
+EXPIRE   useradd -D -e  => passwd 만료일 지정
+SHELL    useradd -D -s  => shell 선택 
+SKEL
+CREATE_MAIL_SPOOL
+
+
+
+
 
 permission        r =4 , w=2, x=1
+ls -l file
+- rwx  rwx    rwx . 1         root     root 0       x월 x일  text
+  user group other  링크수  파일소유자 파일소유그룹
+
 chmod 777 
          a+rwx,u+rwx,g+rwx 
 
@@ -98,7 +132,7 @@ chmod a=x  a.txt   권한준건빼곤 없다
 useradd user1
 passwd user1
 
-chown user1.user1 a.txt
+chown user1.user1 a.txt     소유자 그룹소유자 바꿈 
          user1:user1 
 
 chgrp user a.txt  = chown  .user  a.txt
@@ -121,6 +155,8 @@ chmod g+x a
 
 yum -y install gcc   c 언어 컴파일 
 
+
+
 file    shell name    file 정보 보여줘
 strings shell name   명령어 보여줘
 
@@ -128,10 +164,21 @@ ssh "id"@"ip"         ip 접속
 cp -p "filename" location  -p 퍼미션 까지복사
 
 chattr               file attribute 부여
-       -i  "filename" read only
-        -a  "filename"  read append only
+lsattr                                   확인
+       +i  "filename" read only
+       -i                       제거
+        +a  "filename"  read append only
+        -a                               제거
 
- getfacl "filename" = ls -l "filename"
+ acl   Access Controll  List       
+ 
+ setfacl -m    u:       :rwx       filename
+         설정   유저이름  권한부여   파일     
+         -x                          삭제
+         -m    m
+               umsk 설정                 퍼미션 계산 마스크 값과 유져값 합집합 사용
+
+
 
  
 

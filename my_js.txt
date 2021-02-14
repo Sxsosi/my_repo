@@ -1,0 +1,10 @@
+javascript html controlling 
+
+<script>
+    document.write(1+1); 
+</script>
+
+ <input type="" value="" oneclick="">    event (oneclick)
+
+ ' '  javascript String
+
