@@ -1,7 +1,10 @@
 javascript html controlling 
 
 <script>
-    document.write(1+1); 
+    document.write(1+1);
+    function(){
+        
+    } 
 </script>
 
  <input type="" value="" oneclick="">    event (oneclick)
@@ -12,4 +15,63 @@ javascript html controlling
 
 var x =  ;  int string arry 다들어가는변수선언인거같어
 var abc = ['a', 'b', 'c',];  가능 -_-;;
+
+function = class(java)
+oneclick="function(this)" 함수가 들어올수있음
+method ('') 들어가야함 
+
+
+var kk {"kkang":"kang","min":"hyun"};   javascript 객체
+kk.kkang =>kang  kk.min => hyun
+   
+for(var key in kk){                     javascript 배열 반복문출력
+    document.write(key + kk[key] )
+}
+
+var.callname=                           javascript 객체 는 함수도 들어감
+for(var key in kk){                    
+    document.write(key + kk[key] )
+}
+property = kkang , min 
+var.callname();
+
+ name.js 
+<javascript src="name.js">
+
+jquery cdn
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+javascript 반복문 a tag  선택등을 아~~~~~주 단순하게 해준다 
+
+$('body').css('backgroundColor',color);
+$('body').css('color',color);
+$('a').css('color',color);
+
+ ===
+  
+   <!-- <input type="button" value="night" onclick="
+         document.querySelector('body').style.backgroundColor='black';
+         document.querySelector('body').style.color='white';
+        ">
+        <input type="button" value="day" onclick="
+        document.querySelector('body').style.backgroundColor='white';
+        document.querySelector('body').style.color='black';
+       "> -->
+       
+       
+       <!-- <input id="night_day" type="button" value="night" onclick="
+       if(document.querySelector('#night_day').value === 'night'){
+         document.querySelector('body').style.backgroundColor='black';
+         document.querySelector('body').style.color='white';
+         document.querySelector('#night_day').value ='day';
+       }
+       else{
+        document.querySelector('body').style.backgroundColor='white';
+        document.querySelector('body').style.color='black';
+        document.querySelector('#night_day').value = 'night';
+       } 
+       "
+       > -->
+
+
 
