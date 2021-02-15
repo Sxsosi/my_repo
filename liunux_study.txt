@@ -177,6 +177,20 @@ lsattr                                   확인
          -x                          삭제
          -m    m
                umsk 설정                 퍼미션 계산 마스크 값과 유져값 합집합 사용
+ 
+ systemctl status crond.service 상태확인
+
+ vi /etc/crontab     =>  스케줄 설정
+ 01 3 15 * * root run-parts /etc/corn.monthly
+ 분 시 일 월 요일 
+
+ vi /etc/cron.monthly/backup.sh
+mkdir  /backup
+systemctl restart crond.service
+chmod 755 backup.sh
+date 011503002030
+
+
 
 
 

@@ -8,3 +8,8 @@ javascript html controlling
 
  ' '  javascript String
 
+ a === a  java equl true
+
+var x =  ;  int string arry 다들어가는변수선언인거같어
+var abc = ['a', 'b', 'c',];  가능 -_-;;
+
