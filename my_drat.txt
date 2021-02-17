@@ -1,0 +1,171 @@
+
+
+
+
+void main(){
+    
+    
+
+valiable   
+
+        map에서            key (uniqe 하나만 존재) value 변경가능
+
+                                key     value  
+            Map dictionary ={ 'apple' :'사과',
+                            'banana' : '바나나',
+                            'wartermelon' :'수박',
+            };
+                    print(dictionary['apple']);    // key 값에 대한 value 값 사과 출력      
+
+
+            Map dictionary ={};                     
+            Map dictionary = new Map();                  // 같다
+            
+            dictionary.addAll({ 'apple' :'사과',        
+                            'banana' : '바나나',
+                            'wartermelon' :'수박',});
+
+            
+            Map dictionary = new Map.from({ 'apple' :'사과',     //같다   
+                            'banana' : '바나나',
+                            'wartermelon' :'수박', });
+
+
+                    dictionary.remove('apple');       // key and value 둘다 삭제      
+                    dictionary['apple']='부사';       // key 에대한 value 값 변경
+
+                    print(dictionary.keys.toList());      //key 값들만 리스트로 출력
+                    print(dictionary.values);         //value 값들만 출력
+
+
+            Map<String, int > price = { apple' :1000,     // map 변수타입 지정가능   
+                    double      'banana' : 2000,
+                            'wartermelon' :10000,};
+
+            
+
+
+            
+            List oList=[];                       // List 는 대문자
+            List<String> oList=[];               // 같다
+            List oList = new List();              // 무한이 들어간다
+
+                    oList.add('lee');                     // 리스트 입력
+                    oList[1] = 'yoon'; 
+                
+            
+                    oList.removeAt(number);               // List 해당 number 삭제
+
+                    
+                    print(oList.length);                   //해당 list 갯수 출력
+                    
+            
+            
+            List<String> oList = new List[x];      //x(숫자) 초과 넣을수없다
+
+                    oList.add('lee');                     // 입력불가능
+                    oList.removeAt(number);               // 삭제불가능
+                    print (oList);                        x값 만큼 null null null ... 
+
+                    oList[0] = 'yoon';                     // 이방법만 가능 
+                    
+            
+            
+            
+            List oList= ['lee','yoon'];                //미리입력
+            
+            List oList = new List.from['lee','yoon'];  //두개는 같다
+
+            
+
+            final String time = day.time();      가능
+            
+            const String time = day.time();  불가능 (런타임 후 값을 지정될경우 사용할수 없음)
+                            = "12:50";        가능
+
+
+
+
+            var     name = 'hellow world';           //세미콜론 문자는  큰,작은따옴표  
+                    name='String';  print(name);    ok
+                    name= 1;        print(name);    no      //var 미리 스트링지정했음                 
+            
+            dynamic  name = 'hellow world'; 
+                    name='String';  print(name);    ok
+                    name= 1;        print(name);    ok      //dynamic 은 가능함 
+                    
+            =
+            var name;
+                    name='String';  print(name);    ok
+                    name= 1;        print(name);    ok       // var  미리지정하지않음
+                    
+
+
+            int    count = 5;
+            double 
+            bool   = ture or false                                 //'' 안씀
+            String  name2 = '자동차는 $count 승입니다';        //대문자로 해야함
+            
+            
+                    print(name);
+                    print ('$name+$name');  //문자열에 있어도 $name 은 variable로 취급한다
+                    print (name2); 
+                }
+
+            
+            
+            String  kangHyunWoo ='천재';      변수단어당대문자표시
+            String  _kangHyunWoo ='천재';     클래스때 프라이빗때
+            String  KangHyunWoo ='천재';      사용하지않는다 
+
+
+
+Operater
+
+        int number =2;
+        
+        print(namber % 2);                    // 2계속나누어 나오는나머지
+        number++;                               // 1을더한다
+        number--;                               // 1을뺀다
+
+        int number;
+            number ??= 4;                         // namber값이 null 일경우 4출력
+                    number +=1;                     // 4+1=number (변수에 저장된다!!)
+                    number -=2;                     // 4-2=number (변수에 저장된다!!)
+                    number *=2;                     // 4*2=number (변수에 저장된다!!)
+        double number=4;
+                    number /=2;                      // 4/2=number but error /는 double 나옴
+
+        
+        int number1= 1;
+        int number2= 2;
+                    print(number1<number2);          //ture or false  
+                    print(number1 <= number2);       // ture
+                    print(number1 >= number2);       // false
+                    print(number1 == number2);       // false (같다)
+                    print(number1 != number2);       // ture (같지않다)
+
+                    print(number1 is int );          // ture (인트타입이냐)
+                    print(number1 is! String );      //  ture (문자열타입아니지?)
+
+        bool  result = 12 > 8 && 1 > 0 ;
+                              ||  
+                    print(result);                  // ture
+
+
+
+조건문
+
+    switch(number % 4){
+        case 0:
+            print();
+            break;
+        default;
+             break;
+    }
+
+loop
+
+    for(int i= 0 ; i < 10; i ++){
+        print(i);
+    }
