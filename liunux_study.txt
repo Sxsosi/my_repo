@@ -190,7 +190,20 @@ systemctl restart crond.service
 chmod 755 backup.sh
 date 011503002030
 
+fstab=  file system table
 
+fdisk -l
+fdisk /etc/sdb  n   파티션 설정
+
+mkfs -t ext4 /dev/sdb1
+mkfs.ext4 /dev/sdb2
+mkdir /mp1
+mount /dev/sdb1 /mp1
+vi /etc/fstab
+mount -a
+
+
+df -Th
 
 
 
