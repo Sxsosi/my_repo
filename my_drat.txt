@@ -166,6 +166,114 @@ Operater
 
 loop
 
-    for(int i= 0 ; i < 10; i ++){
-        print(i);
+        List numbers=[ 1,2,3,4,]
+        
+        int total=0;
+        for(int i=0;i<number.length; i++){
+                total += numbers[i];
+                print('total');
+        }
+
+        int total =0;
+        
+        for(int number in numbers){
+        total += number;            //namber  nambers 각각의값이다 
+        print('total');              namber[0] [1] ...
+
+
+
+         
+         
+         
+          int number= 10;
+        
+        while(number<20){               // loop 에 if문
+                print(number);
+                number++;
+                
+                 if(number ==14){
+                        break;
+                        }
+        
+       
+       
+        for(int i=0;i<10;i++){               
+                if(i==5){
+                        break;        // 4 까지 출력 
+                        continue;     // 5 빼고 9까지 출력
+                }
+                pirnt(i);
+        }
+  
+  
+
+        //승인 - approved
+         반려 - rejected
+         대기 - pending
+
+    String status= "approed";           // 오타가 날경우 오류임
+        
+        if(status == "approved")
+        {print('승인');
+        }else{print('반려혹은 대기중');}
+
+
+     enum Status {approved,rejected,pending}   // 오타 를 사전제거
+        
+        if(status == Status.approved){          
+        print('승인');
+        }else{print('반려혹은 대기중');}
+
+        }
+
+        print(Status.values.toList);     Status.approved
+                                         Status.rejected
+                                         Status.pending        //enum 값 출력
+             
+
+
+        voin main(){
+        
+        List testList =[1,2,3,3,3,5];
+        
+        int total=0;
+        for(int number in testList){
+                total += number ;}
+        print(total);
+
+        List testList2 =[10,2,30,3,3,5];      
+        
+        int total=0;
+        for(int number in testList2){
+                total += number ;}
+        print(total);
+         . 
+         .
+         .
+                                        // 중복코드가 많다
+
+        void main(){
+        addList();
+        addList();
+        .
+        .
+        }
+
+        addList(List testList){
+        List testList2 =[10,2,30,3,3,5];  
+        int total=0;
+        for(int number in testList){
+                total += number ;}
+        print(total);
+
+        }
+
+
+
+
+
+
+
     }
+
+

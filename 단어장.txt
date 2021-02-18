@@ -1,0 +1,24 @@
+
+extract               뽑아내다,추출하다 
+refactor              다시적다
+properties            설정
+reference             참고
+paste                 붇여넣다
+compare               비교하다
+primitive             원시적인
+unreachable           불가능한
+available             이용할수있는(구할수있는)
+necessary             필요한 필연적인
+especially            특별히
+particulary           특별히
+repository            저장소
+configuration         환경설정
+execute               실행
+attribute             속성
+specification         설명서
+duplicate             복제
+cols                  열(열쇠)세로
+rows                  행 가로
+approved              승인
+rejected              반려
+pending               보류

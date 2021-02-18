@@ -190,7 +190,22 @@ systemctl restart crond.service
 chmod 755 backup.sh
 date 011503002030
 
+
+sector => cluster =>track =>cylinder
+
+
+HDD ----> RAM -----> Cache----->CPU
+    page      block        word  
+
+        
 fstab=  file system table
+
+linux filesystem EXT4,XFS
+
+저널링  복구하기위해서 쓰는 system 오늘 고장나면
+어제만 사용한 파일을 검색한다
+
+
 
 fdisk -l
 fdisk /etc/sdb  n   파티션 설정
@@ -198,12 +213,37 @@ fdisk /etc/sdb  n   파티션 설정
 mkfs -t ext4 /dev/sdb1
 mkfs.ext4 /dev/sdb2
 mkdir /mp1
-mount /dev/sdb1 /mp1
+mount /dev/sdb1 /mp1            mount point => mp
 vi /etc/fstab
 mount -a
 
 
-df -Th
+df -Th         disk free  type humen rederable 사용가능한 하드용량보기
+
+
+
+fdisk -l                           swap parition
+n t 82 
+mkswap /dev/sdb1
+swapon /dev/sdb1
+swapon
+blkid /dev/sdb1
+vi /etc/fstab
+mount -a
+swapon -a
+
+ctrl + l clear
+
+                                      swap file
+mkdir /swap                            
+dd if=/dev/zero of=/swap/swap01 bs=1MiB count=4096   1MB *4096 =4G 짜리 데이터가 0 으로채워진 파일을 만들어라
+chmod 600 swap01
+mkswap /swap/swap01
+swapon /swap/swap01
+swapon
+vi /etc/fstab
+
+
 
 
 
