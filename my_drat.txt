@@ -232,6 +232,9 @@ loop
              
 
 
+
+        funtion
+
         voin main(){
         
         List testList =[1,2,3,3,3,5];
@@ -253,14 +256,20 @@ loop
                                         // 중복코드가 많다
 
         void main(){
-        addList();
-        addList();
-        .
+                List testList={1,2,3,4,5,};
+                List testList2={10,20,30,40};
+        
+        
+        addList(testList);
+        addList(testList2);
+        
+        int result=addList2(testList, ,c : 3, d :4 , e : 5);              // 리턴값이 있는함수
+        print(result);
         .
         }
 
-        addList(List testList){
-        List testList2 =[10,2,30,3,3,5];  
+        void addList(List testList){
+        
         int total=0;
         for(int number in testList){
                 total += number ;}
@@ -268,12 +277,64 @@ loop
 
         }
 
+        int addList2
+        (List testList,[int b = 3],{int c,int d ,int e}
+        
+        ){                                                      // 리턴값이 있을때 
+                                                                 // [parameter] 입력안해도됨       
+        int total=0;                                             //[parameter = x] 입력하지않을시 x 를 넣어라
+        for(int number in testList){                             //{parameter} 입력안해도됨 
+                total += number ;}                               //[p] {p} 같이쓸수없다
+        return total;
+
+        }
 
 
+        
+        
+        typedef
+
+         void main(){
+
+                add(1.2);
+                subtract(3,2);
+        Operation oper=add;
+        oper(2,1);                        //3
+        oper=subtract;                 
+        oper(3,2);                        // 1
+
+        calculater(1,2,add);                 //3
+        calculater(3,2,subtract);           //1
+
+        }
+
+        typedef Operation(int x, int y);             
+        //parameter 값이 같을경우 method 를 변수로 만들때 쓸수있다
+
+        void add(int x, int y){
+                print ('x 더하기 y 는 $(x+y) 입니다');
+        }
+
+        void subtract(int x, int y){
+                print ('x 빼기 y 는 $(x-y) 입니다');
+        }
+
+        void calculater(int x, int y, Operation opper){
+                oper(x,y);
+        }
+    
+    class
 
 
-
-
-    }
+    class Idol{
+​
+        String name;
+        String group;
+        
+        Idol(String name ,String group):                //이걸기억 
+             this.name = name, 
+             this.group = group;
+  
+  
 
 

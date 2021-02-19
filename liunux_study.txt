@@ -227,21 +227,54 @@ n t 82
 mkswap /dev/sdb1
 swapon /dev/sdb1
 swapon
-blkid /dev/sdb1
+blkid /dev/sdb1                        //hardware uuid value check
 vi /etc/fstab
+
+uuid= lkdsjflksjdflsdkajf swap swap defaults 0 0
+/dev/sdb1   sawp  swap    defaults 0 0 
+
 mount -a
 swapon -a
 
-ctrl + l clear
+ctrl + l ==>clear     
 
                                       swap file
 mkdir /swap                            
 dd if=/dev/zero of=/swap/swap01 bs=1MiB count=4096   1MB *4096 =4G 짜리 데이터가 0 으로채워진 파일을 만들어라
-chmod 600 swap01
+chmod 600 swap01       
 mkswap /swap/swap01
 swapon /swap/swap01
 swapon
 vi /etc/fstab
+
+
+quota
+
+ mkdir /userhome
+ mount /dev/sdb1 /userhome
+ vi /etc/fstab
+ mount -a
+
+ useradd -d /userhome/choi choi
+ useradd -d /userhome/hong hong
+
+vi /etc/fstab
+/dev/sdb1   /userhome  ext4  defaults,usrjquota=aquota.user,jqfmt=vfsv0  0 0
+
+ mount -o remount /userhome
+ quotaoff -avug
+ user quotas turned off
+ quotacheck -augmn
+ rm -fr aquota.*
+ quotacheck -augmn
+ touch aquota.user aquota.group
+ chmod 600 aquota.*
+ quotacheck -augmn
+ quotaon -avug
+ edquota -u choi
+
+
+vgdisplay
 
 
 

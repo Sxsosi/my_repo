@@ -22,3 +22,4 @@ rows                  행 가로
 approved              승인
 rejected              반려
 pending               보류
+subtract              빼기
