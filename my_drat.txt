@@ -211,48 +211,48 @@ loop
          반려 - rejected
          대기 - pending
 
-    String status= "approed";           // 오타가 날경우 오류임
+         String status= "approed";           // 오타가 날경우 오류임
         
         if(status == "approved")
         {print('승인');
         }else{print('반려혹은 대기중');}
 
+enum
+        enum Status {approved,rejected,pending}   // 오타 를 사전제거
+                
+                if(status == Status.approved){          
+                print('승인');
+                }else{print('반려혹은 대기중');}
 
-     enum Status {approved,rejected,pending}   // 오타 를 사전제거
-        
-        if(status == Status.approved){          
-        print('승인');
-        }else{print('반려혹은 대기중');}
+                }
 
-        }
-
-        print(Status.values.toList);     Status.approved
-                                         Status.rejected
-                                         Status.pending        //enum 값 출력
-             
+                print(Status.values.toList);     Status.approved
+                                                Status.rejected
+                                                Status.pending        //enum 값 출력
+                
 
 
 
-        funtion
+funtion
 
         voin main(){
         
-        List testList =[1,2,3,3,3,5];
-        
-        int total=0;
-        for(int number in testList){
-                total += number ;}
-        print(total);
+                List testList =[1,2,3,3,3,5];
+                
+                int total=0;
+                for(int number in testList){
+                        total += number ;}
+                print(total);
 
-        List testList2 =[10,2,30,3,3,5];      
-        
-        int total=0;
-        for(int number in testList2){
-                total += number ;}
-        print(total);
-         . 
-         .
-         .
+                List testList2 =[10,2,30,3,3,5];      
+                
+                int total=0;
+                for(int number in testList2){
+                        total += number ;}
+                print(total);
+                . 
+                .
+                .
                                         // 중복코드가 많다
 
         void main(){
@@ -260,9 +260,9 @@ loop
                 List testList2={10,20,30,40};
         
         
-        addList(testList);
-        addList(testList2);
-        
+                addList(testList);
+                addList(testList2);
+                
         int result=addList2(testList, ,c : 3, d :4 , e : 5);              // 리턴값이 있는함수
         print(result);
         .
@@ -270,71 +270,435 @@ loop
 
         void addList(List testList){
         
-        int total=0;
-        for(int number in testList){
-                total += number ;}
-        print(total);
+                int total=0;
+                for(int number in testList){
+                        total += number ;}
+                print(total);
 
         }
 
         int addList2
-        (List testList,[int b = 3],{int c,int d ,int e}
-        
-        ){                                                      // 리턴값이 있을때 
-                                                                 // [parameter] 입력안해도됨       
-        int total=0;                                             //[parameter = x] 입력하지않을시 x 를 넣어라
-        for(int number in testList){                             //{parameter} 입력안해도됨 
-                total += number ;}                               //[p] {p} 같이쓸수없다
-        return total;
+                (List testList,[int b = 3],{int c,int d ,int e}
+                
+                ){                                                      // 리턴값이 있을때 
+                                                                        // [parameter] 입력안해도됨       
+                int total=0;                                             //[parameter = x] 입력하지않을시 x 를 넣어라
+                for(int number in testList){                             //{parameter} 입력안해도됨 
+                        total += number ;}                               //[p] {p} 같이쓸수없다
+                return total;
 
-        }
+                }
 
 
         
         
-        typedef
+typedef
 
          void main(){
 
-                add(1.2);
-                subtract(3,2);
-        Operation oper=add;
-        oper(2,1);                        //3
-        oper=subtract;                 
-        oper(3,2);                        // 1
+                        add(1.2);
+                        subtract(3,2);
+                Operation oper=add;
+                oper(2,1);                        //3
+                oper=subtract;                 
+                oper(3,2);                        // 1
 
-        calculater(1,2,add);                 //3
-        calculater(3,2,subtract);           //1
+                calculater(1,2,add);                 //3
+                calculater(3,2,subtract);           //1
 
-        }
+                }
 
-        typedef Operation(int x, int y);             
-        //parameter 값이 같을경우 method 를 변수로 만들때 쓸수있다
+                typedef Operation(int x, int y);             
+                //parameter 값이 같을경우 method 를 변수로 만들때 쓸수있다
 
-        void add(int x, int y){
-                print ('x 더하기 y 는 $(x+y) 입니다');
-        }
+                void add(int x, int y){
+                        print ('x 더하기 y 는 $(x+y) 입니다');
+                }
 
-        void subtract(int x, int y){
-                print ('x 빼기 y 는 $(x-y) 입니다');
-        }
+                void subtract(int x, int y){
+                        print ('x 빼기 y 는 $(x-y) 입니다');
+                }
 
-        void calculater(int x, int y, Operation opper){
-                oper(x,y);
-        }
+                void calculater(int x, int y, Operation opper){
+                        oper(x,y);
+                }
     
-    class
+   
+class
 
-
-    class Idol{
-​
-        String name;
-        String group;
+        void main(){
+                
+                Idol redVelvet= new Idol(
+                        group:'red velvet',
+                        name:'sulki';
+                );                           //인스턴트화 named paramether 순서가 상관없음
         
-        Idol(String name ,String group):                //이걸기억 
-             this.name = name, 
-             this.group = group;
-  
-  
+                      redVelvet.name = '민구'      // 불가능
+              Idol rm = new Idol.formMap({
+                      'name': 'rm',
+                      'group':'bts',
+              });                             //  named constucter
+        
+                
+
+        }
+
+        class Idol{
+​
+                final String name;                  // class 변수 고정 지정 
+                final String group;
+                        
+                        Idol({String name ,String group}):                //이걸기억 named {}parameter
+                        this.name = name, 
+                        this.group = group;
+
+                        Idol.formMap( Map input):                       // named constucter
+                        this.name=input['name'],
+                        this.group=input['group'];
+                
+                        void syaName(){
+
+                        }
 
 
+  /Getter Setter
+  //Getter -> 값을 가져올때
+  //Setter -> 값을 변경할때
+        
+                Idol leeha = new Idol(
+                name:'kang',
+                group:'kkang'
+                );
+                
+                leeha.sayName();
+                
+        print(leeha._name);   // leeha._name;     같은파일 에서만 쓸수있다
+        print(leeha.name);    // .name 은 get name 함수에서 가져온거다
+
+        leeha.name='leeun';    // .name 은 get name 함수에서 가져온거다
+        print(leeha.name);    
+  
+}
+  
+                class Idol {
+
+                        //private varibale
+                        String _name;
+                        String _group;
+                        
+                        Idol({ 
+                        
+                                String name,
+                                String group,
+
+                                }) : this._name = name,
+                                     this._group = group;
+                                
+                        void sayName(){
+                                print ('저의 ${this._name} 입니다.');
+                        
+                        
+                        }
+                        get name{
+                                return this._name;
+                        }
+                        
+                        set name(String name){
+                                this._name=name;
+                        }
+
+ 
+ Inheritance               //상속
+
+
+        class BoyGroup extends Idol {
+                BoyGroup(
+                String name, //파라미터
+                String group, //파라미터
+                ) : super(
+                        //
+                        name: name,
+                        group: group,
+                        );
+
+ method overriding
+
+        @override
+        int calculate(){
+                int result = super.calculate();  // super는 부모 클래스 뜻 매소드를 다시설정 할수있다
+
+                return result + result;
+        }
+
+
+static
+
+
+        void main(){
+
+        Employee leeha = new Employee('리하');
+        Employee leeyun = new Employee('리윤');
+        
+        leeha.printNameAndBuling();
+        leeyun.printNameAndBuling();
+        
+        Employee.building='여의도 ';  //클래스변수에서 바꿈
+        
+        leeha.printNameAndBuling();
+        leeyun.printNameAndBuling();
+        
+        Employee.building='을지로 '; // 스태틱 설정으로 공통의 변수값을 지정해서 코드줄을 줄인다
+        
+        leeha.printNameAndBuling();
+        leeyun.printNameAndBuling();
+        }
+
+
+
+        class Employee{
+
+        static String building;       // 스테틱은 인스턴스에 귀속되지않음 
+        String name;
+        
+        Employee(
+        String name,
+        ): this.name =name;
+        
+        
+        void printNameAndBuling(){
+        print('제이름은 ${this.name} 입니다 ${building} 에서 근무하고있습니다');
+        }
+        }
+
+
+super and this
+
+void main() {
+        Engineer kkangmin = new Engineer(
+        languages: ['dard', 'java', 'javascript'],
+        name: 'kkang',
+        building: 'deajon',
+        );
+        kkangmin.sayProfile();
+        }
+
+        class Employee {
+        final String building; //final 선택시 무조건 constucter input
+        final String name;
+
+        Employee(
+        String name,
+        String building,
+        )   : this.name = name,
+                this.building = building;
+
+        void printNameAndBuling() {
+        print('제이름은 ${this.name} 입니다 ${building} 에서 근무하고있습니다');
+        }
+        }
+
+//엔지니어
+// 언어
+        class Engineer extends Employee {
+        List<String> languages;
+
+        Engineer({
+        //네임드파라미터
+        List<String> languages,
+        String name,
+        String building,
+        })  : this.languages = languages, // 부모클래스의 컨스트럭쳐 도 만족해야함
+                super(
+                name,
+                building,
+                // 부모 파라미터를 네임드로 받지 않았기때문에
+                );
+
+        sayProfile() {
+        print(
+                '저의 이름은 ${super.name} ${this.languages.join(",")} 를 사용할수있고 원하는 근무지는 ${super.building}입니다');
+        }                      this. name                                                                 this.name
+        }
+
+
+Interface
+
+        void main() {
+
+        BoyGroup leeha= new BoyGroup('leeyun');
+        
+        leeha.sayName();
+
+        }
+
+        class IdolInterface {
+        String name;
+        void sayName() {}
+        }
+
+        class BoyGroup implements IdolInterface {
+        String name; //인터페이스에서 가저오는 메소드 변수 꼭 있어야한다
+
+        BoyGroup(
+        String name,
+        ) : this.name = name;
+
+        void sayName() {
+        print('제이름은 ${this.name}입니다');
+        }
+        }
+
+
+
+
+Cascade
+
+        void main() {
+
+        Idol leeha= new Idol('leeyun','kknag');
+        
+        leeha.sayName();
+        leeha.sayGroupName();
+        
+        
+        new Idol('leeha','lee')            // Cascade Operater
+        ..sayName()
+        ..sayGroupName();
+
+        }
+
+
+
+        class Idol {
+        String name; 
+        String group;
+        Idol(
+        String name,
+        String group,
+        ) : this.name = name,
+        this.group=group;
+
+        void sayName() {
+        print('제이름은 ${this.name}입니다');
+        
+        }
+        void sayGroupName() {
+        print('제그룹은 ${this.group}입니다');
+        }
+        }
+Looping
+Mapping 
+Reduce/Fold
+  
+                //loofing - forEach
+                List<String> redVelvet =['아이린','슬기','웬디','조이','예리'];
+                
+                
+                redVelvet.forEach( (kk) {print(kk);} );  // froEach 리스트 메소드  파라미터 값에 파라미터와함수를  받는다
+                                
+                
+                for(String value in redVelvet){         // 같다
+                print (value);
+                }
+                
+                
+                
+                //Mapping -map
+                
+                final newList =redVelvet.map((value){            // 맵은 리턴값을 받을수있다 새로운 리스트를 만든다
+                
+                return '제 이름은 $value 입니다';                //각가 값을 변경 시켜 반복문 기능을 가지고 있음 
+                
+                } );
+                
+                print(newList);
+                
+                
+                //Reduce /Fold 
+                
+                List<int> numbers =[
+                0,1,2,3,4,5,
+                ];
+                
+                
+                int total = numbers.fold(0, (total, inter)   // fold 시작값0 과 변수 변수 리턴을 받는다
+                => total+inter                      // fold 입력값이 String 출력값이 int 여도가능
+                );
+                print(total);
+                
+                // index- 0
+                //inter= 0
+                //total=0
+                // return =0+0
+                
+                int total2=numbers.reduce( (total,inter){  // reduce 는 시작값 0 을 생략 타입 입력값 =리턴값
+                return total+inter;
+                });
+                
+                print(total2);
+                
+                int total3 = numbers.reduce( (total,inter)  // {}return 생략 =>
+                =>  total+inter);
+
+                print(total3);
+                }
+
+
+Map 심화
+void main() {
+
+                        Map map ={
+                        'apple':'사과',
+                        'banana':'바나나',
+                        'kiwi':'키위',
+                        };
+                        print(map.keys);
+                        print(map.values);
+                        
+                        print(map.keys.toList());
+                        print(map.values.toList());
+                        
+                        //Mapping -map => (entry)
+                        
+                        final newMap =map.entries.map((entery){  // map 에 apple 사과 모두 하나로 가져온다
+                        final key=entery.key;
+                        final value=entery.value;
+                        
+                        return '$key 는 한글로 $value 입니다 ';
+                        });
+                        print (newMap);
+                        
+                        
+                        map.entries.forEach((entery){
+                        final key=entery.key;
+                        final value=entery.value;
+                        
+                        print ( '$key 는 한글로 $value 입니다 ');
+                        });
+                        
+                        List<int> numbers=[
+
+                        1,11,12,13,14,15,];
+                        
+                        final newMap2= numbers.map((item){
+
+                        return '값이 $item 입니다';
+                        });
+                        
+                        print(newMap2);
+                        
+                        final newMap3= numbers.asMap().entries.map((entery){  // 리스트를 맵으로 바꿈 그리고 엔트리
+                        final index=entery.key;
+                        final value=entery.value;
+                        
+                        return '인덱스가 $index 일대 값은  $value 입니다 ';
+                        
+                        
+                        
+                        
+                        });    
+                        
+                        print(newMap3);
+                        
+                        }
+                        

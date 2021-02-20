@@ -23,3 +23,9 @@ approved              승인
 rejected              반려
 pending               보류
 subtract              빼기
+Inheritance           상속
+interface             상호작용
+foreach               각각 하나마다
+iterable              반복가능
+entry                 입장 들어가다
+expected              기대한다,요구한다
