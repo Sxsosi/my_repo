@@ -29,3 +29,4 @@ foreach               각각 하나마다
 iterable              반복가능
 entry                 입장 들어가다
 expected              기대한다,요구한다
+material              직물,재료,물질적인

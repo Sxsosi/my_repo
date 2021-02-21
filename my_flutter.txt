@@ -1,0 +1,20 @@
+
+
+
+stateless Widgets
+1 스크린상에 존재만 할뿐 아무것도 하지않음
+2 어떠한 실시간 데이터도 저장하지않음
+3 상태 모양 을 유발시키는 value 값을 가지지 않음
+
+Stataful Widgets
+1 사용자 interface 에 따라 모양이 바뀜
+2 data 를 받게 되두 모양이 바뀜
+
+Flutter Widget tree
+1 widget tree 구조 정리 할수 있음
+2 한 widget 은 other widget  include   
+3 widget  은  parent widget  자식 위젯
+4 Parent widget 은 widget container 
+
+Scaffold => 
+
