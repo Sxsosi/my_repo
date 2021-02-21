@@ -178,7 +178,8 @@ lsattr                                   확인
          -m    m
                umsk 설정                 퍼미션 계산 마스크 값과 유져값 합집합 사용
  
- systemctl status crond.service 상태확인
+ systemctl status crond.service 
+ systemctl is-active crond        상태확인
 
  vi /etc/crontab     =>  스케줄 설정
  01 3 15 * * root run-parts /etc/corn.monthly
@@ -189,6 +190,14 @@ mkdir  /backup
 systemctl restart crond.service
 chmod 755 backup.sh
 date 011503002030
+rdate -s time.bora.net
+ls /etc | grep cron*
+cron.deny                     // dney 만 있다면 user 는 cron 사용불가능
+cron.allow                   // 이에 존제하는 user 만 cron 사용가능
+root echo isec > /etc/cron.allow
+su isec 
+crontab 
+crontab -l                      permission 줘야 가능
 
 
 sector => cluster =>track =>cylinder
@@ -196,6 +205,17 @@ sector => cluster =>track =>cylinder
 
 HDD ----> RAM -----> Cache----->CPU
     page      block        word  
+
+
+
+touch data1
+stat data1  inode namuber   Modify  Access Change 확인  
+
+
+/dev/dsx     HardDisk (x= a,b,c,d,...)
+/dev/dsxn    parition (n=1,2,3,4,...) 
+fdisk        partition 
+mkfs         make file system = format
 
         
 fstab=  file system table
@@ -218,11 +238,11 @@ vi /etc/fstab
 mount -a
 
 
-df -Th         disk free  type humen rederable 사용가능한 하드용량보기
+df -Th         disk free  type human rederable 사용가능한 하드용량보기
 
 
 
-fdisk -l                           swap parition
+fdisk -l                           swap partition
 n t 82 
 mkswap /dev/sdb1
 swapon /dev/sdb1

@@ -10,7 +10,7 @@ unreachable           불가능한
 available             이용할수있는(구할수있는)
 necessary             필요한 필연적인
 especially            특별히
-particulary           특별히
+particularly           특별히
 repository            저장소
 configuration         환경설정
 execute               실행
@@ -30,3 +30,7 @@ iterable              반복가능
 entry                 입장 들어가다
 expected              기대한다,요구한다
 material              직물,재료,물질적인
+recent                최근 
+Material              (물건의) 재료 
+Scaffold               발판 
+elevation             높이 

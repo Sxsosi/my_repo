@@ -16,5 +16,30 @@ Flutter Widget tree
 3 widget  은  parent widget  자식 위젯
 4 Parent widget 은 widget container 
 
-Scaffold => 
+runApp
+    MyApp                               // 스크린 레이아웃 을 최초로 빌드  뼈대를 만든다
+    =>MaterialApp                     //title  String 사용  앱을 총칭하는이름  
+            title:                             최근 사용한 앱 리스트 볼때 나오는 이름 
+            theme: ThemeData
+            home : MyHomePage
+                    =>Scaffold
+                        appbar: AppBar              // title  Text widget  사용  그냥 앱바에나오는이름
+                                    title:Text 
+                        body:  Center
+                                    L Column
+                                    L widget
+
+    custom widget 만들땐 stl 인지 stf 인지 고심해야함 
+
+
+appBar: AppBar(
+        title: Text('BBANTO'),
+        centerTitle: true,                  // 엡바 에서 텍스트 값을 센터로 놓고싶을때 boolren 
+        backgroundColor: Colors.redAccent   // 엡바 백그라운드 칼러 설정 
+
+
+
+Padding Widget
+    |
+--> 0 <--      // 특정 지점에서 떨어여자야는 widget     
 
