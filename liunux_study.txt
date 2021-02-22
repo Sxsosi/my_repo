@@ -297,6 +297,94 @@ vi /etc/fstab
 vgdisplay
 
 
+pv => vg =>lv  
+
+fdisk /dev/sdb
+t 8e
+fdisk /dev/sdc
+t 8e
+pvcreate /dev/sdb1
+pvcreate /dev/sdb2
+
+vgcreate vg /dev/sdb1 /dev/sdc1
+
+lvcreate -L 300MB -n lv1 vg
+ lvcreate --size  1G  --name  lv2 vg
+  lvcreate --extents 100%FREE --name lv3 vg
+  
+   mkfs -t ext4 /dev/vg/lv1
+    mkfs -t ext4 /dev/vg/lv2
+     mkfs -t ext4 /dev/vg/lv3
+
+mkdir /lvm1 /lvm2 /lvm3
+
+mount /dev/vg/lv1 /lvm1
+mount /dev/vg/lv2 /lvm2
+mount /dev/vg/lv3 /lvm3
+
+vi /etc/fstab
+dev/vg/lv1  /lvm1  ext4 defaults 0 0
+mount -a
+
+raid
+
+fdisk /dev/sdb                   //fd parition
+t fd                  
+fdisk /dev/sdc
+t fd
+
+mdadm -C(--create) /dev/md9 -l(--level) linear -n 2 /dev/sdb1 /dev/sdc1
+                    이름                종류      하드갯수
+                                 // raid 설정
+
+mdamd -D(--detail) -S(--scan)      // raid 설정확인
+mdamd  -D /etc/md9
+
+mkfs -t ext4 /dev/md9           // format
+
+mkdir /linerraid                   // mount
+    
+mount /dev/md9 /linerraid
+df -Th
+vi /etc/fstab
+mount -a
+
+mdadm -D -s /dev/md9
+ls -l /etc/mdadm.conf
+mdadm -D -s /dev/md9 > /etc/mdadm.conf
+cat /etc/mdadm.conf
+
+
+ umount /dev/md9                              //raid 삭제
+ mdadm --stop /dev/md9
+ mdadm --remove /dev/md9
+ mdadm --zero-superblock /dev/sdb1 /dev/sdc1
+ rm -rf /dev/mdadm.conf
+ vi /etc/fstab
+ fdisk /dev/sdb
+ d
+ fdisk /dev/sdc
+
+   
+   
+    1  fdisk /dev/sdb                                 //raid0 만들기
+    2  fdisk /dev/sdc
+    4  mdadm -C /dev/md0 -l 0 -n 2 /dev/sdb1 /dev/sdc1
+    5  mdadm -D /dev/md0
+    6  mkfs -t ext4 /dev/md0
+    7  mkdir /raid0
+    8  mount /dev/md0 /raid0
+    9  df -Th
+   10  vi /etc/fstab
+       /dev/md0  /raid0 ext4 defaults 0 0
+   11  mount -a
+   12  mdadm -D -s /dev/md0 > /etc/mdadm.conf
+   13  cat /etc/mdadm.conf
+
+
+
+
+
 
 
 
