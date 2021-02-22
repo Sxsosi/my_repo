@@ -16,6 +16,20 @@ Flutter Widget tree
 3 widget  은  parent widget  자식 위젯
 4 Parent widget 은 widget container 
 
+
+기본적으로 widget 에 입력 값은  named {parameter} 
+
+funtion({var x})  =>named parameter 값 생략 가능하지면  입력시 x 는 얼마라고 지정해줘야한다
+         미입력시 => null
+         x:  반드시지정해야함 
+
+funtion([var x = y]) =>optionnull parameter 다생략 가능 
+             미입력시 =>y
+
+
+
+위젯의 key 값을 보고 싶으면 ctrl+space 한다
+
 runApp
     MyApp                               // 스크린 레이아웃 을 최초로 빌드  뼈대를 만든다
     =>MaterialApp                     //title  String 사용  앱을 총칭하는이름  
@@ -32,10 +46,87 @@ runApp
     custom widget 만들땐 stl 인지 stf 인지 고심해야함 
 
 
+
+
+return MaterialApp(
+    debugShowCheckedModeBanner: false  // 디버그 표시를 지워준다  최상위 에서 선택
+)
+
+
+Scaffold(
+    backgroundColor:Colors.amber[숫자];  // 전체의 호박색 백그라운드 다
+                                            위치는 안에만 있으면 된다 AppBar 에서 설정 하지않는이상 
+)
+
 appBar: AppBar(
         title: Text('BBANTO'),
         centerTitle: true,                  // 엡바 에서 텍스트 값을 센터로 놓고싶을때 boolren 
         backgroundColor: Colors.redAccent   // 엡바 백그라운드 칼러 설정 
+        elevation: 0.0,                     //appbar 높이 설정
+
+
+        body: Padding(
+            
+            padding:EdgeInsets.fromLTRB(left,top,right,bottom), //inset 뭔가를 삽입하다
+            
+            child: Column(                 
+               
+                crossAxisAlignment : CrossAxisAlignment.start, // 컬럼을 가로 왼쪽에서 시작한다
+                mainAxisAlignment : MainAxisAlignment.center  //컬럼을 세로 가운데는 축을 정렬 뜻한다 
+                     
+                    children:<widget>[                     // column 은 child  오고 children Text 로 온다
+                         
+                         Center(
+                             child: CircleAvatar(          //이미지 동그라미안에 넣은다
+                             backgroundImage:AssetImage('assets/name') // assets 폴더를 만든후 이미지저장 
+                                                                //pubspec.yaml 에 assets 가서 이미지 경로를 지정한다
+                             radius: 동그라미 크기 
+                             backgroundColor:Colors.x     //투명이미지 배경설정
+                             )
+                         ),
+
+                         Divider(        // 가로 줄을 그어넣은다
+                             height:     //위아래 포함이다
+                             thickness:  //선의 두깨
+                             endIndent   // 선이 끝나는 지점을 정한다
+                         )
+
+
+                         Text('String',                     //text 처음 파라미터는 스트링 문자열입력
+                            letterSpacing:                  // 글자간격 소수점 1자리까지 찍어줌        
+
+                         )
+                     ]
+                SizeBox(                                   //column 안에 세로 글간격을 조절한다
+                    height:                                 //세로 cols
+                    width:                                  //가로 rows
+                )
+
+                Row(
+                    children:<Widget>[
+                        Icon(Icons.check_circle_outline), // flutter 에서 제공하는 체크박스 이미지를 가저온다 
+                                                            // 왼쪽에 미리보기 제공함
+
+                    ]
+                )
+                                                               
+            ) 
+        
+        body:Center(                 //center widget 이있다고해서 화면정중앙 배치되는거아님
+            child: Column(             Column 위젯가 만나게 되면 왜냐면 column 은세로축 재약이 없기 때문이다
+               mainAxisAlignment:MainAxisAlignment.center 
+            )
+        )
+        )
+
+
+
+
+
+
+
+
+
 
 
 
