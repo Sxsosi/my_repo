@@ -34,7 +34,7 @@ runApp
     MyApp                               // 스크린 레이아웃 을 최초로 빌드  뼈대를 만든다
     =>MaterialApp                     //title  String 사용  앱을 총칭하는이름  
             title:                             최근 사용한 앱 리스트 볼때 나오는 이름 
-            theme: ThemeData
+            theme: ThemeData(primaryColor: Colors.x) //  앱바의 태마를 선택한다
             home : MyHomePage(임의의 widget 입력 Scaffold 도가능)
                     =>Scaffold
                         appbar: AppBar              // title  Text widget  사용  그냥 앱바에나오는이름
@@ -47,7 +47,6 @@ runApp
 
 
 
-
 return MaterialApp(
     debugShowCheckedModeBanner: false  // 디버그 표시를 지워준다  최상위 에서 선택
 )
@@ -56,18 +55,127 @@ return MaterialApp(
 Scaffold(
     backgroundColor:Colors.amber[숫자];  // 전체의 호박색 백그라운드 다
                                             위치는 안에만 있으면 된다 AppBar 에서 설정 하지않는이상 
-)
+    
+    
+     drawer: Drawer(                                      //앱바의 햄버거 매뉴를 자동으로 생기고 누르면 나오는 자신의 상태창
+                                                          //ctrl click Scaffold 속성
+                                                           //drawer value 값은 위젯 이와야함
+             child: ListView(                               //복수의 widget 이 나열할수있음 각각 ListTile 을 가지고있음
+                        padding: EdgeInsets.zero,           // 여백을 없에버림
+                            children: <Widget>[             //ListView 는 child 아 아닌 children 이온다
+                                 UserAccountsDrawerHeader(   // 유저개정 정보가 보여야함
+                                    currentAccountPicture: CircleAvatar(
+                                        backgroundImage: AssetImage('assets/cat.png'),
+                                        ),
+                                    countName: Text('KKang'),             //@reqire 반드시써야함
+                                    accountEmail: Text('kang@bb.com'),    //@reqire 반드시나와야함
+                                    onDetailsPressed: () {                //기능을 수행한fuchtion 형태 와야함  
+                           
+                                     print('arrow is clicked');
+                                     },
+                                 otherAccountsPictures: <Widget>[       //복수 우측 끝에 위치한다
+                                    CircleAvatar(
+                                    backgroundImage: AssetImage('assets/bear.jpg'),
+                                    backgroundColor: Colors.white,
+                                    ),
+                        decoration: BoxDecoration(                  
+                                    color: Colors.red[200],
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(40.0),  //곡선율 40 설정
+                                        bottomRight: Radius.circular(40.0),
+                        ListTile(
+                                leading: Icon(   // 왼쪽끝에 아이콘을 삽입
+                                    Icons.home,
+                                    color: Colors.grey[850],
+                                    ),
+                                title: Text('Home'),
+                                onTap: () {                        // 길게누르기 두번 누르기 액션을 감지할수있음
+                                    print('home is clicked');      // 스플레시 효과도 나옴
+                                    },
+                                trailing: Icon(Icons.add),     //오른쪽끝에 아이콘을 삽입 
+                                     ),
+        appBar:
+        body: Builder(                         //스넥바 를 사용하기위해선 Scaffold.of(context)
+                                               //하위트리 Builder 만든다 
+            builder:(BuildContext ctx){        // Builder 에서 리턴된 값인 ctx  
+                return Center(
+                    child: FlatButton(
+                        child:Text(
+                            'show me',
+                            style: TextStyle(
+                                color:Colors.white.
+                            ),
+                        ),
+                    color:Colors.red,
+                    onPressed:(){
+                        Scaffold.of(ctx).showSnackBar(SnackBar(  //Scaffold 의 context 값 ctx 입력
+                            content: Text('hello'),
+                        ));
+            
+            body: MySnackBar(),             // 가독성으로 MySnackBar 함수만듬
+
+        class MySnackBar extends StatelessWidget {
+                @override
+                Widget build(BuildContext context) {
+                    return Center(
+                    child: RaisedButton(
+                        child: Text('show me'),
+                        onPressed: () {
+                            Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                'hellow',
+                                textAlign: TextAlign.center,   //글자 정렬
+                                style: TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: Colors.teal,
+                                duration: Duration(milliseconds: 1000), //지연시간 1000 1초 
+
+
+import 'package:fluttertoast/fluttertoast.dart';  // 토스트 메시지 를 쓰기위해 콜
+
+
+            body: Center(
+                    child: FlatButton(
+                    onPressed: () {
+                      flutterToast();            //토스트 함수 호출 
+                    child: Text('toast'),
+                    color: Colors.blue,
+             
+            void flutterToast() {
+                Fluttertoast.showToast(               //enum 값 
+                msg: 'flutter',                      // 호출 메시지
+                gravity: ToastGravity.BOTTOM,       // 호출 위치
+                backgroundColor: Colors.redAccent,    //배경색
+                fontSize: 20.0,
+                textColor: Colors.white, 
+                toastLength: Toast.LENGTH_SHORT);       //토스트 유지시간
+           
+
 
 appBar: AppBar(
         title: Text('BBANTO'),
         centerTitle: true,                  // 엡바 에서 텍스트 값을 센터로 놓고싶을때 boolren 
         backgroundColor: Colors.redAccent   // 엡바 백그라운드 칼러 설정 
         elevation: 0.0,                     //appbar 높이 설정
+        
+        leading: IconButton(               //leading AppBar IconButton( 왼쪽정렬 
+            icon: Icon(Icons.menu),          // icon : Icon(Icons 햄버거 아이콘 선택
+                onPressed: () {                  // 버튼에 사용  함수의 형태로 버튼을 눌렀을대 함수내용실행
+                    print('menu cliced');
+          },
 
+        actions: <Widget>[                //actions Appbar 오른쪽정렬 1가지이상 추가할수록 처음은 밀린다
+            IconButton(
+                icon: Icon(Icons.shopping_cart),
+            IconButton(
+                icon: Icon(Icons.search),
+            },
+          ),
 
         body: Padding(
             
-            padding:EdgeInsets.fromLTRB(left,top,right,bottom), //inset 뭔가를 삽입하다
+             padding:EdgeInsets.fromLTRB(left,top,right,bottom), //inset 뭔가를 삽입하다
             
             child: Column(                 
                

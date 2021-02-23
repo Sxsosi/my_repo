@@ -44,3 +44,8 @@ interspace             간격
 height                 높이
 Weight                 두께 무개
 width                  너비 가로
+drawer                 서랍
+current                흐름
+Assets                 재산
+border                  경계
+Context                 글의 맥락 전후사정
