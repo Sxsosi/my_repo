@@ -382,6 +382,11 @@ cat /etc/mdadm.conf
    13  cat /etc/mdadm.conf
 
 
+file
+ls -il   //i node showing
+
+
+
 
 
 

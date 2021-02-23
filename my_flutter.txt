@@ -35,7 +35,7 @@ runApp
     =>MaterialApp                     //title  String 사용  앱을 총칭하는이름  
             title:                             최근 사용한 앱 리스트 볼때 나오는 이름 
             theme: ThemeData
-            home : MyHomePage
+            home : MyHomePage(임의의 widget 입력 Scaffold 도가능)
                     =>Scaffold
                         appbar: AppBar              // title  Text widget  사용  그냥 앱바에나오는이름
                                     title:Text 
