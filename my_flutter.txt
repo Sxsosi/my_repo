@@ -29,6 +29,7 @@ funtion([var x = y]) =>optionnull parameter 다생략 가능
 
 
 위젯의 key 값을 보고 싶으면 ctrl+space 한다
+모든 widget은 MaterialApp child 가 되어야한다 push 는 context 는 
 
 runApp
     MyApp                               // 스크린 레이아웃 을 최초로 빌드  뼈대를 만든다
@@ -185,7 +186,7 @@ import 'package:fluttertoast/fluttertoast.dart';  // 토스트 메시지 를 쓰
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween, // 1번과 n 번 컬럼이 각자 구석을 차지 하며 너누어짐
                         //crossAxisAlignment: CrossAxisAlignment.end, // 가로축 끝 기준으로 정렬하라
                         //crossAxisAlignment: CrossAxisAlignment.start, // 가로축 끝 시작 기준으로 정렬 하라
-                        crossAxisAlignment: CrossAxisAlignment.stretch, // 가로축끝까지 영역을 넓여줌
+                        //crossAxisAlignment: CrossAxisAlignment.stretch, // 가로축끝까지 영역을 넓여줌
 
                         children: <Widget>[
                         Container(
@@ -291,6 +292,155 @@ appBar: AppBar(
         )
         )
 
+//flutter 에서 route 는 하나의 page 이다
+// navigator 는 route 를 stack data구조로 관리한다
+// stack data구조는 쌓아올리는데 추가할땐 push method 제거할댄 Pop method
+// 모든 route 는 MaterialApp 위젯 아레에 child 로 있어야한다
+
+            class MyApp extends StatelessWidget {
+            @override
+            Widget build(BuildContext context) {
+                return MaterialApp(
+                home: FristPage(),                  // route 는 materialApp 아래에 위치해야한다
+            
+            class FristPage extends StatelessWidget {
+            @override
+            Widget build(BuildContext context2) {    
+                return Scaffold(
+                appBar: AppBar(
+                    title: Text('frist page'),
+                    centerTitle: true,
+                    backgroundColor: Colors.blue,
+                    
+                body: Center(
+                    child: RaisedButton(
+                        child: Text('Go to the Second Page'),
+                            onPressed: (){                                     //onPressed 뒤에는 함수가 와야함
+                            Navigator.push(context2,                            //context 가 가지고있는 widget tree 위치정보 를 가지고 현제 route 를 확인하고 push 함수가 원하는 route 를 쌓아올려줘야한다  
+                            MaterialPageRoute(builder:(context2)=>SecondPage()   //네비게이터는 push 와 pop 으로 stack 으로 정리하는데
+                                                                                //빌더 를 통해서 현제위치를 받아 원하는 route 로이동한다
+                                                                                //SecondPage 는 FristPage 위로 올라가는거다
+
+            class SecondPage extends StatelessWidget {
+            @override
+            Widget build(BuildContext ctx) {
+                return Scaffold(
+                appBar: AppBar(
+
+                    title: Text('Second page'),
+                    centerTitle: true,
+                    backgroundColor: Colors.red,
+                    elevation: 0.0,
+                ),
+                body: Center(
+                    child: RaisedButton(
+                    child: Text('Go to the Frist Page'),
+                    onPressed: (){
+                        Navigator.pop(ctx);              // 네비게이터 pop 은 단지 제거만 해준다 그러면  아래route 가 나오기때문이다
+
+
+
+multipage  Navigator
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(          //routes 이동할 페이지 이름생성 map 자료형
+      initialRoute: '/',      //multi page 시 선택 home 이랑 같이사용하지 않음
+      routes: {              // flutter start page 는 보통 / 로지정함
+         '/': (context) => ScreenA(), 
+        '/b': (context) => ScreenB(),
+        '/c': (context) => ScreenC(),
+
+class ScreenA extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('ScreenA'),
+        centerTitle: true,
+      ),
+      body: Center(
+
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,  //center 와 column 이 같이올때 반드시써야함
+          children:<Widget> [
+            RaisedButton(
+              color: Colors.red,
+                onPressed:(){
+                Navigator.pushNamed(context, '/b');
+                },
+                child: Text('go to ScreenB')
+            ),
+            RaisedButton(
+                color: Colors.red,
+                onPressed:(){
+                Navigator.pushNamed(context, '/c');
+                },
+                child: Text('go to ScreenC')
+
+
+
+List<String> number=new List(); //growable  <dynamic> 이것이 generic 
+var number2=new List(5);  //fixed-length
+            number.add(5);
+            number.add('kk');
+            number.add(4.2);
+            number.add(addNumber(3,4));
+            number.add(true);
+            print(number); // 함수 나 블리언 까지 리스트 들어간다
+            int addNumber(num1 , num2)=>num1+num2;
+
+void main() {
+        var number =List(); 
+        number.add(5);
+        printNumber(number); //number 는 dynamic 타입 리스트라 오류
+
+void printNumber(List<int>a){ // int 타입 리스트 
+print(a);
+
+List<String> names=List();
+names.addAll(['a','b','c']); //list 이기때문에 []써야함
+print(names);
+
+
+
+
+
+void main() {
+
+        //   var ccS=new CircleSlot();
+        
+        //   Circle x = new Circle(); 
+        //   ccS.insert(x); 
+        
+        //   ccS.insert(new Circle()); // 같다 ㅡ,.ㅡ
+        
+        
+        //   var sqS=new SquareSlot();
+        //   sqS.insert(new Circle());    
+
+        // class SquareSlot{
+        // insert(Square sq){
+        // class CircleSlot{
+        // insert(Circle cc){
+
+
+Stataful 은 제너릭 기법을 이용한다
+
+class Circle{}
+class Square{}
+
+
+var ccS=new Slot<Circle>();          //이것이 제너릭스 기법
+  ccS.insert(new Circle());           // 다른 것이 추가되면 triangle 이라던가 
+ var sqS=new Slot<Square>();
+sqS.insert(new Square());            // 간결 하고 중복을 피하며 재사용성이 좋아야 좋은코드이다
+                                        
+class Slot<T>{                        //이것이 제너릭스 기법
+insert(T shape){                        
+
+   
 
 
 
@@ -298,11 +448,4 @@ appBar: AppBar(
 
 
 
-
-
-
-
-Padding Widget
-    |
---> 0 <--      // 특정 지점에서 떨어여자야는 widget     
 
