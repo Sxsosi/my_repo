@@ -102,7 +102,7 @@ Scaffold(
                     child: FlatButton(
                         child:Text(
                             'show me',
-                            style: TextStyle(
+                            style: TextStyle(            //버튼 스타일은 따로잡는다
                                 color:Colors.white.
                             ),
                         ),
@@ -151,6 +151,70 @@ import 'package:fluttertoast/fluttertoast.dart';  // 토스트 메시지 를 쓰
                 textColor: Colors.white, 
                 toastLength: Toast.LENGTH_SHORT);       //토스트 유지시간
            
+
+
+
+            Scaffold(                             //Container 사용        
+                backgroundColor: Colors.blue,
+                body: SafeArea(       //컨테이너 가 화면 에 보이지않기때문에 safearea 이용 alt+ 엔터 사용
+                    child: Container(   //child 가없을 경우 컨테이너는 최대한 공간에 포지션
+                    child: Text('hello'),   // child 가지면 텍스트 크기로 변한다
+                                            // Container 는 하나의 컨테이너를 같는다
+                    color: Colors.red,
+                    width: 100,
+                    height: 100,
+                    margin:EdgeInsets.symmetric(  // 마진값 수치를 임의적으로 변경할수 있다
+                        vertical: 50,           //세로
+                        horizontal: 10          //가로
+                    ),
+                        padding: EdgeInsets.all(20), // 상하좌우 수치값  andauto 에서 inspetor 에서 볼수있음 
+                    ),
+
+
+  Colum 심화                                             
+        Scaffold(
+                backgroundColor: Colors.teal,
+                body: SafeArea(
+                    //child: Center(// 센터위젯 세로통제권 없음
+                    child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.center,//세로는 무한확장 가로는 크기가 제한됨
+                        // mainAxisSize:MainAxisSize.min, //  센터위젯이 세로 통제권얻음
+                        //verticalDirection: VerticalDirection.up, // 아래에서부터 컨테이너가 올라감
+                        //verticalDirection: VerticalDirection.down, //위에서 아래로 내려감 defult 값같음
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 컬럼숫자 사이를 같은간격으로 나누어짐 1번 컨네이너 위는 공백이생김
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween, // 1번과 n 번 컬럼이 각자 구석을 차지 하며 너누어짐
+                        //crossAxisAlignment: CrossAxisAlignment.end, // 가로축 끝 기준으로 정렬하라
+                        //crossAxisAlignment: CrossAxisAlignment.start, // 가로축 끝 시작 기준으로 정렬 하라
+                        crossAxisAlignment: CrossAxisAlignment.stretch, // 가로축끝까지 영역을 넓여줌
+
+                        children: <Widget>[
+                        Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.white,
+                            child: Text('container 1'),
+                        ),
+                        Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.blue,
+                            child: Text('container 2'),
+                        ),
+                        Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.red,
+                            child: Text('container 3'),
+                        ),
+                        // Container(                 // 컨테이너는 세로 통제권이 없음 컨테이너 크기가 바로 세로 끝임
+                        //                           // 화면 오른쪽 끝 기준으로 정령 할려면 새로운컨테이너 인비져블 컨테이너
+                        //                           // 가필요함
+                        //   width: double.infinity,
+                        //   height: 20,
+                        // )
+
+
+
 
 
 appBar: AppBar(
