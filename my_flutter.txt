@@ -444,6 +444,62 @@ insert(T shape){
 
 
 
+void main()=>runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => MyAppState();
+
+}
+class MyAppState extends State<MyApp> {
+  int _count=0;
+  @override
+  Widget build(BuildContext context) {  // build 메서드는 SLW과 SFW(더 정확히는 SFW의 State 클래스)에서 구현되며 화면을 구성할 UI들을 구현하는 메서드다
+                                          //화면이 출력될 때 build 메서드가 호출되면서 build 메서드 내부에 구현한 UI 위젯들이 화면에 출력된
+    print("** build - StatelessWidget Demo"); //SLW은 변화가 필요없는 화면을 구성할 때 사용하는 위젯 클래스이며, 그렇기 때문에 build 메서드는 한 번만 호출된다.
+
+
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Stateless Widget'),
+          backgroundColor: Colors.blue,
+
+        ),
+        body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "$_count",
+              style: TextStyle(
+                fontSize: 30
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:<Widget> [
+                FloatingActionButton(
+                  heroTag: null,
+                    child: Icon(Icons.add),
+                    onPressed:(){
+                    setState(() {  //SFW 내부의 상태를 변경할 때 사용하는 메서드
+                      _count++;
+                      print("value of _count= $_count");
+                    });
+
+
+                    }),
+                FloatingActionButton(
+                  heroTag: null,
+                    child: Icon(Icons.remove),
+                    onPressed:(){
+                    setState(() {  //setState 메서드에서 변경된 상태 값을 플랫폼에 전달하여 build 메서드가 호출
+                      _count--;
+                      print("value of _count= $_count");
+                    });
+
+
 
 
 
