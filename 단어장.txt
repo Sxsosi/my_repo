@@ -51,3 +51,4 @@ border                  경계
 Context                 글의 맥락 전후사정
 interpolation           보관법
 growable                자랄수있는
+validation              확인

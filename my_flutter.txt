@@ -27,6 +27,50 @@ funtion([var x = y]) =>optionnull parameter 다생략 가능
              미입력시 =>y
 
 
+BuildContext 는 widget tree 에서 현재  widget 위치를 알수 있는정보
+build method 는 Scaffold 위젯을 리턴하는데  이때 어디에 위치하는 정보를 가진 
+context 를 넣어서 리턴을 해준다 
+
+
+플러터는 위젯(Widget)의 크기, 여백 등의 설정을 위해 컨테이너(Container) 개념을 
+두고 있다. 컨테이너는 자식 위젯의 크기와 여백(Margine, Padding) 등을 설정한다.
+ 또한 컨테이너는 다시 부모 위젯으로 컬럼(Column)과 로우(Row)를 둘 수 있다. 
+ 개별 위젯을 조종하기 위해서는 먼저 
+ ‘바디(Body) > 컬럼/로우 > 컨테이너 > 위젯(예:TextField, Button)’의 계층 구조를 갖음
+
+
+child를 속성으로 가지는 위젯은 Center나 Container 등의 하나의 위젯만 들어가는 위젯이고
+children를 속성으로 가지는 위젯은 복수의 위젯을 가질 수 있는 Row, Column, ListView, Stack 등이 있다.
+
+
+ Drawer
+Scaffold의 속성으로 줄 수 있습니다.
+child로 ListView를 준 것을 보실 수 있는데 대개 Drawer에는 ListView를 사용합니다.
+ListView의 children으로 DrawerHeader를 줘서 헤더를 구성하고 
+그 아래로 ListTile을 붙여나가는 방식으로 처리합니다.
+
+Container를 활용해서 각 원소들을 끝으로 밀어 넣을 수 있다.
+ width 값을 double.infinity로 주면 된다.
+해당 컨테이너는 길이, 높이가 없고 속성만 가졌으므로 'invisible Container'라고 불리운다.
+
+
+
+Form 필드 내부에 위치했을 때의 validation이 가능한지입니다.
+
+ 
+
+TextFormField는 속성으로 validator가 존재하지만 TextField는 존재하지 않습니다. 
+아무 값이나 받으면 상관 없을 때 TextField를 사용하고 좀더 검증해야 하는 값에는 TextFormField를 사용하면됩니다
+
+ 
+
+ListTile을 눌렀을 때는 보통 작동한 후 탭이 닫히는데 이는 Navigator.pop()으로 닫을 수 있습니다.
+
+이 의미는 Drawer가 열린 것은 다른 화면 위에 쌓인 것으로 본다는 말입니다.
+
+
+
+
 
 위젯의 key 값을 보고 싶으면 ctrl+space 한다
 모든 widget은 MaterialApp child 가 되어야한다 push 는 context 는 
@@ -501,7 +545,392 @@ class MyAppState extends State<MyApp> {
 
 
 
+class _LogInState extends State<LogIn> {  //alt enter stf 로 바꾼다
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Log in'),
+        backgroundColor: Colors.redAccent,
+        centerTitle: true,
+        leading: IconButton(  // 앱바 좌측 정령
+            icon: Icon(Icons.menu),
+            onPressed: (){}
+        ),
+        actions: <Widget>[  //앱바 오른쪽 정령
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: (){}
+          )
+        ],
+      ),
+      body: SingleChildScrollView(  //자판기 사용시 화면이 밀릴경우 사용한다
+        child: Column(  //전체적인 화면 구성을 크게 2개의 컬럼으로 구성
+          
+          children:<Widget> [
+            Padding(padding: EdgeInsets.only(top: 50)), //상단에서 50px 떨어짐
+            Center(  // 이미지로 상단을 구성 하고
+
+              child: Image(
+                image: AssetImage('image/chef.gif'),
+                width:170 ,
+                height: 190,
+              ),
+            ),
+            Form( //하단은 폼 으로 잡고
+              child:Theme(  // 폼의 형식을 설정함
+                data: ThemeData(
+                  primaryColor: Colors.orangeAccent,   //text 입력줄 아래 색 선택시 보여줌
+                  inputDecorationTheme: InputDecorationTheme(
+                    labelStyle: TextStyle(
+                      color: Colors.blue, //폼의 미리보기글씨 색
+                      fontSize: 20.0
+                    )
+                  )
+                ),
+                  child: Container( // 컨네이너로 하단을 잡고 컬럼 3개로 구성
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children:<Widget> [
+                        TextFormField(  //
+                          decoration: InputDecoration(  //아이디를 적어주세요
+                            labelText: 'Email 주소를 적어주세요',
+                            hintText:'예)adg@dkfek.com',
+                            hintStyle: TextStyle(
+                              fontSize: 8,
+                            )
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        TextField(   //데코레이션을 가져온다
+                          decoration: InputDecoration(
+                              labelText: '비밀번호'
+                          ),
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 40.0),
+                        ButtonTheme(  //버튼의 외형을 설정 할수있다
+                          minWidth: 100.0,
+
+                            height: 50.0,
+                            child: RaisedButton(
+                              color: Colors.orangeAccent,
+                                child: Icon(  //글자뿐만 아니라 아이콘도 입력가능
+                                  Icons.arrow_forward,
+                                  size: 35,
+                                ),
+                                onPressed: (){
 
 
 
 
+class LogIn extends StatefulWidget {
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {  //alt enter stf 로 바꾼다
+
+  TextEditingController controller=TextEditingController(); // 텍스트필드 에서 data 를 가져올수있음
+  TextEditingController controller2=TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Log in'),
+        backgroundColor: Colors.redAccent,
+        centerTitle: true,
+        leading: IconButton(  // 앱바 좌측 정령
+            icon: Icon(Icons.menu),
+            onPressed: (){}
+        ),
+        actions: <Widget>[  //앱바 오른쪽 정령
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: (){}
+          )
+        ],
+      ),
+      body: Builder( //이것이있어야 토스트 페이지 이동이 가능하다
+        builder:(context) {  // page 이동을 위해서 context 값을 받아야함  동영상 18 19
+          return GestureDetector(  // 키보드를 없에기위해서 사용자가 누르는 것을 인식하는 위젯
+            onTap: () { // key보드는 focus 받고있다  모든 범위에 focusscope 를 해제한다
+              FocusScope.of(context).unfocus();
+            },
+              child: SingleChildScrollView(  //context 값을 받기 위해선 빌더의 리턴된 위젯 안에 있어야 한다  //자판기 사용시 화면이 밀릴경우 사용한다
+              child: Column(  //전체적인 화면 구성을 크게 2개의 컬럼으로 구성
+
+                children:<Widget> [
+                  Padding(padding: EdgeInsets.only(top: 50)), //상단에서 50px 떨어짐
+                  Center(  // 이미지로 상단을 구성 하고
+
+                    child: Image(
+                      image: AssetImage('image/chef.gif'),
+                      width:170 ,
+                      height: 190,
+                    ),
+                  ),
+                  Form( //하단은 폼 으로 잡고
+                    child:Theme(  // 폼의 형식을 설정함
+                        data: ThemeData(
+                            primaryColor: Colors.orangeAccent,   //text 입력줄 아래 색 선택시 보여줌
+                            inputDecorationTheme: InputDecorationTheme(
+                                labelStyle: TextStyle(
+                                    color: Colors.blue, //폼의 미리보기글씨 색
+                                    fontSize: 20.0
+                                )
+                            )
+                        ),
+                        child: Container( // 컨네이너로 하단을 잡고 컬럼 3개로 구성
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children:<Widget> [
+                              TextFormField(
+                                controller: controller,
+                                decoration: InputDecoration(  //아이디를 적어주세요
+                                    labelText: 'dice 적어주세요',
+                                    hintText:'예)dice',
+                                    hintStyle: TextStyle(
+                                      fontSize: 8,
+                                    )
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              TextField(   //데코레이션을 가져온다
+                                controller: controller2,
+                                decoration: InputDecoration(
+                                    labelText: '비밀번호',
+                                  hintText:'1234',
+                                ),
+                                keyboardType: TextInputType.text,
+                                obscureText: true,
+                              ),
+                              SizedBox(height: 40.0),
+                              ButtonTheme(  //버튼의 외형을 설정 할수있다
+                                minWidth: 100.0,
+
+                                height: 50.0,
+                                child: RaisedButton(
+                                    color: Colors.orangeAccent,
+                                    child: Icon(  //글자뿐만 아니라 아이콘도 입력가능
+                                      Icons.arrow_forward,
+                                      size: 35,
+                                    ),
+                                    onPressed: (){
+
+                                      if(controller.text=='dice'&& controller2.text=='1234'){
+
+                                        Navigator.push(context, //builder 의 context 가있어야한다!!
+                                            MaterialPageRoute(builder:(context)=>Dice()) //builder 안전장치
+                                        );
+                                      }else if(controller.text=='dice'&& controller2.text!='1234'){
+                                        
+                                        showSnackBar2(context);                                   
+                                      }else if(controller.text!='dice'&& controller2.text=='1234'){
+                                        showSnackBar3(context);
+                                      }else{
+                                        showSnackBar(context);
+                                      }
+
+void showSnackBar(BuildContext context){
+  Scaffold.of(context).showSnackBar(  //snackbar는 scaffold 의 정확한 context 를 참조해서
+    SnackBar(content:                 //그곳에 snackbar 를 그린다
+    Text('로그인 정보를 다시확인하세요 ',
+    textAlign: TextAlign.center,),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blue,
+
+
+
+
+
+    Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor:Colors.redAccent,
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        title: Text('Dice Game'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget> [
+            Padding(
+              padding: EdgeInsets.all(32.0),
+              child: Row( // expanded 때문에 화면이 꽉참 그래서 패딩으로 사이즈를 주면서 row 패딩으로 감쌈
+                children:<Widget> [
+                  Expanded(// 이미지를 끝가지 확장
+                    //flex: 1,//비율애 따라 이미지 크기를 지정한다
+                    child: Image.asset('image/dice$leftDice.png')), //같다 Image(image: AssetImage('image/dice1.png'),
+
+                  SizedBox(                                         //주사위 사진이 파일명과 숫자명이 같으므로 랜덤함수 변수로 지정해준다
+                    width: 20.0,
+                  ),
+
+                  Expanded(
+                    //flex: 3,
+                      child: Image.asset('image/dice$rightDice.png')),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 60.0,
+            ),
+
+            ButtonTheme(
+              minWidth: 100.0, //88 이상
+              height: 60.0,  // 36 이상 줘야 에러가 없다
+              child: RaisedButton(
+                child: Icon(Icons.play_arrow,
+                      color: Colors.white,
+                      size: 40.0,
+                     ),
+                  color: Colors.orangeAccent,
+                  onPressed: (){
+                  setState(() {  // 변수의 변함을 인식한다
+                    leftDice=Random().nextInt(6)+1; // 렌덤값을 변수에 입력한다 nextInt(x) 0~x 까지이다
+                    rightDice=Random().nextInt(6)+1;
+                  });
+                  showToast(
+                    "Left dice: {$leftDice} ,Right dice:{$rightDice}");
+
+
+
+
+
+
+void showToast(String message){
+  Fluttertoast.showToast(msg: message,
+  backgroundColor: Colors.white,
+  toastLength: Toast.LENGTH_SHORT,
+  gravity: ToastGravity.BOTTOM);
+
+
+한가지만 순서대로 하는방식을 Synchronous
+전부 순서없이 하는것을 Asyncronous 방식  -> 기다려 await 가나옴
+
+
+
+
+
+void main(){
+  showData();
+}
+void showData() async{
+startTask();
+String account= await accessData();  // aceessData 함수 실행할때까지 기다려라
+fetchData(account);
+}
+
+void startTask(){
+  String info1='요청 수행 시작';
+  print(info1);
+}
+
+Future<String> accessData() async{   //영수증 앞으로 실체를 가지게 될것이다
+                                      //async 는 중가로앞에 위치해야한다 awite 함수를 쓸수있따
+  String account;                     // Future 클래스는 비동기 작업을 할때 사용 일정 시간뒤 데이터나 에러 반환
+                                      // async 클래스는 await 메서드를 가지고 있음
+                                      
+  Duration time = Duration(seconds: 3);  // 지연을 한다
+   if(time.inSeconds>2){
+    await Future.delayed(time ,(){   //await 로 서언된 메서드는 응답이 처리할때까지 대기한다
+      account='8,500 만원';
+      print(account);
+    });
+  }
+return account;
+  //  sleep(time);                          // 들어온 변수 값을 시간동안 멈춘다
+  //  String info2='데이터에 접속중';  // 코드가 진행되다가 지연이 생기던 아니던 순서대로  진행되는게
+  // print(info2);                     //  synchronous 방식
+}
+
+void fetchData(String account){
+  String info3='잔액은 $account 입니다';
+  print(info3);
+
+
+for in loop  for(var x in List) {method(x)}
+forEach     list.forEach((x){method(x);});
+           
+다트는 싱글 스레드 이다 한가지만 하고 그다음한다
+dart s는 3가지로 일한다
+1 frist in first out fifo  MicroTask(event queue) 와 event 준비
+2 main 함수 실행
+3 event loop  실행 =>이때 Future Stream
+
+asysnc method
+ method 통한 결과물은 Future
+ Await 만날때까지  synchronous 처리
+await 키워드를 만나면 future 완료될때까지대기
+future 가 완료되자마자 다음 코드 실행 
+
+
+
+event loop  flutter 시작 순간 isolate 
+
+
+oid main(){
+  showData();
+}
+
+
+void showData() async{
+
+startTask();
+String account= await accessData();  // aceessData 함수 실행할때까지 기다려라
+fetchData(account);
+}
+
+void startTask(){
+  String info1='요청 수행 시작';
+  print(info1);
+}
+
+Future<String> accessData() async{   //영수증 앞으로 실체를 가지게 될것이다
+                                      //async 는 중가로앞에 위치해야한다 awite 함수를 쓸수있따
+  String account;                     // Future 클래스는 비동기 작업을 할때 사용 일정 시간뒤 데이터나 에러 반환
+                                      // async 클래스는 await 메서드를 가지고 있음
+
+  Duration time = Duration(seconds: 3);  // 지연을 한다
+   if(time.inSeconds>2){
+    await Future.delayed(time ,(){   //await 로 서언된 메서드는 응답이 처리할때까지 대기한다
+      account='8,500 만원';
+      print(account);
+    });
+  }
+return account;
+  //  sleep(time);                          // 들어온 변수 값을 시간동안 멈춘다
+  //  String info2='데이터에 접속중';  // 코드가 진행되다가 지연이 생기던 아니던 순서대로  진행되는게
+  // print(info2);                     //  synchronous 방식
+}
+
+void fetchData(String account){
+  String info3='잔액은 $account 입니다';
+  print(info3);
+
+
+  void main() async{
+
+  print('order...');
+  print( await orderMsg());
+
+}                                     //async 를 만나면 await 까지 비동기로간다
+
+Future<String> orderMsg() async{
+ 
+  var order = await fUserOrder();  //비동기방식 즉 기다려야함 
+  
+  return 'order is $order';        //동기 방식으로 실행되고있음 
+}
+                                 //async 는 Future 를 대신하는게 아님 다트에게 비동                                   기방식이야 알려주고 미래에 어느시점에 올 값을 기다리                                   는거야 
+
+Future<String> fUserOrder(){
+
+
+return Future.delayed(
+      Duration(seconds:2),
+() =>'Large latte',
