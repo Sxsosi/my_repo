@@ -1,3 +1,31 @@
+
+
+
+
+directory 구조
+
+/ 
+
+/bin 명령어있는곳  
+/sbin system 명령어있는곳
+/root root 홈
+/etc  system 설정파일 저장소
+/boot 
+/mnt  
+/lib 언어저장소
+/proc 프로세스 정보 저장소 
+/tmp 
+/usr  응용프로그렘 저장소 program file win
+/var  로그 기록 
+/home
+
+
+
+
+
+
+
+
 system configuration       => /etc/profile  user logname mail hostname 
                                      /etc/bashrc   umask 
 
@@ -382,9 +410,53 @@ cat /etc/mdadm.conf
    13  cat /etc/mdadm.conf
 
 
-file
-ls -il   //i node showing
+hard link
 
+stat filename  => 파일 상태를 보여줌 mac 링크 inode 보여줌
+ln 원본파일 링크파일이름 =>원본복사 원본에 기입해도 복사본에 기입된다 링크로 연결 되있음  
+
+ln -s 원본파일 링크파일이름  => 링크 연결되있으나 inode 가아닌 파일에 링크가 걸려있음 
+
+ls -il   //i node showing
+sighup 2 ctrl+c  프로세스 종료 
+sighup 9 kill   프로세스 강제종료 기록도못하고 강제종료시킴
+sighup 20  ctrl+z 작업을 대기 시킨다 suspend 
+
+kill 명령어 
+pkill [sig number] PID 
+
+jobs -l   background 돌아가는 process 확인한다
+nohub 사용자가 로그아웃 하거나 터미널을 닫아도 백그라운드로 작업을 할수 있게 도와준다
+
+top 프로세스 모니터링 
+
+ps 동작중인 프로세스 상세보기
+ps -aux 동작된 프로세스 보기
+ps -ef|grep ssh  동작중인 프로세스 보기 
+lsof -u isec   실행중인 프로세스가 참조하는 파일 정보를 보여주는 도구 
+vmstat 메모리 스왑 등 자원 모니터링
+vmstat -d 디스크 사용량 출력
+
+
+rpm -Uvh 파일이름   => 패치 설치 의존성 문제가 생김 
+rpm -e  파일이름     => 패치 삭제    
+yum -y install 파일이름 => 온라인으로 패치를 받는 다 -y 는 all yse
+rpm 설치시 cdrom 마운트 확인후 설치
+rpm -qa|grep 패키지 이름  => 설치 패키지 확인 
+vi /etc/yum.conf  =>yum 설정 파일 
+
+
+gzip -r file   > file.gz   gunzip file.gz > file       ==>-r 하위 까지복사
+bzip2 file  > file.bz2    bunzip2 file.bz2 > file
+
+tar cvfz 생성이름.tar.gz 파일명 파일명2 파일명 3  => gzip 으로 모아서 압축
+tar cvfj 생성이름.tar.bz2 파일명 파일명2 파일명 3  => bzip2 으로 모아서 압축
+tar cvfJ 생성이름.tar.xz 파일명 파일명2 파일명 3  => xz 으로 모아서 압축
+
+
+tar xvfz 파일명 -C 위치  => 경로 지정 gzip 파일로 풀경우
+tar xvfj 파일명 -C 위치  => 경로 지정 bzip2 파일로 풀경우
+tar xvfJ 파일명 -C 위치  => 경로 지정 xz 파일로 풀경우
 
 
 

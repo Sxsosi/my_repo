@@ -17,6 +17,15 @@ Flutter Widget tree
 4 Parent widget 은 widget container 
 
 
+
+
+
+APi
+
+
+
+
+
 기본적으로 widget 에 입력 값은  named {parameter} 
 
 funtion({var x})  =>named parameter 값 생략 가능하지면  입력시 x 는 얼마라고 지정해줘야한다
@@ -819,6 +828,7 @@ void showToast(String message){
 void main(){
   showData();
 }
+ 
 void showData() async{
 startTask();
 String account= await accessData();  // aceessData 함수 실행할때까지 기다려라
@@ -934,3 +944,217 @@ Future<String> fUserOrder(){
 return Future.delayed(
       Duration(seconds:2),
 () =>'Large latte',
+
+
+
+
+
+    RaisedButton(
+                onPressed: () {
+                  futureTest();
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'Future test',
+                    style: TextStyle(
+                        fontSize: 20.0
+                    ),
+
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                result,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.redAccent,
+                ),
+              ),
+              Divider(
+               height: 20,
+               thickness: 2.0,
+             ),
+              FutureBuilder(                 // 데이터가 오는걸 시각적으로 표시할때
+                                              // future builder initialdata 3개가 와야함함
+                  future: myFuture(),       // return Future value 필요함
+                  builder:(context,snapshot){  // 특정시점 데이터를 복사 보관함
+                    if(snapshot.connectionState==ConnectionState.done){ //snapshot 에 데이터가 복사해서 보관하는지 확인작업
+                                                                      //none 없을때 waiting 기다릴때 done 완료 됬을때
+                      return Text(snapshot.data,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.redAccent,
+                      ),
+                      );
+                    }
+                    return CircularProgressIndicator();
+
+            
+
+  Future<void> futureTest() async{
+
+
+    await Future.delayed(Duration(seconds: 3))
+        .then((value) {
+                    print('here comes first1');     // 1번
+       setState(() {
+        this.result = 'The data is fetched';      //2번
+        print(result);
+                    print('here comes first2');   //3번
+
+        // void futureTest() {                            // here com 나오고 다음 data fetch 나온다
+  //   Future.delayed(Duration(seconds: 3))
+  //       .then((value) {
+  //     setState(() {
+  //       this.result = 'The data is fetched';
+      });
+    });
+    print('here comes first');                 //4
+    print('here comes first3');               //5
+  }
+
+  Future<String> myFuture() async{
+    await Future.delayed(Duration(seconds: 2));
+        return 'anotther future compl';
+  }
+}
+
+
+
+
+
+
+Stataful Widget life 
+
+page move
+initialRoute  /  route { '/' : (context)}=>funtion()
+pushNamed(content,'/')
+
+
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+     initialRoute: '/',                    
+      routes: {
+        '/' :(context)=>ScreenA(),
+        '/b':(context)=>ScreenB(),
+        '/c':(context)=>ScreenC(),
+
+
+
+class ScreenA extends StatefulWidget {
+
+
+  @override
+  _ScreenAState createState() => _ScreenAState();
+}
+
+class _ScreenAState extends State<ScreenA> {
+  @override
+  void initState() {                      //app 을 실행할때시작
+    // TODO: implement initState
+    super.initState();
+    print('initState is Called');
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar:AppBar(
+        title: Text('ScreenA'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget> [
+            RaisedButton(
+              color: Colors.redAccent,
+                child: Text(
+                  'b 화면으로'
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/b');
+                }
+  
+  class ScreenB extends StatefulWidget {
+  @override
+  _ScreenBState createState() => _ScreenBState();
+}
+
+class _ScreenBState extends State<ScreenB> {
+
+   @override
+  void dispose() {                      // route 가 사라질때 실행 
+    // TODO: implement dispose
+    super.dispose();
+    print ('dispose is called');
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    print('bulid is called');                    // 빌드할때시작
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('ScreenB'),
+        backgroundColor: Colors.blue,
+
+      ),
+      body: Center(
+        child: Text('ScreenB',
+        style: TextStyle(
+          fontSize: 24.0
+
+
+
+
+APi
+
+import 'package:geolocator/geolocator.dart';
+
+
+class Loading extends StatefulWidget {
+  @override
+  _LoadingState createState() => _LoadingState();
+}
+
+
+
+
+class _LoadingState extends State<Loading> {
+
+  void getLocation()async{
+    print('ok');
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);  // dot 전용 위치기반 앱 실행
+    // geolocator install pubspec. 설정  후  임포트  app main manifac  에서 설정 후실행해야함 
+
+ print(position);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: RaisedButton(
+          onPressed: (){
+            getLocation();
+          },
+          child: Text(
+            'get my location',
+            style: TextStyle(
+              color: Colors.white,
+
+
+
