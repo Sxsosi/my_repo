@@ -462,6 +462,19 @@ tar xvfJ 파일명 -C 위치  => 경로 지정 xz 파일로 풀경우
 
 
 
+ ./configure --enable-optimizations  압축을 푼후 해당 폴더에 가서 make file 만들기 컴파일함
+make altinstall  컴파일과 설치가 한번에 함
+which python3.8  파일위치 찼아
+ vi /root/.bashrc  실행 명령어 변경해준다
+source /root/.bashrc  데몬 제가동
+ls -l /bin/python  링크파일확인
+rm -rf /bin/python   링크제거
+ ln -s /usr/local/bin/python3.8 /bin/python   링크연결 
+ vi /usr/bin/yum
+ vi /usr/libexec/urlgrabber-ext-down  
+
+
+
 
 
 
