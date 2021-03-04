@@ -20,6 +20,9 @@ directory 구조
 /home
 
 
+dd if=/dev/zero of=/swapfile bs=1024 count=1024000  1g 채운다
+ 
+
 
 
 
@@ -473,13 +476,38 @@ rm -rf /bin/python   링크제거
  vi /usr/bin/yum
  vi /usr/libexec/urlgrabber-ext-down  
 
+  ls |cpio -ocv >backup.cpio
+ cpio -icv < ../backup.cpio
 
+
+ mkdir /backup
+ dd if=/dev/zero of=/home/isec/full bs=1M count=1 //기본파일만듬
+ tar cfpz /backup/isec_full.tgz -g /backup/isec_full_backup /home/isec   
+        //tgz =tar.gzip 단축  -g 중문백업해라  
+
+ ls -l /backup
+ dd if=/dev/zero of=/home/isec/first bs=1M count=1  데이터가싸임 (만든거임)
+ tar cfpz /backup/isec_1.tgz -g /backup/isec_inc1_backup /home/isec
+                   // 다시압축
+
+tar xfz /backup/isec_2.tgz -g /backup/isec_inc2_backup -C /  풀기
+
+
+
+[root@localhost home]# tar cvfz - /home/isec | split -b 10m - isec.tar.gz
 
 
 
 
  
 
+1  vi /etc/resolv.conf
+    2  ethtool ens33
+    3  ethtool -s ens33 speed 10 duplex half autoneg off
+    4  ethtool ens33|more
+    5  ethtool -s ens33 speed 1000 duplex full autoneg on
+    6  ethtool ens33|more
+    7  history
 
 
 
