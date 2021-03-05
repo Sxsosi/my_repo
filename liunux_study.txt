@@ -510,6 +510,14 @@ tar xfz /backup/isec_2.tgz -g /backup/isec_inc2_backup -C /  풀기
     7  history
 
 
+       1  ll /etc/sysconfig/network
+    2  ll /etc/host.conf              =>hosts file on
+    3  ll /etc/hosts                             
+    4  ll /etc/resolv.conf
+    5  ll /etc/sysconfig/network-scripts/ifcfg-ens33
+
+
+
 
 
 
