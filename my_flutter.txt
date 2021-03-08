@@ -1158,6 +1158,8 @@ class _LoadingState extends State<Loading> {
 
 
 
+SvgPicture
+
 IconButton(
           onPressed: () {},
           icon: SvgPicture.asset(   // 아이콘 버튼 데신 svg 란 그림을 넣을수있음 크기조절은 width
@@ -1173,7 +1175,191 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 
+ThemeData
+
 MaterialApp(
       title: 'flutter app',
       theme: ThemeData(
         primaryColor: Colors.white,     appbar 에서 배경 지정 가능하나 material에서도 가능하다
+
+
+
+
+Map > List 
+
+class _HomeState extends State<Home> {
+  List<Map<String, String>> datas = [];  // 맵형 데이터를 리스트로 받아들인다
+
+   void initState() {
+    super.initState();
+    datas = [
+      {
+        "cid": "1",
+        "image": "assets/images/ara-1.jpg",
+        "title": "네메시스 축구화275",
+        "location": "제주 제주시 아라동",
+        "price": "30000",
+        "likes": "2"
+      },
+
+
+GestureDetector
+
+
+AppBar(
+      elevation: 1.0,
+      title: GestureDetector(                   // 제스쳐 디텍더 를 사용하면 여러함수를 쓸수있다
+        onTap: () {print('click');
+        onLongPress: () {
+          print('long click');
+   
+
+ NumberFormat  
+
+final oCcy = new NumberFormat( "#,###", "ko_KR");          // 스트링을 원화 포멧으로 바꿔준다 import 'package:intl/intl.dart';
+  String calculStringToWon(String price) {
+    return "${oCcy.format(int.parse(price))} 원";          //int.parse() 인트로 바꿔준다
+  }
+
+
+
+
+
+ListView.separated 
+
+
+ Widget _bodyWidget() {
+    return ListView.separated(    // 3가지 itemCount,separatorBuilder, itemBuilder 꼭와야한다
+                            padding:
+                          const EdgeInsets.symmetric(horizontal: 10), //전체 패딩 하는이유는 아래선도 포함해야함
+
+      itemCount: 10,
+
+      separatorBuilder: (BuildContext context, int index) {  // 사이간격에 라인을 나눠준다
+                        
+                        return Container(
+                          height: 1,
+                          color: Colors.black.withOpacity(0.5),
+                          // color: Color(0xff999999)
+
+      itemBuilder: (BuildContext context, int index) {
+                       
+                        return Padding(
+
+     padding: const EdgeInsets.symmetric(vertical: 10), //이미지 상하 패딩
+                          
+                          
+                          child: Container(
+                              child: Row( children: [
+
+
+      ClipRRect(   // 외우자 모르갯다
+                                 
+      borderRadius: BorderRadius.all(Radius.circular(10.0)), // 이미지 모서리 둥굴기설정
+      
+      
+      child: Image.asset(datas[index]["image"],  //데이터에서 이미지 뽑아오는법 
+                                   
+                                   
+                                    width: 70,
+                                    height: 70,
+                                  )),
+                              // SizedBox(  이미지와 텍스트 사이
+                              //   width: 10,
+                              // ),
+    
+    Expanded(                      // 위에 ClipRRect 를 제외한 나머지 값을 전부 쓴다
+                                
+                                child: Container( // 부모의 싸이즈를 지정한다
+                                  padding: EdgeInsets.only(left: 10),
+                                  
+                                  height: 80,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+      
+      Text(datas[index]['title'],overflow: TextOverflow.ellipsis,   //text 가 넘어가면 줄바꿈을 막아줌
+                                        
+                                     
+                                      Text(datas[index]['location']),
+                                      Text(calculStringToWon(datas[index]['price']),
+
+  style: TextStyle(fontWeight: FontWeight.w800),  // 글자 두깨 늘리는법 
+                                     
+
+                                      Expanded(
+                                        //확장은 부모의 싸이즈 따라간다
+                                        child: Container(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/svg/heart_off.svg',
+                                                width: 13,
+                                                height: 13,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(datas[index]['likes']),
+
+
+
+BottomNavigationBar
+
+Scaffold의 body에 위젯 List[index] 형태로 보여질 위젯을 정해주고 
+탭을 선택할 때 index가 변화하도록 하는 방법이다.
+
+ BottomNavigationBar는 currentIndex라는 선택 탭의 번호를 
+ 지정하는 속성을 가지고 있는데, 이 속성의 값은 탭의 선택에 따라 
+ 자동으로 변경되는 것이 아니라 아래의 예제처럼 onTap을 정의해주어야한다.
+
+onTap에서 screenIndex를 value로 변경하면 body의 List 요소와 
+탭이 함께 변경되어 우리가 아는 것처럼 하단 탭 부분과 화면이 바뀌게 된다.
+
+
+class _HomeState extends State<Home> {
+  List<Map<String, String>> datas = [];
+
+  int _currentPageIndex;
+
+  BottomNavigationBarItem _bottomNavigationBarItem(
+    String iconName, String label) {
+    
+    return BottomNavigationBarItem(
+        icon: Padding(
+          padding: const EdgeInsets.only(bottom: 5.0), //바텀 내비 라벨 과 svg 사이간격 올림
+          child: SvgPicture.asset(
+            'assets/svg/${label}_off.svg',
+            width: 22,
+            height: 22,
+          ),
+        ),
+        label: iconName);
+  }
+
+  
+  
+  Widget _bottomNavigationBarWidget() {
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed, //라벨과 아이콘 정렬해준다
+        onTap: (int index) {
+          // 홈이나 동내생활등에 페이지를 지정해준다 items 순서로 0.1.2
+          print(index);
+          setState(() {
+            _currentPageIndex = index;
+          });
+        },
+        currentIndex: _currentPageIndex, // 현제 인덱스갑 설정
+        selectedFontSize: 15, // laval 크기선택
+        selectedItemColor: Colors.black, //현제 페이지 의 iconname 값이 강조됨
+        // selectedLabelStyle: TextStyle(color: Colors.black),
+        items: [
+          _bottomNavigationBarItem('동네 생활', 'notes'),
+          _bottomNavigationBarItem('홈', 'home'),
+          _bottomNavigationBarItem('내 근처', 'location'),
+          _bottomNavigationBarItem('채팅', 'chat'),
+          _bottomNavigationBarItem('나의 당근', 'user'),
+        ]);
+  }
