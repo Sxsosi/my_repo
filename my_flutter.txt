@@ -1158,3 +1158,22 @@ class _LoadingState extends State<Loading> {
 
 
 
+IconButton(
+          onPressed: () {},
+          icon: SvgPicture.asset(   // 아이콘 버튼 데신 svg 란 그림을 넣을수있음 크기조절은 width
+            'assets/svg/bell.svg',
+            width: 22.0,
+          ),
+
+pubdev 에서 flutter_svg 다운  
+flutter_svg: ^0.19.3  
+import 'package:flutter_svg/flutter_svg.dart';
+
+보통 assets 설정으로 가서 assets/img  assets/svg  로 설정해준다 
+
+
+
+MaterialApp(
+      title: 'flutter app',
+      theme: ThemeData(
+        primaryColor: Colors.white,     appbar 에서 배경 지정 가능하나 material에서도 가능하다
