@@ -518,6 +518,13 @@ tar xfz /backup/isec_2.tgz -g /backup/isec_inc2_backup -C /  풀기
 
 
 
+ip alias
 
+ifconfig ens33:1 192.168.40.138 up  
+ifconfig ens33:1 192.168.40.139 down
+
+
+cd /etc/sysconfig/network-scripts
+cp ifcfg-ens33 ifcfg-ens33:0
 
 
