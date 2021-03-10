@@ -528,3 +528,8 @@ cd /etc/sysconfig/network-scripts
 cp ifcfg-ens33 ifcfg-ens33:0
 
 
+ yum -y install nmap*
+    3  which nmap
+    4  nmap -T4 -sS -p 80,443,1000 192.168.1.39
+    5  nmap -T4 -sT -p 80-100 192.168.1.39
+    6  nmap -T4 -sF -p 21,80,120 192.168.1.39

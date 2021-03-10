@@ -186,6 +186,9 @@ Scaffold(
                                 duration: Duration(milliseconds: 1000), //지연시간 1000 1초 
 
 
+
+toast
+
 import 'package:fluttertoast/fluttertoast.dart';  // 토스트 메시지 를 쓰기위해 콜
 
 
@@ -207,7 +210,7 @@ import 'package:fluttertoast/fluttertoast.dart';  // 토스트 메시지 를 쓰
            
 
 
-
+safearea
             Scaffold(                             //Container 사용        
                 backgroundColor: Colors.blue,
                 body: SafeArea(       //컨테이너 가 화면 에 보이지않기때문에 safearea 이용 alt+ 엔터 사용
