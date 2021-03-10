@@ -1424,3 +1424,81 @@ final Map<String, String> locationTypeToString = {
             Icon(Icons.arrow_drop_down),
           ]),
         ),
+
+
+
+
+void didChangeDependencies() {
+    //data 불러오기
+    super.didChangeDependencies();
+    contentsRepository = ContentsRepository();
+  }
+
+
+ ContentsRepository contentsRepository;
+contentsRepository = ContentsRepository();
+
+
+FutureBuilder
+
+FutureBuilder(
+        future: _loadContents(),
+        builder: (BuildContext context, dynamic snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            //데이터 올때동안 로딩처리
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            // 데이터가 없을경우
+            return Center(child: Text('데이터 오류'));
+          }
+
+          if (snapshot.hasData) {
+            return _makeDataList(snapshot.data);
+          }
+
+
+
+          future
+
+          void download(){
+          String value=Future.delayed(Duration(Second:2))
+              return data
+          }
+              return value
+          
+          main(){
+            download();
+            print(value)
+          }
+            
+           
+           future<String> value
+           //퓨쳐값으로 온 데이타는 시간이 걸린다 이때 value 는 기다리지못한다
+            //퓨처 값을 받고 적용할려면 value 는 빈박스 여야한다
+            Future<void> download()
+            // 퓨쳐 데이터를 리턴하려면 빈박스 여야하고
+           Future<String>=download()
+           //역시 빈박스라 퓨쳐로 받아야한다
+           print(value)
+           // 그런데 빈박스를 출력할려면 기다려야한다
+           main() async{
+              Future<String>= awit download()
+            // 이때 싱크 어웨이트가 필요하다
+            print(value )
+            // 자이제 출력하자 
+
+
+            Future<void> download(){
+              Future<String> value=Future.delayed(Duration(Second:2))
+               return data
+              }
+              return value
+            }
+
+              main() async{
+                Future<String> = awit download();
+                print(value );
+          }
