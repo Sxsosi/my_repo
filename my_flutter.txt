@@ -1535,3 +1535,22 @@ Hero(
           widget.data["image"], // ??
           fit: BoxFit.fill,
           width: size.width, // 디바이스 width 값을 지정해준다
+
+
+import 'package:http/http.dart' as http; //get 의 함수가 어디서 오는지 알려줌
+import 'dart:convert'; //jsonDecode 메소드를 쓸수있음
+
+
+fetchData() async {
+    // url 에서 데이터를 가지고 온다 하지만 future 값이기때문에 await async 해준다
+    http.Response response = await http.get(//as http 의 Response 타입이다
+        'https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1');
+    //print(response.body); // data의 바디를 가져온다
+    //print(response.statusCode); // 서버 상태를 나타네준다 200은 정상
+    if (response.statusCode == 200) {
+      String jsonData = response.body;
+      var myJson =
+          jsonDecode(jsonData)['weather'][0]['description']; //데이터를 변수에 집어넣은다
+      var myJson1 = jsonDecode(jsonData)['wind']
+          ['speed']; // jsonDecode 값을 받을려면 var 타입이여야한다
+      var myJson2 = jsonDecode(jsonData)['id'];
