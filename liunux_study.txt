@@ -533,3 +533,27 @@ cp ifcfg-ens33 ifcfg-ens33:0
     4  nmap -T4 -sS -p 80,443,1000 192.168.1.39
     5  nmap -T4 -sT -p 80-100 192.168.1.39
     6  nmap -T4 -sF -p 21,80,120 192.168.1.39
+
+selinux 
+
+getenforce 
+setenforce 0  permission
+           1  enforcing
+getsebool -a   모두보기
+
+/etc/selinux/config 설정
+
+firewall
+
+firewall-cmd --list-service
+firewall-cmd --list-ports
+
+firwall-cmd --add-service=http --permanent
+firwall-cmd  -- add-port=80/tcp --permanent
+
+firewall-cmd --reload
+
+firewall-cmd --remove-service=http --permanent
+firewall-cmd --remove-port=80/tcp --permanent
+
+firewall-cmd --reload
