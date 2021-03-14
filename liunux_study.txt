@@ -497,13 +497,34 @@ tar xfz /backup/isec_2.tgz -g /backup/isec_inc2_backup -C /  풀기
 [root@localhost home]# tar cvfz - /home/isec | split -b 10m - isec.tar.gz
 
 
+네트워크 환경설정
+
+vi /etc/sysconfig/network
+
+vi /etc/host.conf        
+
+vi /etc/hosts        
+
+vi /etc/resolv.conf        DNS 지정
+
+vi /etc/sysconfig/network-scripts/ifcfg-ens33  //dhcp 사용이냐 고정아이피 선택이냐
+
+ BOOTPROTO =dhcp
+
+
+ BOOTPROTO=static
+ IPADDR 
+ NATMASK 
+ GATEWAY
+ DNS 
+
 
 
  
 
 1  vi /etc/resolv.conf
-    2  ethtool ens33
-    3  ethtool -s ens33 speed 10 duplex half autoneg off
+    2  ethtool ens33              //설정보여줘 ifconfig
+    3  ethtool -s ens33 speed 10 duplex half autoneg off //속도줄여주고 어ㅉ구..
     4  ethtool ens33|more
     5  ethtool -s ens33 speed 1000 duplex full autoneg on
     6  ethtool ens33|more
@@ -517,22 +538,107 @@ tar xfz /backup/isec_2.tgz -g /backup/isec_inc2_backup -C /  풀기
     5  ll /etc/sysconfig/network-scripts/ifcfg-ens33
 
 
+ping 
+
+
+netstat -ant | grep LISTEN  //대기상테 tcp 를 보여줘
+
+
+nslookup
+set type= ns  //ns 서버
+d2hellgate.com // hellgate.com ns 는 누구냐 
+
+
+
+
+
+
+
 
 ip alias
 
 ifconfig ens33:1 192.168.40.138 up  
 ifconfig ens33:1 192.168.40.139 down
+reboot 하면 사라짐 
 
 
+static  하기위해선 
 cd /etc/sysconfig/network-scripts
 cp ifcfg-ens33 ifcfg-ens33:0
+vi /etc/sysconfig/network-scripts/ifcfg-ens33:0
+BOOTPROTO
+DEVIDE
+IPADDR
+....
+systemctl restart network
+rm -rf /etc/sysconfig/network-scripts/ifcfg-ens33:0
 
 
- yum -y install nmap*
+Channel Bonding
+
+modprobe Bonding
+lsmod | grep Bonding // kenel 사용
+
+cd /etc/sysconfig/network-scripts
+vi ifcfg-bond0
+
+      1 DEVICE=bond0
+      2 BOOTPROTO=none
+      3 ONBOOT=yes
+      4 IPADDR=192.168.44.150
+      5 NETMASK=255.255.255.0
+      6 GATEWAY=192.168.219.1
+      7 DNS1=8.8.8.8
+      8 NAME=bond0
+      9 BONDING_MASTER=yes
+     10 BONDING_OPTS="mode=0 miimon=100"
+     11 USERCTL=no
+     12 NM_CONTROLLED=no
+
+    vi ifcfg-ens33
+        DEVICE=ens33
+        BOOTPROTO=no
+        MASTER=bond0
+        NAME=ens33
+        ONBOOT=yes
+        SLAVE=yes
+        NM_CONTROLLED=no
+    
+    vi ifcfg ens34
+         DEVICE=ens34
+        BOOTPROTO=no
+        MASTER=bond0
+        NAME=ens34
+        ONBOOT=yes
+        SLAVE=yes
+        NM_CONTROLLED=no
+
+    vi /etc/sysconfig/network
+
+    NETWORKING=yes
+    GATEDEV=bond0
+
+    vi /etc/modprobe.d/modprobe.conf
+
+    alias bond0 bonding
+    options bond0 mode=0 miimon=100  <== mode 0 는 두가지이상 네트워크 번갈아 사용 대역폭 늘리고자할경우 
+                                    <== miimon 헬싱 체크 인터페이스가 죽었는지 살았는지 점검 
+
+    modprobe bonding
+
+    systemctl restart network
+
+    cat /proc/net/bonding/bond0  <== 설정 확인
+
+
+
+
+
+yum -y install nmap*
     3  which nmap
-    4  nmap -T4 -sS -p 80,443,1000 192.168.1.39
-    5  nmap -T4 -sT -p 80-100 192.168.1.39
-    6  nmap -T4 -sF -p 21,80,120 192.168.1.39
+    4  nmap -T4 -sS -p 80,443,1000 192.168.1.39 <=half 스켄 3쉐이크에서 ack 대신 RST 날림으로 확인 
+    5  nmap -T4 -sT -p 80-100 192.168.1.39    <== open 스켄 3쉐이크 방식
+    6  nmap -T4 -sF -p 21,80,120 192.168.1.39 <== fin 날림 머여 -p 포트  뒤는 목표 
 
 selinux 
 
@@ -540,10 +646,20 @@ getenforce
 setenforce 0  permission
            1  enforcing
 getsebool -a   모두보기
+setsebool  service name  on
+getsebool -a
+setsebool  servide name  off 
+getsebool -a
 
-/etc/selinux/config 설정
+disabled 설정 방법 
+vi /etc/selinux/config 
+disabled 하고 리스타트  
 
 firewall
+
+firewall-cmd --get-default-zone  <== 기본 존 출력
+firewall-cmd --get-active-zone  <<==활성화중인 존출력
+
 
 firewall-cmd --list-service
 firewall-cmd --list-ports
@@ -557,3 +673,40 @@ firewall-cmd --remove-service=http --permanent
 firewall-cmd --remove-port=80/tcp --permanent
 
 firewall-cmd --reload
+
+
+telnet  server
+
+rpm -qa | grep telnet <==텔넷 설치확인
+yum -y install telnet-server <== 텔넷 서버설치
+
+systemctl restart telnet.soket <<== 텔넷 다시 가동
+systemctl status telnet.soket <== 텔넷 상태 표시 
+
+firwall-cmd --list-service 
+firewall-cmd --add-service=telnet
+firewall-cmd --reload
+
+useradd telnetuser
+passwd telnetuser
+
+
+
+
+systemctl enable telnet.soket  <== 서비스 상시가동 위해 enable 설정
+systemctl restart telnet.soket <== 데몬 제시작 
+
+vi /etc/sudoers  <== 파일편집
+telnetuser  ALL=(ALL) ALL <== 권한부여
+
+telnet client
+
+yum -y install telnet
+
+telnet  ip address
+
+user login
+
+make dir 실패  권한없음 
+
+sudo mkdir /a <<== 권한 획득후 가능 
