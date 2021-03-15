@@ -699,6 +699,9 @@ systemctl restart telnet.soket <== 데몬 제시작
 vi /etc/sudoers  <== 파일편집
 telnetuser  ALL=(ALL) ALL <== 권한부여
 
+
+
+
 telnet client
 
 yum -y install telnet
@@ -710,3 +713,14 @@ user login
 make dir 실패  권한없음 
 
 sudo mkdir /a <<== 권한 획득후 가능 
+
+
+
+telnet -l isec 192.168.1.19 23 // id 텔넷 로그인
+
+   100 root            ALL=(ALL)       ALL
+    101 telnetuser      ALL=(ALL)       ALL
+    102 isec    ALL=(ALL)       NOPASSWD:ALL
+    103 user1   ALL=(ALL)       /usr/bin/mkdir
+    104 user2   ALL=(root,isec,telnetuser)      ALL
+    105 user3   192.168.1.19=(ALL)      ALL
