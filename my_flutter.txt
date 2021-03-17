@@ -24,12 +24,35 @@ APi
 
 
 
+플러터는 함수 와 클래스로만 진행해도된다
+
+Function  name = ( parameter ){ funtion } ;   가능 -_-
+
+
+Function add = (a,b){return print(a+b)}  <<== 익명함수 
+
+var add2 = (a,b){return print(a+b)} <<== 익명함수 
+
+hello(Function t){t();}
+
+main(){ hello(add); }
+
+
+class 
+1 클래스 변수는 프로퍼티 나 속성 이라고 한다
+2 여러가지 데이터를 담을수있다
+3 개발자가 직접 메모리에 올려야함 
+
+classname.method(){} <== named 생성자
+
+
+
 
 
 기본적으로 widget 에 입력 값은  named {parameter} 
 
-funtion({var x})  =>named parameter 값 생략 가능하지면  입력시 x 는 얼마라고 지정해줘야한다
-         미입력시 => null
+funtion({var x = 1 , var x = 2})  =>named parameter 값 생략 가능하지면  입력시 x 는 얼마라고 지정해줘야한다
+         미입력시 => 1 , 2
          x:  반드시지정해야함 
 
 funtion([var x = y]) =>optionnull parameter 다생략 가능 
