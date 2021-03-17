@@ -1600,3 +1600,72 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     width: 60 /
                         99 *
                         sellerMannerTemp, //65를 100으로 보고 거기에 메너템프를 곱해서 게이지를 채운다
+
+
+
+
+Provider 
+
+oid main() {
+  runApp(MyApp()); // my엡 에서 프로바이더 를 접글할려면 이곳에서
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: ChangeNotifierProvider(
+      // 싱글 프로바이더임 하나뿐이 등록못함
+      create: (BuildContext context) {
+        //create 해야함
+        return CountProvider(); // 차일드 하위 모든위젯들은  카운트 프로바이더 접근가능
+      },
+      child: Home(), //child 가능
+
+
+class Home extends StatelessWidget {
+  CountProvider _countProvider; // 프로바이더 불러오는법
+  @override
+  Widget build(BuildContext context) {
+    _countProvider = Provider.of<CountProvider>(context,
+        listen: false); // 프로바이더 불러오는법 즉 듣고있다가됨
+    //이것을 사용해서 하면 리빌드가 되버림
+    // 리빌드 막을경우 listen : false 를 해줘야함
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('provider '),
+      ),
+      body: CountHomeWidget(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                _countProvider.add(); //여기서 프로바이더를 호출됨
+
+  
+class CountProvider extends ChangeNotifier { //changnotifier 가 상태관리를 해줘야함
+  int _count = 0; //상태를 넣어줌  외부에서 접속못하게함
+  int get count => _count; //<== 외부에서 count 를 가져올수 있는 get 함수사용
+
+  add() {
+    _count++;
+    notifyListeners(); // 변경되었다는 신호를 chasngenotifier 에게 보ㅐ야함
+  }
+
+
+lass CountHomeWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('buld call'); //ex 1하위의 모든 위젯이 불러와진다 않좋음
+    return Center(
+      child: Consumer<CountProvider>(
+        //ex1 이 해결 하기위해선 consumer 사용
+        builder: (context, provider, child) {
+          //빌드는 3가지 받음
+          return Text(
+            //ex 1Provider.of<CountPorvider>(context).count.toString()  << ==_count 접근해야함
+            provider.count.toString(), //ex 2
+            style: TextStyle(fontSize: 80),
