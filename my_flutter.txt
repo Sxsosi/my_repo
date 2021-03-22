@@ -1778,3 +1778,412 @@ lass CountHomeWidget extends StatelessWidget {
             //ex 1Provider.of<CountPorvider>(context).count.toString()  << ==_count 접근해야함
             provider.count.toString(), //ex 2
             style: TextStyle(fontSize: 80),
+
+
+class Movie {
+  String overview;
+  String posterpath;
+  String title;
+  // json data 에서 필요한 데이터를 클래스 변수로 지정해준다
+  Movie({this.overview, this.posterpath, this.title});
+  // 생성자를 만들어서 들어온 데이터를 변수에 데입할 준비를 한다
+
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    //이것은 이름있는 생성자이다 이름 있는 생성자는 반드시 생성자가 있어야한다
+    // fromJson json 데이터를 받는 곳으로 원하는값을 Movie 클래스 변수로 집어넣어준다
+    return Movie(
+      overview: json['overview'] as String,
+      //overview 변수값을 json 데이터중 overvie 항목을 스트링으로
+      posterpath: json['poster_path'] as String,
+      title: json['title'] as String,
+    );
+  }
+  String get poterUrl => 'https://image.tmdb.org/t/p/w500/${this.posterpath}';
+}
+
+
+class MovieRepository {
+  // 이곳이 api 서버에서 데이터를 받아오는구간
+  var queryPram = {'api_key': '7a349f754a65e95d87cce0865bcc5103'};
+
+  Future<List<Movie>> loadMovie() async {
+    //자 json  데이터 이리와
+    // 그런데 내가 지정한 타입으로 와야해 list<Movie>로 그리고 난 future 로 기다릴깨
+    // future 객체 니깐 async 로 기다리고 http가 필요할꺼야
+    var uri = Uri.https('api.themoviedb.org', '/3/movie/popular', queryPram);
+    // uri  는 Uri 란 클래스로 받아주는데 거기서 https 란 메서드로 받을꺼야
+    //parameter 값은 3가지로 받을꺼야
+    var response = await http.get(uri);
+    //여기서 http.get uri 데이터를 받을꺼야 async 니깐 await 로 기다려야하고
+    // 그값이 var type 에 response 로 들어가는거야
+    if (response.body != null) {
+      //response로 들어온 body 값이 없지 않으면 즉 있으면
+      Map<String, dynamic> body = jsonDecode(response.body);
+
+      // json String data 를 moive 객체로 만들기위해서
+      // map<stirng ,dynamic> 즉 자료형 으로 바꿔주는거야
+      // json 전체 데이터  자료형으로 바꿔준거고
+
+      if (body['results'] != null) {
+        //map<stirng ,dynamic> 자료형 results 란 값이 있으면
+        List<dynamic> list = body['results'];
+        //json 데이터 에서 results 값에 대한 배열 리스트를 list 로 넣어준다
+        //results 바디값을   List<dynamic>  다이나믹 타입으로 리스트화해서
+        //리스트에  집어넣은다
+        return list.map<Movie>((item) => Movie.fromJson(item)).toList();
+        //이건 list 에서 들어온 data를
+        //Movie 에서 필요한 변수  값을 추출하고
+        // 그값을  다시 매핑하는데  리스트형으로 리턴해준다
+
+
+class MovieProvider extends ChangeNotifier {
+  MovieRepository _movieRepository = MovieRepository();
+  //List<Map<String, dynamic>>
+  //여기선 api 를 통한 데이터 값이 리스트 맵타입 이다 즉 json 타입
+  List<Movie> _movies = [];
+  // 또여기서 멥 으로 들어오는 데이터 타입을 클래스로 지정을 해버린다
+  //캬 .... 이런방법이
+  List<Movie> get movies => _movies;
+  // get 메스드 movies 를 이용해서 loadMovies 에서 들어온 _movies 로 리턴한다
+
+  loadMovies() async {
+    // 이곳에서부터 repository 가 필요하다
+    List<Movie> listMovies = await _movieRepository.loadMovie();
+    //listMovie 예외처리해주고
+    //추가적인 가공절차
+    _movies = listMovies;
+
+    notifyListeners();
+
+Consumer
+
+    Widget build(BuildContext context) {
+    print('buld call'); //ex 1하위의 모든 위젯이 불러와진다 않좋음
+    return Center(
+      child: Consumer<CountProvider>(
+        //ex1 이 해결 하기위해선 consumer 사용
+        builder: (context, provider, child) {
+          //빌드는 3가지 받음
+          return Text(
+            //ex1 Provider.of<CountPorvider>(context).count.toString()  << ==_count 접근해야함
+            provider.count.toString(), //ex 2
+            style: TextStyle(fontSize: 80),
+          );
+
+
+get x 사용
+
+get: ^3.26.0
+import 'package:get/get.dart';
+
+main 에서  GetMaterialApp 사용 
+
+
+page 이동 
+
+  Get.to(FirstPage());  getx
+
+  //Navigator.of(context).push(MaterialPageRoute(builder:(_)= >Firstpage()));기존 
+  
+
+page 뒤로 이동 
+
+    Get.back(); getx
+       
+       //Navigator.of(context).pop() 기존 
+
+page 싹지우고 홈으로 
+
+      Get.offAll(Home()); 
+      Get.offAllNamed('/'); //named 일때 
+
+
+page named 이동
+      getPages: [
+        GetPage(name: '/', page: () => Home()),
+      ]
+        
+      Get.toNamed('/f');  getx
+             //Navigator.pushNamed(context, '/f'); 기존   
+
+GetPage 옵션 
+
+      transition: Transition.zoom  // 이동할때 이펙트 
+      
+      binding:PageBinding(),
+             //바인드빌딩을 사용하지않고 따로 클래스를 만들어관리할수있다
+
+                class BindPageBinding implements Bindings {
+                      // bindings 를  implements 한다
+                
+                            @override
+                    void dependencies() {
+                          Get.put(WithNativeGetxController());
+                          }
+                
+                BindingsBuilder(() {Get.put(WithGetxController());
+                    // 바인딩을 페이지 이동시 하고 들어갈수가있다
+                    // 그렇기 때문에 해당페이지 에서 인스턴스화에 신경쓰지않아도된다
+  
+
+               
+                      
+page 이동 옵션
+
+    Get.toNamed 
+
+    arguments:'/user/233?name=khwoo&age=40&uid=233'); //parameter 도 넘길수있음
+                     Text('${Get.parameters['uid']}'),
+                     Text('${Get.parameters['name']}'),
+                    Text('${Get.parameters['age']}'), 
+                
+                User(age: 23, name: 'min')); //객체 data 도 넘길수있다
+
+
+Getx 일반 상태 관리
+ 
+              child: WithGetx(), // getx 로 상태 관리
+           
+
+Widget build(BuildContext context) {
+    
+    Get.put(WithGetxController()); //사용할분분선언
+
+    GetBuilder<WithGetxController>( 
+              //getx controller 에서 받는 데이터를 사용한다
+              id: 'frist', //id 를 지정해서 원하는곳을 데이터 컨트롤 가능
+              builder: (controller) {
+                return Text(
+                  '${controller.count}',
+    
+    class WithGetxController extends GetxController {
+                     
+                 int count = 0;
+        void increse() {
+                count++;
+                update();
+
+       onPress  Get.find<WithNativeGetxController>().increase();
+         
+ 
+Getx 반응형 상태관리
+
+  child: WithGetx(),
+  Get.put(WithGetxController()); //사용할분분선언 여기서 바인딩이 필요할수있다
+
+   Obx(() { //이곳에서 업데이트한것을 받는다 
+            return Text(
+              // 이곳이 다르다 Obx 는 bilder 를 사용하지않는다
+              '${Get.find<WithNativeGetxController>().count.value}',
+              style: TextStyle(fontSize: 50),
+ 
+ onPress Get.find<WithNativeGetxController>().increase(); //변화된값을 컨트롤러에 호출한다
+        Get.find<WithNativeGetxController>().putNumber(5);
+
+enum Num { frist, sec }
+
+class User {
+  String name;
+  int age;
+  User({this.name, this.age});
+}
+
+class WithNativeGetxController extends GetxController {  //변화된 변수를 기억하고  뿌려준다
+  
+  RxInt count = 0.obs; //RxInt 라고해야한다
+  RxDouble _double = 0.0.obs;
+  RxString value = ''.obs;
+  Rx<Num> nums = Num.frist.obs;
+  Rx<User> user = User(name: 'kwoo', age: 40).obs;
+  RxList<String> list = [''].obs;
+
+  
+  void increase() {
+    count++;
+    _double++;
+    _double(424);
+    nums(Num.sec);
+    user(User());
+    user.update((_user) {
+      _user.name = 'kkang';
+    });
+
+    // list.addAll();
+    // list.add(item);
+    list.addIf(user.value.name == 'khwoo', 'ok');
+  }
+
+  void putNumber(int value) {
+    //count = value;  아님
+    count(value); // 이렇게 넣어야함
+  }
+
+  //GetxController 를 상속 받게 되면 라이프 싸이클 생김 이벤트 호출임
+
+  @override
+  void onInit() {
+    ever(count, (_) => print('매번호출')); //반응형 일경우만 가능함
+    once(count, (_) => print('한번만 호출')); //한번만 호출됨
+    debounce(count, (_) => print('마지막 변경만 호출 '), time: Duration(seconds: 1));
+    //멈추면 처리함 특히 검색에 사용한다고함
+    interval(count, (_) => print('변경되고 있는 동안 설정된 시간마다 호출  '),
+        time: Duration(seconds: 1));
+
+    super.onInit();
+  }
+                  
+  
+Getx dependencies  //little binding
+
+
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('의존성 주입'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            RaisedButton(
+              onPressed: () {
+                Get.to(GetPut(), 
+                binding: BindingsBuilder(() { //page 안에서 get put 을 썻다면 이건 page 이동할때 안고 간다
+                  
+                  Get.put(
+                      DependenceController()); //들어가는동시에 메모리 올리고 나갈때 메모리에 컨트롤러를 즉시 내려버린다
+                }));
+              },
+              child: Text('Getput'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Get.to(GetLazyPut(), binding: BindingsBuilder(() {
+                  Get.lazyPut<DependenceController>(
+                      () => //lazy put 은 빌더를 사용한다 시작할대 메모리 올리지않고
+                          //컨트롤러를 사용할때 메모리에 올라가고 나갈때 즉시 메모리에서 내린다
+                          DependenceController());
+                }));
+              },
+              child: Text('get lazyput'),
+            ),
+            RaisedButton(
+              child: Text('get async'),
+              onPressed: () {
+                Get.to(
+                  GetPut(),
+                  binding: BindingsBuilder(() {
+                    Get.putAsync<DependenceController>(() async {
+                      await Future.delayed(Duration(seconds: 5));
+                      // put 과는 차이가 없지만 데이터를 받을때 즉 딜레이가 됬을때 메모리에 올린다
+                      return DependenceController();
+
+
+Getx 바인딩
+
+Get.put(WithGetxController());  <== 이부분을 미리쓰고 가는것이 바인딩
+
+initialBinding: InitBinding(), //binding 여기서 해줌
+GetPage(
+          name: '/binding',
+          page: () => BindingPage(),
+          transition: Transition.cupertino,
+          
+          binding: BindPageBinding(),  <== 바인딩을 클래스로 선언
+          
+          //바인드빌딩을 사용하지않고 따로 클래스를 만들어관리할수있다
+          // BindingsBuilder(() {
+          //    Get.put(WithGetxController());
+
+        
+        class BindPageBinding implements Bindings {
+            // bindings 를  implements 한다
+  
+              @override
+              void dependencies() {
+                Get.put(WithNativeGetxController());
+              }
+       
+
+
+
+
+ Obx(() {
+            return Text(
+              
+              '${Get.find<WithNativeGetxController>().count.value}',
+              style: TextStyle(fontSize: 50),
+            );
+          }),
+          RaisedButton(
+            onPressed: () {
+              WithNativeGetxController.to.increase();
+              
+              //Get.find<WithNativeGetxController>().increase();
+              //컨트롤러에서 static get to 함수로 지정하면 줄일수 있음
+              
+            },
+
+class WithNativeGetxController extends GetxController {
+  
+  static WithNativeGetxController get to => Get.find();
+  //싱글턴 방식이다 그렇기때문에 Get.find()함수를 static 으로 고정
+
+
+class BindPageBinding implements Bindings {
+  // bindings 를  implements 한다
+  
+  @override
+  void dependencies() {
+    Get.put(WithNativeGetxController());
+  }
+
+
+
+getx service
+
+Get.put(GetxServiceTest());
+
+ Obx(() {
+            return Text(
+              
+              '${Get.find<GetxServiceTest>().count.value}',
+              style: TextStyle(fontSize: 50),
+
+RaisedButton(
+            onPressed: () {
+              GetxServiceTest.to.increase()
+
+class GetxServiceTest extends GetxService {
+  // 컨트롤러와 차이점 음 Getxservice 를 extends 한다는것
+  // count 값이 증가할경우 컨트롤러같은경우 데이터가 나가면 사라지지만 
+  //service 는 유지된다 메모리에 계속 그러니 로그유지에 좋을거같다 
+  static GetxServiceTest get to => Get.find();
+  RxInt count = 0.obs;
+
+  void increase() {
+    count++;
+  }
+}
+
+RaisedButton(
+            child: Text('get reset'),
+            onPressed: () {
+              Get.reset(); // 겟서비스에 저장된값을 다 없에 버린다 
+              Get.offAllNamed('/'); // 홈으로 간다 
+            },
+
+class App extends GetView<AppController> {
+  //바꾸게 되면 controller 라고쓸수있음
+
+  bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+              type: BottomNavigationBarType.fixed, //유튜브는 하단 애니메이션이없음 그래서 고정
+              currentIndex: controller.currentIdex.value,
+              showSelectedLabels: true, //라벨 을 보여줘야함
+              selectedItemColor: Colors.black, // 선택했을때 라벨 색을 바꿔줌
+              onTap: controller.changePageIndex,
+              //(index) {print(index);
+              //controller.changePageIndex(index);
+
+              //AppController.to.changePageIndex(index);
+             
