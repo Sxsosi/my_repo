@@ -54,3 +54,6 @@ growable                자랄수있는
 validation              확인
 deprecated             비추천 
 resolve                결의 결심 결단 
+symmetric              대칭 
+horizontal             수평의
+vertical               세로 수직 

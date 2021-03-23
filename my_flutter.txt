@@ -1930,12 +1930,17 @@ GetPage 옵션
                       
 page 이동 옵션
 
-    Get.toNamed 
+    Get.toNamed('/detail/12154')
+    GetPage(name: '/detail/:videoId', page: () => YoutubeDetail())
+   
+    YoutubeDetail 
+    Text('${Get.parameters['videoId']}')
+    Text(Get.parameters['videoId'])
 
-    arguments:'/user/233?name=khwoo&age=40&uid=233'); //parameter 도 넘길수있음
-                     Text('${Get.parameters['uid']}'),
-                     Text('${Get.parameters['name']}'),
-                    Text('${Get.parameters['age']}'), 
+    arguments:'/user/:233?name=khwoo&age=40&uid=233'); //parameter 도 넘길수있음
+                     Text(Get.parameters['uid']),
+                     Text(Get.parameters['name']),
+                    Text(Get.parameters['age']), 
                 
                 User(age: 23, name: 'min')); //객체 data 도 넘길수있다
 
@@ -2187,3 +2192,155 @@ class App extends GetView<AppController> {
 
               //AppController.to.changePageIndex(index);
              
+enum RouteName { Home, Search, Add, Subs, Reposi }
+//쉽게 이야기해서
+//RouteName[0] = Home 이다
+//RouteName[1] = Search 이다
+//RouteName[2] = Add 이다
+//RouteName[3] = Subs 이다
+//RouteName[4] = Reposi 이다
+
+class AppController extends GetxService {
+  static AppController get to => Get.find();
+  RxInt currentIdex = 0.obs;
+  //currentIdex(index) 값으로 들어온 값을  변환해준다
+  //컨트롤러 구독하는 값을 변경하라고 한다
+
+  void changePageIndex(int index) {
+    if (RouteName.values[index] == RouteName.Add)
+    //(index == 2)
+    //기본 적으로 index 값이 2가 나올경우 변환 스타일 시트가 나와야한다
+    //
+    {
+      _showBottomSheet();
+    } else {
+      currentIdex(index);
+      //currentIndex 값에 들어온 index 값을 설정해준다
+    }
+
+Widget _showBottomSheet() {
+    Get.bottomSheet(YoutubeBottomSheet());
+    //Get 에는 bottomSheet 가있는데 호출을 컨트롤러에서 함 
+
+Widget _itemButton(
+      {String icon, double iconsize, String label, Function onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            //컨테이너 크기를 늘려주기위해선 또 컨테이너를 하나더감싸서 높이와 크기지정
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: Colors.grey.withOpacity(0.3)),
+            //BoxDecoration 백그라운드에 색을 입혀준다
+            child: Center(
+              //BoxDecoration 안에 이미지 크기조절을 위해 센터 위젯 또 해줌
+              child: Container(
+                width: iconsize,
+                height: iconsize,
+                child: SvgPicture.asset('assets/svg/icons/$icon.svg'),
+
+
+CustomScrollView
+
+
+SafeArea(
+        //Scaf 가 아니라 safeArea 쓴다 왜냐 안전하라고
+        child: CustomScrollView(
+      //여기서는 커스텀 스크롤 뷰쓴다 왜냐 유튜브니깐
+      slivers: [
+        // 슬리버 쓴다고 선언한거지
+        SliverAppBar(
+          //역시 슬리버를 쓰기 때문에 엡바를
+          title: CustomAppBar(),
+          floating: true, //스크롤을 내리다 살짝 올리면 앱바가 표시되게한다
+          snap: true, //앱바가 더커진다고 해야하나 강조된다고해야하나
+        ),
+        SliverList(
+          
+          // 슬리버를 쓰면 리스트 를 써야하고  리스트를 뿌려준다
+          delegate: SliverChildBuilderDelegate(
+            
+            // 이부분이 리스트를 뿌려주는 거같아
+            (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  height: 150,
+                  color: Colors.grey,
+                ),
+              );
+            },
+            childCount: 10, // 리스트 10개 보여준다
+
+  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //양끝으로 사이를 벌려준다
+        children: [
+          _logo(),
+          _actions(),
+        ],
+
+Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          //사이를 좌우 20 씩 패딩값을 준다
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: 30,
+              height: 30,
+              child: SvgPicture.asset('assets/svg/icons/search.svg'),
+            ),
+          ),
+        ),
+        CircleAvatar(
+          backgroundColor: Colors.grey.withOpacity(0.3),
+          backgroundImage: Image.network('url')
+.image,
+          //CircleAvatar는  프로바이더를 사용  .network 는 image 를 리턴
+          // 그래서 .image 를 사용하면 프로바이더로 보낸다
+        )
+
+
+
+
+Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      //maxLines 가 먹히지 않을경우 expanded 로 영역을 줘야한다
+                      //iconbutton 의 영역이 정해져 있기 때문에 나머지를 쓴다는거다
+                      child: Text(
+                        '개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기',
+                        maxLines: 2,
+                      ),
+                    ),
+                    IconButton(
+                        alignment: Alignment.topCenter,
+                        //iconbutton 이 텍스트가 2줄을 사용하기에 위치가 에메함
+                        //이럴때 alignment 를 사용해서 위치조정
+                        icon: Icon(
+                          Icons.more_vert,
+                          size: 18,
+                        ),
+                        onPressed: () {})
+                  ],
+
+
+
+GetPage(name: '/detail/:videoId', page: () => YoutubeDetail())
+        // /detail/:videoId 설정해준다 즉 detail/: 뒤에 오는것은 videoid 라는것
+        // get.toname 으로  /detail/? 라는값으로 갈경우 ? 값을가지고 YoutubeDetail 간다
+      
+
+
+GestureDetector(
+                onTap: () {
+                  Get.toNamed('/detail/12154');
+                  // detail/12154  뜻은 main getpage 에서
+                  //설정한 /:videoId 값이 12154 라는거다
+
+Text('${Get.parameters['videoId']}'), //여기서 GetPage 에서 온 파라미터값을 받아준다
+ 
