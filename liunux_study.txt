@@ -724,3 +724,37 @@ telnet -l isec 192.168.1.19 23 // id 텔넷 로그인
     103 user1   ALL=(ALL)       /usr/bin/mkdir
     104 user2   ALL=(root,isec,telnetuser)      ALL
     105 user3   192.168.1.19=(ALL)      ALL
+
+
+
+
+
+linux server
+
+
+ 3  yum -y install samba*
+    4  testparm
+    5  mkdir /share
+    6  groupadd sambaGroup
+    7  ls -ld /share
+    8  chgrp sambaGroup /share
+    9  ls -ld /share
+   10  chmod 770 /share
+   11  ls -ld /share
+   12  useradd smbUser1
+   13  passwd smbUser1
+   14  tail -1 /etc/passwd
+   15  usermod -g smbaGroup smbUser1
+   16  usermod -g sambaGroup smbUser1
+   17  tail -l /etc/passwd
+   18  smbpasswd -a smbUser1
+   19  systemctl restart smb nmb
+   20  systemctl enable smb nmb
+   21  firewall-cmd --add-service=samba --permanent
+   22*
+   23  firewall-cmd --add-service=samba-client --permanent
+   24  firewall-cmd --add-port=139/tcp --permanent
+   25  firewall-cmd --add-port=445/tcp --permanent
+   26  firwalll-cmd --reload
+   27  firewall-cmd --reload
+

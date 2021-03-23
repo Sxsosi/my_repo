@@ -52,4 +52,5 @@ Context                 글의 맥락 전후사정
 interpolation           보관법
 growable                자랄수있는
 validation              확인
- deprecated             비추천 
+deprecated             비추천 
+resolve                결의 결심 결단 
