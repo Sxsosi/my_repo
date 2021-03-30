@@ -18,7 +18,7 @@ Flutter Widget tree
 
 
 
-json 스트링 : json 텍스트 데이터 (자료형 : String)
+json 스트링 : json 텍스트 데이터 (자료형 : String) 
 
 json 자료형 : Dart에서 json 데이터를 다루기 위해 사용되는 자료형 (자료형 : Map<String, dynamic>)
 
@@ -86,7 +86,7 @@ return {'name':name,'age':age,'is_man':isMan,};
 
 
 
-
+jsonDecode() 사용하면 Map<String, dynamic>  이나온다 
 
 
 
@@ -2343,4 +2343,14 @@ GestureDetector(
                   //설정한 /:videoId 값이 12154 라는거다
 
 Text('${Get.parameters['videoId']}'), //여기서 GetPage 에서 온 파라미터값을 받아준다
+ 
+
+
+ 앱의 하나의 화면을 때어서 보면 구성이 UI 화면 이 있고 UI 화면을 제어하는 것이 있고 
+ UI화면에 들어갈 데이터들이 있고 그 데이터를 받아올 저장소가 있을 것입니다. 
+ 각각의 하는일이 전부 다릅니다. UI화면을 제어하는 것을 controller 가 담당하고 
+ UI화면에 데이터를 뿌려져야하는데 그 데이터들을 특성에 맞게 그룹화 되어 관리되는 곳이 model 입니다.
+
+
+
  

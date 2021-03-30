@@ -1,0 +1,600 @@
+get x 사용
+
+get: ^3.26.0
+import 'package:get/get.dart';
+
+main 에서  GetMaterialApp 사용 
+
+
+page 이동 
+
+  Get.to(FirstPage());  getx
+
+  //Navigator.of(context).push(MaterialPageRoute(builder:(_)= >Firstpage()));기존 
+  
+
+page 뒤로 이동 
+
+    Get.back(); getx
+       
+       //Navigator.of(context).pop() 기존 
+
+page 싹지우고 홈으로 
+
+      Get.offAll(Home()); 
+      Get.offAllNamed('/'); //named 일때 
+
+
+page named 이동
+      getPages: [
+        GetPage(name: '/', page: () => Home()),
+      ]
+        
+      Get.toNamed('/f');  getx
+             //Navigator.pushNamed(context, '/f'); 기존   
+
+GetPage 옵션 
+
+      transition: Transition.zoom  // 이동할때 이펙트 
+      
+      binding:PageBinding(),
+             //바인드빌딩을 사용하지않고 따로 클래스를 만들어관리할수있다
+
+                class BindPageBinding implements Bindings {
+                      // bindings 를  implements 한다
+                
+                            @override
+                    void dependencies() {
+                          Get.put(WithNativeGetxController());
+                          }
+                
+                BindingsBuilder(() {Get.put(WithGetxController());
+                    // 바인딩을 페이지 이동시 하고 들어갈수가있다
+                    // 그렇기 때문에 해당페이지 에서 인스턴스화에 신경쓰지않아도된다
+  
+
+               
+                      
+page 이동 옵션
+
+    Get.toNamed('/detail/12154')
+    GetPage(name: '/detail/:videoId', page: () => YoutubeDetail())
+   
+    YoutubeDetail 
+    Text('${Get.parameters['videoId']}')
+    Text(Get.parameters['videoId'])
+
+    arguments:'/user/:233?name=khwoo&age=40&uid=233'); //parameter 도 넘길수있음
+                     Text(Get.parameters['uid']),
+                     Text(Get.parameters['name']),
+                    Text(Get.parameters['age']), 
+                
+                User(age: 23, name: 'min')); //객체 data 도 넘길수있다
+
+
+Getx 일반 상태 관리
+ 
+              child: WithGetx(), // getx 로 상태 관리
+           
+
+Widget build(BuildContext context) {
+    
+    Get.put(WithGetxController()); //사용할분분선언
+
+    GetBuilder<WithGetxController>( 
+              //getx controller 에서 받는 데이터를 사용한다
+              id: 'frist', //id 를 지정해서 원하는곳을 데이터 컨트롤 가능
+              builder: (controller) {
+                return Text(
+                  '${controller.count}',
+    
+    class WithGetxController extends GetxController {
+                     
+                 int count = 0;
+        void increse() {
+                count++;
+                update();
+
+       onPress  Get.find<WithNativeGetxController>().increase();
+         
+ 
+Getx 반응형 상태관리
+
+  child: WithGetx(),
+  Get.put(WithGetxController()); //사용할분분선언 여기서 바인딩이 필요할수있다
+
+   Obx(() { //이곳에서 업데이트한것을 받는다 
+            return Text(
+              // 이곳이 다르다 Obx 는 bilder 를 사용하지않는다
+              '${Get.find<WithNativeGetxController>().count.value}',
+              style: TextStyle(fontSize: 50),
+ 
+ onPress Get.find<WithNativeGetxController>().increase(); //변화된값을 컨트롤러에 호출한다
+        Get.find<WithNativeGetxController>().putNumber(5);
+
+enum Num { frist, sec }
+
+class User {
+  String name;
+  int age;
+  User({this.name, this.age});
+}
+
+class WithNativeGetxController extends GetxController {  //변화된 변수를 기억하고  뿌려준다
+  
+  RxInt count = 0.obs; //RxInt 라고해야한다
+  RxDouble _double = 0.0.obs;
+  RxString value = ''.obs;
+  Rx<Num> nums = Num.frist.obs;
+  Rx<User> user = User(name: 'kwoo', age: 40).obs;
+  RxList<String> list = [''].obs;
+
+  
+  void increase() {
+    count++;
+    _double++;
+    _double(424);
+    nums(Num.sec);
+    user(User());
+    user.update((_user) {
+      _user.name = 'kkang';
+    });
+
+    // list.addAll();
+    // list.add(item);
+    list.addIf(user.value.name == 'khwoo', 'ok');
+  }
+
+  void putNumber(int value) {
+    //count = value;  아님
+    count(value); // 이렇게 넣어야함
+  }
+
+  //GetxController 를 상속 받게 되면 라이프 싸이클 생김 이벤트 호출임
+
+  @override
+  void onInit() {
+    ever(count, (_) => print('매번호출')); //반응형 일경우만 가능함
+    once(count, (_) => print('한번만 호출')); //한번만 호출됨
+    debounce(count, (_) => print('마지막 변경만 호출 '), time: Duration(seconds: 1));
+    //멈추면 처리함 특히 검색에 사용한다고함
+    interval(count, (_) => print('변경되고 있는 동안 설정된 시간마다 호출  '),
+        time: Duration(seconds: 1));
+
+    super.onInit();
+  }
+                  
+  
+Getx dependencies  //little binding
+
+
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('의존성 주입'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            RaisedButton(
+              onPressed: () {
+                Get.to(GetPut(), 
+                binding: BindingsBuilder(() { //page 안에서 get put 을 썻다면 이건 page 이동할때 안고 간다
+                  
+                  Get.put(
+                      DependenceController()); //들어가는동시에 메모리 올리고 나갈때 메모리에 컨트롤러를 즉시 내려버린다
+                }));
+              },
+              child: Text('Getput'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Get.to(GetLazyPut(), binding: BindingsBuilder(() {
+                  Get.lazyPut<DependenceController>(
+                      () => //lazy put 은 빌더를 사용한다 시작할대 메모리 올리지않고
+                          //컨트롤러를 사용할때 메모리에 올라가고 나갈때 즉시 메모리에서 내린다
+                          DependenceController());
+                }));
+              },
+              child: Text('get lazyput'),
+            ),
+            RaisedButton(
+              child: Text('get async'),
+              onPressed: () {
+                Get.to(
+                  GetPut(),
+                  binding: BindingsBuilder(() {
+                    Get.putAsync<DependenceController>(() async {
+                      await Future.delayed(Duration(seconds: 5));
+                      // put 과는 차이가 없지만 데이터를 받을때 즉 딜레이가 됬을때 메모리에 올린다
+                      return DependenceController();
+
+
+Getx 바인딩
+
+Get.put(WithGetxController());  <== 이부분을 미리쓰고 가는것이 바인딩
+
+initialBinding: InitBinding(), //binding 여기서 해줌
+GetPage(
+          name: '/binding',
+          page: () => BindingPage(),
+          transition: Transition.cupertino,
+          
+          binding: BindPageBinding(),  <== 바인딩을 클래스로 선언
+          
+          //바인드빌딩을 사용하지않고 따로 클래스를 만들어관리할수있다
+          // BindingsBuilder(() {
+          //    Get.put(WithGetxController());
+
+        
+        class BindPageBinding implements Bindings {
+            // bindings 를  implements 한다
+  
+              @override
+              void dependencies() {
+                Get.put(WithNativeGetxController());
+              }
+       
+
+
+
+
+ Obx(() {
+            return Text(
+              
+              '${Get.find<WithNativeGetxController>().count.value}',
+              style: TextStyle(fontSize: 50),
+            );
+          }),
+          RaisedButton(
+            onPressed: () {
+              WithNativeGetxController.to.increase();
+              
+              //Get.find<WithNativeGetxController>().increase();
+              //컨트롤러에서 static get to 함수로 지정하면 줄일수 있음
+              
+            },
+
+class WithNativeGetxController extends GetxController {
+  
+  static WithNativeGetxController get to => Get.find();
+  //싱글턴 방식이다 그렇기때문에 Get.find()함수를 static 으로 고정
+
+
+class BindPageBinding implements Bindings {
+  // bindings 를  implements 한다
+  
+  @override
+  void dependencies() {
+    Get.put(WithNativeGetxController());
+  }
+
+
+
+getx service
+
+Get.put(GetxServiceTest());
+
+ Obx(() {
+            return Text(
+              
+              '${Get.find<GetxServiceTest>().count.value}',
+              style: TextStyle(fontSize: 50),
+
+RaisedButton(
+            onPressed: () {
+              GetxServiceTest.to.increase()
+
+class GetxServiceTest extends GetxService {
+  // 컨트롤러와 차이점 음 Getxservice 를 extends 한다는것
+  // count 값이 증가할경우 컨트롤러같은경우 데이터가 나가면 사라지지만 
+  //service 는 유지된다 메모리에 계속 그러니 로그유지에 좋을거같다 
+  static GetxServiceTest get to => Get.find();
+  RxInt count = 0.obs;
+
+  void increase() {
+    count++;
+  }
+}
+
+RaisedButton(
+            child: Text('get reset'),
+            onPressed: () {
+              Get.reset(); // 겟서비스에 저장된값을 다 없에 버린다 
+              Get.offAllNamed('/'); // 홈으로 간다 
+            },
+
+class App extends GetView<AppController> {
+  //바꾸게 되면 controller 라고쓸수있음
+
+  bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+              type: BottomNavigationBarType.fixed, //유튜브는 하단 애니메이션이없음 그래서 고정
+              currentIndex: controller.currentIdex.value,
+              showSelectedLabels: true, //라벨 을 보여줘야함
+              selectedItemColor: Colors.black, // 선택했을때 라벨 색을 바꿔줌
+              onTap: controller.changePageIndex,
+              //(index) {print(index);
+              //controller.changePageIndex(index);
+
+              //AppController.to.changePageIndex(index);
+             
+enum RouteName { Home, Search, Add, Subs, Reposi }
+//쉽게 이야기해서
+//RouteName[0] = Home 이다
+//RouteName[1] = Search 이다
+//RouteName[2] = Add 이다
+//RouteName[3] = Subs 이다
+//RouteName[4] = Reposi 이다
+
+class AppController extends GetxService {
+  static AppController get to => Get.find();
+  RxInt currentIdex = 0.obs;
+  //currentIdex(index) 값으로 들어온 값을  변환해준다
+  //컨트롤러 구독하는 값을 변경하라고 한다
+
+  void changePageIndex(int index) {
+    if (RouteName.values[index] == RouteName.Add)
+    //(index == 2)
+    //기본 적으로 index 값이 2가 나올경우 변환 스타일 시트가 나와야한다
+    //
+    {
+      _showBottomSheet();
+    } else {
+      currentIdex(index);
+      //currentIndex 값에 들어온 index 값을 설정해준다
+    }
+
+Widget _showBottomSheet() {
+    Get.bottomSheet(YoutubeBottomSheet());
+    //Get 에는 bottomSheet 가있는데 호출을 컨트롤러에서 함 
+
+Widget _itemButton(
+      {String icon, double iconsize, String label, Function onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            //컨테이너 크기를 늘려주기위해선 또 컨테이너를 하나더감싸서 높이와 크기지정
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: Colors.grey.withOpacity(0.3)),
+            //BoxDecoration 백그라운드에 색을 입혀준다
+            child: Center(
+              //BoxDecoration 안에 이미지 크기조절을 위해 센터 위젯 또 해줌
+              child: Container(
+                width: iconsize,
+                height: iconsize,
+                child: SvgPicture.asset('assets/svg/icons/$icon.svg'),
+
+
+CustomScrollView
+
+
+SafeArea(
+        //Scaf 가 아니라 safeArea 쓴다 왜냐 안전하라고
+        child: CustomScrollView(
+      //여기서는 커스텀 스크롤 뷰쓴다 왜냐 유튜브니깐
+      slivers: [
+        // 슬리버 쓴다고 선언한거지
+        SliverAppBar(
+          //역시 슬리버를 쓰기 때문에 엡바를
+          title: CustomAppBar(),
+          floating: true, //스크롤을 내리다 살짝 올리면 앱바가 표시되게한다
+          snap: true, //앱바가 더커진다고 해야하나 강조된다고해야하나
+        ),
+        SliverList(
+          
+          // 슬리버를 쓰면 리스트 를 써야하고  리스트를 뿌려준다
+          delegate: SliverChildBuilderDelegate(
+            
+            // 이부분이 리스트를 뿌려주는 거같아
+            (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  height: 150,
+                  color: Colors.grey,
+                ),
+              );
+            },
+            childCount: 10, // 리스트 10개 보여준다
+
+  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //양끝으로 사이를 벌려준다
+        children: [
+          _logo(),
+          _actions(),
+        ],
+
+Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          //사이를 좌우 20 씩 패딩값을 준다
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: 30,
+              height: 30,
+              child: SvgPicture.asset('assets/svg/icons/search.svg'),
+            ),
+          ),
+        ),
+        CircleAvatar(
+          backgroundColor: Colors.grey.withOpacity(0.3),
+          backgroundImage: Image.network('url')
+.image,
+          //CircleAvatar는  프로바이더를 사용  .network 는 image 를 리턴
+          // 그래서 .image 를 사용하면 프로바이더로 보낸다
+        )
+
+
+
+
+Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      //maxLines 가 먹히지 않을경우 expanded 로 영역을 줘야한다
+                      //iconbutton 의 영역이 정해져 있기 때문에 나머지를 쓴다는거다
+                      child: Text(
+                        '개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기개남 유튜브 다시보기',
+                        maxLines: 2,
+                      ),
+                    ),
+                    IconButton(
+                        alignment: Alignment.topCenter,
+                        //iconbutton 이 텍스트가 2줄을 사용하기에 위치가 에메함
+                        //이럴때 alignment 를 사용해서 위치조정
+                        icon: Icon(
+                          Icons.more_vert,
+                          size: 18,
+                        ),
+                        onPressed: () {})
+                  ],
+
+
+
+GetPage(name: '/detail/:videoId', page: () => YoutubeDetail())
+        // /detail/:videoId 설정해준다 즉 detail/: 뒤에 오는것은 videoid 라는것
+        // get.toname 으로  /detail/? 라는값으로 갈경우 ? 값을가지고 YoutubeDetail 간다
+      
+
+
+GestureDetector(
+                onTap: () {
+                  Get.toNamed('/detail/12154');
+                  // detail/12154  뜻은 main getpage 에서
+                  //설정한 /:videoId 값이 12154 라는거다
+
+Text('${Get.parameters['videoId']}'), //여기서 GetPage 에서 온 파라미터값을 받아준다
+ 
+
+
+ 앱의 하나의 화면을 때어서 보면 구성이 UI 화면 이 있고 UI 화면을 제어하는 것이 있고 
+ UI화면에 들어갈 데이터들이 있고 그 데이터를 받아올 저장소가 있을 것입니다. 
+ 각각의 하는일이 전부 다릅니다. UI화면을 제어하는 것을 controller 가 담당하고 
+ UI화면에 데이터를 뿌려져야하는데 그 데이터들을 특성에 맞게 그룹화 되어 관리되는 곳이 model 입니다.
+
+
+
+ final HomeController controller = Get.put(HomeController());
+  //home 을 컨트롤 할려고 한다 즉 홈화면에서 필요한 data 를 뽑아서 쓸수
+  //있어야하기때문이다
+  ////controller 를 사용할수 있는 2가지 중 하나
+  ///statlesswidget 을 GetView<AppController> 바꾸던가
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      //Scaf 가 아니라 safeArea 쓴다 왜냐 안전하라고
+      child: Obx(() =>
+          //Obx 감싼다 왜?? childCount 써야하니깐
+          return GestureDetector(
+                      onTap: () {
+                        Get.toNamed('/detail/12154');
+                        // detail/12154  뜻은 main getpage 에서
+                        //설정한 /:videoId 값이 12154 라는거다
+                      },
+                      child: VideoWidget(
+                          video: controller.youtubeResult.value.items[index]),
+                      //이제 여기에 넘겨 받는 아이템스 데이터를 집어넣어준다
+                    );
+                  },
+                  childCount: controller.youtubeResult.value.items == null
+                      ? 0
+                      : controller.youtubeResult.value.items.length,
+
+                  //렝스가 0 일경우 오류가 나올수 있다 ,
+                  //items 가 0일 경우 0 을 넣어주고 =>? 0: 아니면
+        
+class YoutubeVideoResult {
+  //만드는이유가 page 처리를 하기위해서
+  int totalREsults;
+  int resultsPerpage;
+  String nextPageToken;
+  List<Video> items;
+
+  YoutubeVideoResult(
+      {this.items, this.nextPageToken, this.resultsPerpage, this.totalREsults});
+
+  factory YoutubeVideoResult.formJason(Map<String, dynamic> json) =>
+      YoutubeVideoResult(
+          totalREsults: json['pageInfo']['totalResults'],
+          resultsPerpage: json['pageInfo']['resultsPerPage'],
+          nextPageToken: json['nextPageToken'] ?? '', //다음 page가 null 일수도있음
+          // ?? null 일경우 '' 비어있는 문자를 집어넣어라
+          items: List<Video>.from(
+              json['items'].map((data) => Video.fromJson(data))));
+}
+
+
+class HomeController extends GetxController {
+  static HomeController get to => Get.find();
+  //여기선 비디오 리스트를 불러올꺼야
+
+  Rx<YoutubeVideoResult> youtubeResult = YoutubeVideoResult().obs;
+
+  @override
+  void onInit() {
+    //라이프 싸이클 즉 시작 할때 간다!! 여기선 비디오 리스트 를 로드할꺼야
+    _videoLoad();
+    super.onInit();
+  }
+
+  void _videoLoad() async {
+    //데이터에 접근할수 있는 repository 가 필요해서 만들어야한다
+    YoutubeVideoResult youtubeVideoResult =
+        await YoutubeTepository.to.loadVideos();
+    if (youtubeVideoResult != null &&
+        youtubeVideoResult.items != null &&
+        youtubeVideoResult.items.length > 0) {
+      youtubeResult(youtubeVideoResult);
+    }
+  }
+
+class YoutubeTepository extends GetConnect {
+  //getconnect 는 http 와 같은데 더많은걸 가지고 있다
+  // pub.dev getx 한글문서 보면 커스텀 구성 api 키등록 auth token 설정 할수있음
+  static YoutubeTepository get to => Get.find();
+
+  @override
+  void onInit() {
+    httpClient.baseUrl = "https://www.googleapis.com";
+
+    super.onInit();
+  }
+
+  Future<YoutubeVideoResult> loadVideos() async {
+    String url =
+        "/youtube/v3/search?part=snippet&channelId=UCbMGBIayK26L4VaFrs5jyBw&maxResults=10&type=video&videoDefinition=high&key=AIzaSyB066zmLZe-vLCy2NVXrZkMZb-uZB9I02I&order=date";
+    //api 로 다뽑고싶은걸 뽑아온다
+
+    final response = await get(url);
+    //get 은 http get 과 같다 getconnect 가 가지고 있다
+    // response json 데이터 가져와 !!
+    if (response.status.hasError) {
+      return Future.error(response.statusText);
+    } else {
+      if (response.body['items'] != null && response.body['items'].length > 0) {
+        return YoutubeVideoResult.formJason(response.body);
+      }
+    }
+  }
+
+
+class InitBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(YoutubeTepository(), permanent: true);
+    //바인딩 할때 위치는 상관없지만 시작하자마자 데이터를 가져오기위해서 여기에 쓴다
+    //메모리에서 지우지 않을꺼란이야기
+    //getservice 가 아니여서 permanent 써야함
+    Get.put(AppController());
+  }
+
+}
+
+}
