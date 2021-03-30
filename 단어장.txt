@@ -57,3 +57,4 @@ resolve                결의 결심 결단
 symmetric              대칭 
 horizontal             수평의
 vertical               세로 수직 
+permanent              영구적인

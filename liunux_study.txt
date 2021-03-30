@@ -27,6 +27,21 @@ dd if=/dev/zero of=/swapfile bs=1024 count=1024000  1g 채운다
 
 
 
+/root/.vimrc           //vi conf
+ 1 set nu
+      2 set expandtab
+      3 set tabstop=4
+      4 set shiftwidth=4
+      5 set smartindent
+      6 set autoindent
+      7 set cindent
+      8 set title
+      9 set showmatch
+     10 set showcmd
+     11 syntax on
+
+
+
 
 
 system configuration       => /etc/profile  user logname mail hostname 
@@ -758,3 +773,42 @@ linux server
    26  firwalll-cmd --reload
    27  firewall-cmd --reload
 
+
+
+
+aws
+
+30  yum -y install gcc gcc-c++ httpd-devel
+   31  cd /var/www/httml
+   32  cd /var/www
+   33  ll
+   34  cd html
+   35  ll
+   36  tar xvfz tomcat-connectors-1.2.48-src.tar.gz
+   37  ll
+   38  cd tomcat-connectors-1.2.48-src/
+   39  ll
+   40  cd native/
+   41  ll
+   42  pwd
+   43  ls -l /usr/bin/apxs
+   44  ./configure --with-apxs=/usr/bin/apxs
+   45  ll
+   46  pwd
+   47  make && make install
+   48  ls -l /etc/httpd/modules/mod_jk.so
+   49  vi server.xml
+   50  cd /etc/tomcat
+   51  vi server.xml
+   52  vi /etc/httpd/conf/httpd.conf
+   53  cd /etc/httpd/conf.modules.d/
+   54  ll
+   55  vi /etc/httpd/conf/httpd.conf
+   56  touch mod_jk.conf
+   57  ll
+   58  vi mod_jk.conf
+   59  cd /etc/httpd/conf
+   60  ll
+   61  touch workers.properties
+   62  vi workers.properties
+   63  systemctl restart httpd.service
