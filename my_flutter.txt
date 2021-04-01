@@ -90,7 +90,8 @@ jsonDecode() 사용하면 Map<String, dynamic>  이나온다
 
 
 
-
+Map<String,dynamic> jsonData = jsonDecode(jsonString)
+User user = User.fromJson(jsonData);
 
 
 

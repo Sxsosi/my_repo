@@ -1,0 +1,21 @@
+node =>  network linked DEVICE
+host =>  ip have node clinet pc or server
+L3 router => 동그라미 안에 4방향 들어오고나오고
+L2 swith => 네모에 양방향 으로 나가면 스위치 한방향이면 hub
+link => 물리적인 선이다 up (살아있냐) and down (죽어있냐)
+
+Bit =>   2^n 승 으로 표현 최소단위
+Byte =>  8bit ~> 1byte 
+word =>  cpu 처리 단위  window 32bit 64bit  
+         word는   cpu 처리단위에따라서 달라짐 
+         한번에 읽어을수 있는 단위
+character => 최소 문자를 표현 하려면 1byte 임 
+대역폭 bandwidth => 초당 받아들일수있는 bit 수
+
+1KB =>1024 Byte
+1MB =>1024 KB
+1GB =>1024 MB
+1TB =>1024 GB
+
+MAC 주소 는 물리적 주소임  48bit 로 나타남
+     16진수로 나타넴 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,10

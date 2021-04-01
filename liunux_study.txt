@@ -812,3 +812,8 @@ aws
    61  touch workers.properties
    62  vi workers.properties
    63  systemctl restart httpd.service
+
+
+update user set password=password('qwe@123') where user='root';
+
+ flush privileges;
