@@ -817,3 +817,26 @@ aws
 update user set password=password('qwe@123') where user='root';
 
  flush privileges;
+
+ 
+
+ SELECT COUNT(*) as cnt  => as cnt alias 별명
+
+ desc 큰수부터 내려온다해서  내림 차순 
+ asc 작은수부터 올라간다해서  오름차순 
+
+ MariaDB [mysql]> select * from customer order by 3 desc;   //3열 로 
++------+-------+------+-----------------+---------+-------+
+| seq  | name  | age  | email           | hobby   | major |
++------+-------+------+-----------------+---------+-------+
+|    4 | kkang |   45 | kkang@naver.com | playing | comp  |
+|    3 | guest |   40 | guest@naver.com | reading | acc   |
+|    5 | min   |   35 | min@naver.com   | reading | acc   |
+|    6 | woo   |   33 | woo@naver.com   | soccer  | comp  |
+|    2 | isec  |   30 | isec@naver.com  | soccer  | comp  |
+|    3 | goo   |   22 | goo@daum.net    | reading | comp  |
+|    1 | admin |   20 | admin@naver.com | tennis  | eco   |
++------+-------+------+-----------------+---------+-------+
+
+
+
