@@ -839,4 +839,12 @@ update user set password=password('qwe@123') where user='root';
 +------+-------+------+-----------------+---------+-------+
 
 
+view 를 쓰는 이유는 필요한 폼을 미리형성 필요할시 데이터만 뽑아오기만해서
+data 리소스 를 줄여주고 보안에 강화를 할수있음
 
+create view cstucent(sno,sname,year)
+    -> as select sno,sname,year from student where dept='컴퓨터'
+    -> with check option;
+
+select host,user,password from user;       권한유저 보기 
+grant all privileges on *.* to 'isec'@'%';         =>root 권한을 isec @~~  준다

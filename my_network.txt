@@ -53,10 +53,65 @@ x         X      X               X    X    x
 X    X    X    X                  X     X    X    X
 2^3  2^2  2^1  2^0                2^3  2^2  2^1  2^0               
 
-0  +  0  +  2  +  0  => 2         8  +  4  +  0  +  0  =>12 는 16에서 C
+0  +  0  +  2  +  0  => 2         8  +  4  +  0  +  0  =>12 는 16진수에서 C
 
 44 => 2진수 10100  => 16진수 2C 
 
 
+ip4 address
+
+128 64 32 16 8 4 2 1 
+
+ip4 구성 요소  network id + host id
+
+network id  가 같아야 통신이된다
+
+pc 는 어디까지 네트워크 아이디 구별을 위해 subnet mask  반드시사용한다
+
+ip4  158.  11 . 2. 20  
+s/m  255. 255.  0.  0    =>> 158을 보면 B class 알수있다 
+     &     &    &   &    =>> and 연산 사용
+     158.  11.  0.  0    =>> 0.0 은 pc 가 사용 
+     158   11.  0.  1    =>> host ip 사용가능 
+b/c  155.  11. 255.255   =>> broad cast  관리자 사용불가능
+
+사설 아이피 범위 (이범위는 공인아이피도 없다)
+
+10.0.0.0 ~ 10.255.255.255     
+172.16.0.0   ~  172.31.255.255   
+192.168.0.0  ~ 192.168.255.255   
 
 
+a class 
+
+0~127.x x x . x x x . x x x    < 128
+@ @ @                          network id
+       = = = . = = = . = = =    host id
+2 5 5.     0 .     0 .     0    subnet mask
+         
+
+
+b class
+
+128~191.x x x . x x x . x x x   < 128+64
+@ @ @ . @ @ @ .                 network id
+                = = = . = = =   host id
+2 5 5 . 2 5 5 .     0 .     0   subnet mask
+
+
+c class              
+
+192~223.x x x . x x x . x x x    < 128+64+32
+@ @ @ . @ @ @ . @ @ @ .          network id
+                        = = =    host id
+2 5 5 . 2 5 5 . 2 5 5 .     0    subnet mask
+
+
+d class
+224 ~239 .xxx.xxx.xxx < 128+64+32+16
+
+
+
+ip4 구성 요소  network id + host id
+
+network id  가 같아야 통신이된다
