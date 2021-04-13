@@ -28,19 +28,37 @@ dd if=/dev/zero of=/swapfile bs=1024 count=1024000  1g 채운다
 
 
 /root/.vimrc           //vi conf
- 1 set nu
-      2 set expandtab
-      3 set tabstop=4
-      4 set shiftwidth=4
-      5 set smartindent
-      6 set autoindent
-      7 set cindent
-      8 set title
-      9 set showmatch
-     10 set showcmd
-     11 syntax on
+    set nu
+    set expandtab
+    set tabstop=4
+    set shiftwidth=4
+    set smartindent
+    set autoindent
+    set cindent
+    set title
+    set showmatch
+    set showcmd
+    syntax on
 
+ vi /root/.bashrc
+[root@localhost ~]# source /root/.bashrc
+[root@localhost ~]# ls /bin/python
+/bin/python
+[root@localhost ~]# rm -rf /bin/python
+[root@localhost ~]# ls -s /usr/bin/python3.6 /bin/python
+ls: cannot access /bin/python: 그런 파일이나 디렉터리가 없습니다
+12 /usr/bin/python3.6
+[root@localhost ~]# ls -s /usr/bin/python3.6 /bin/python
+ls: cannot access /bin/python: 그런 파일이나 디렉터리가 없습니다
+12 /usr/bin/python3.6
+[root@localhost ~]# vi /usr/bin/yum
+[root@localhost ~]# vi /usr/bin/yum-
+yum-builddep        yum-debug-dump      yum-groups-manager
+yum-config-manager  yum-debug-restore
+[root@localhost ~]# vi /usr/bin/yum-config-manager
+[root@localhost ~]# vi /usr/libexec/urlgrabber-ext-down
 
+pip3 install pymysql
 
 
 
@@ -848,3 +866,57 @@ create view cstucent(sno,sname,year)
 
 select host,user,password from user;       권한유저 보기 
 grant all privileges on *.* to 'isec'@'%';         =>root 권한을 isec @~~  준다
+
+hostname
+vi /etc/hostname
+vi /etc/sysconfig/network
+
+vi /etc/sysconfig/selinux disabled  <== 
+
+dig dns domain  ==>> ip query
+
+
+mail server setting
+
+ ifconfig ens33
+    4  hostname
+    5  vi /etc/hostname
+    6  vi /etc/sysconfig/network
+    7  vi /etc/sysconfig/selinux
+    8  vi /etc/sysconfig/network-scripts/ifcfg-ens33
+    9  reboot
+   10  hostname
+   11  vi /etc/sysconfig/network
+   12  vi /etc/sysconfig/network-scripts/ifcfg-ens33
+   13  vi /etc/resolv.conf
+   14  systemctl status firewalld.service
+   15  systemctl stop firewalld.service
+   16  systemctl disable firewalld.service
+   17  getenforce
+   18  yum -y install sendmail-cf dovecot
+   19  vi /etc/mail/sendmail.cf
+   20  vi /etc/mail/local-host-names
+   21  vi /etc/hosts
+   22  reboot
+   23  ifconfig ens33
+   
+   26  vi /etc/mail/sendmail.cf
+   27  vi /etc/mail/access
+   28  makemap hash /etc/mail/access < /etc/mail/access
+   29  vi /etc/dovecot/dovecot.conf
+    31  vi /etc/dovecot/dovecot.conf
+   32  vi /etc/dovecot/conf.d/10-ssl.conf
+   33  vi /etc/dovecot/conf.d/10-mail.conf
+   34  useradd dmail_user
+   35  passwd dmail_user
+   36  systemctl restart sendmail.service
+   37  systemctl enable sendmail.service
+   38  systemctl restart dovecot
+   39  systemctl enable dovecot
+   40  systemctl enable sendmail.service
+   41  systemctl is-active firewalld.service
+   42  systemctl status firewalld.service
+
+
+
+

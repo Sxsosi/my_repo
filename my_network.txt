@@ -1,7 +1,8 @@
 node =>  network linked DEVICE
 host =>  ip have node clinet pc or server
 L3 router => 동그라미 안에 4방향 들어오고나오고
-L2 swith => 네모에 양방향 으로 나가면 스위치 한방향이면 hub
+L2 swith => 네모에 양방향 으로 나가면 스위치 
+L1 hub  => 한방향이면 hub
 link => 물리적인 선이다 up (살아있냐) and down (죽어있냐)
 
 Bit =>   2^n 승 으로 표현 최소단위
@@ -72,15 +73,18 @@ ip4  158.  11 . 2. 20
 s/m  255. 255.  0.  0    =>> 158을 보면 B class 알수있다 
      &     &    &   &    =>> and 연산 사용
      158.  11.  0.  0    =>> 0.0 은 pc 가 사용 
-     158   11.  0.  1    =>> host ip 사용가능 
+g/w  158   11.  0.  1~3 or 253~254   =>>  gate way address
 b/c  155.  11. 255.255   =>> broad cast  관리자 사용불가능
+     
+
 
 사설 아이피 범위 (이범위는 공인아이피도 없다)
 
+127.0.0.1  => loopback 주소 (자신이 자기로가는 주소)
 10.0.0.0 ~ 10.255.255.255     
 172.16.0.0   ~  172.31.255.255   
 192.168.0.0  ~ 192.168.255.255   
-
+169.254.0.0  <== dhcp 고장시 이주소로 줄수있음
 
 a class 
 
@@ -115,3 +119,130 @@ d class
 ip4 구성 요소  network id + host id
 
 network id  가 같아야 통신이된다
+
+nslookup  =>질의 ip 주소나 dns 주소 질의해서 알수있다 set_type=ns
+
+netstat => 내 피씨 연결상태 라우팅 테이블 통계 정보확인사용 
+
+netstat -tan 
+
+
+같은장비 : Cross Over Cable
+다른장비:Straight Through cable
+
+
+L1 Hub   :  여러대의 물리적 장비를 연걸해주는 네트워크 장비
+         Hub 모든 데이터를 브로드 캐스팅 하므로 충돌 영역 이 1개이다
+
+L2 Switch : 여러대의 물리적 장비를 연결해 주는 네트워크 장비 
+         Switch 는 데이터를 포트별로 포워딩 하므로 충돌영역이 포트개수이다 포트가 4개면 충돌영역은 4개이다
+
+
+L3 router :   
+
+router 한개일경우
+               (gate way) 설정모드
+               cli 버전
+
+
+               user(>) => privileges mode (#)         : enable  단축키 en 
+               privileges mode(#) => config mode((config)#)  :configure terminal 단축키 conf t
+
+               ip 설정모드
+                (config)# : interface fa 0/0  단축키 int f0/0 
+
+               
+               아이피(GATEWAY) 추가
+               (config-if)# : ip addr xxx.xxx.xxx.xxx  (netmask) xxx.xxx.xxx.xxx
+
+               아이피(GATEWAY) 삭제
+               (config)#: int f0/0
+               (config if)#  no ip addr
+
+               
+               설정 저장
+               (config if)# : no shutdown 단축키 no sh
+               
+               inter face 보기
+               pr 모드에서 가능하나 config 모드에서 볼려면
+               (config-if)# :do  show ip int bri
+                
+                route 상태보기 
+                (config)# : show ip route
+
+
+router 2개 일경우
+static routeing
+               route 추가 
+               (config)# ip route    (network id)    (net mask)   연결된 router ip
+               route 삭제  
+               (config)# no ip route  (network id)     (net mask)     (near router ip)
+
+               ctl + shft + 6 
+
+router 기초새팅
+
+          (config)# hostname R1   :hostname 변경
+          
+          R1#  
+          (config)# enable secret  kk  :  R1> R1#  password config
+          R1>en
+          password: kk
+          R1#
+
+          사용자 계정구성 
+
+          R1(config)#username admin privileges 15 password kk 
+          : 계정 admin 비번 kk 권한 15(최대)
+          R1(config)#username user1 password kk
+          : 계정 user1 비번 kk 권한 0 (최소)
+
+          telnet mode 원격 접속
+          R1(config)#line vty 0 4  : 원격접속 0~4 즉 5명 제한 
+          R1(config-line)#login local  : 인증은 로컬로
+          R1(config-line)#password kk  :원격접속 비번 설정 kk 
+
+          console mode
+
+          R1(config)#line console 0  : console setting
+          R1(config-line)#login local : 인증은 로컬로
+          R1(config-line)#password kk  :console 비번 설정 kk 
+
+          R1# copy running-config startup-config =>메모리 실행하는것을 저장한다
+          R1# copy r s 단축키
+
+          
+          (config-line)#logging synchronous  :   동기화 설정
+          (config-line)#exec-timeout 0 0 : console session time 설정
+
+          show run =>설정 보여주기
+          no ip domain lookup =>conf 오타 오류 막기
+          copy running-config startup-config =>메모리 실행하는것을 저장한다
+          copy r s 단축키
+
+
+
+ routing protocol ㅡ ㅡ static routing 
+                    |
+                     ㅡ dynamic routing  ㅡ  IGP ㅡ ㅡ distance vector - RIP
+                                        |         |
+                                        |           ㅡ link state   - OSPF                    
+                                        |
+                                         ㅡ  EGP  ㅡㅡ  path vector ㅡ BGP
+
+
+route 가 3개인 경우
+
+(R1) 1.1.1.1                          (R2)1.1.1.2         (R3)2.1.1.2
+                                         2.1.1.1
+ip route 2.0.0.0 255.0.0.0 1.1.1.2                        ip route 1.0.0.0 255.0.0.0 2.1.1.1
+ip route 172.16.x.x 255.255.0.0 1.1.1.2                   ip route 192.168.10.X 255.255.255.0 2.1.1.1
+
+
+
+
+(pc)192.168.10.X                                         (pc)172.16.X.X
+
+
+route 경로 보기 tracert (domain or ip)  
+
