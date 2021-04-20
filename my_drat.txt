@@ -3,8 +3,65 @@
 
 
 void main(){
+
+
+
+
+null safety
+
+null 값이 들어가서는 안되는 변수에 들어갔을때 그코드가
+1천 1만줄일때 찼기가 어려워진다 그러므로 nullsafty 를 
+사용하면 미연에 방지할수 있다 사용하자!!
+
+class Person{
+          
+        String  name  => String? name;  선언과동시에 초기화 해야한다.null 값이 들어올수있다 라는 표시이다
+       
+
+       String  nameChange (String? name){  <== name 의 인자값은 null 이 올수있다 그러므로 표시해야한다
+                this.name=name;
+                if(name==null){                   <== null 이 올경우 어떻게 할지 조치를 한다 )
+                        return 'need a name';
+                }else{
+        return name.toUpperCase();  <=== name 에 null 값이 올수 있기 때문에 조건문 을 추가해야한다
+       }
+
+}
+
+class Person {
+         
+         int age;     ==>  late int age;   :  main 함수에서 나중에 sum 함수에 인자값 100 이 들어온다 
+                                              그러므로 시작은 null 이지만  나중에 체워지므로 그럴때 
+                                             late 를 써서 나중에 들어와!! 라고 알려주는거다 
+         int sum(int age,int num){
+                 this.age =age;
+                 int total =age+num;
+                 return total+age;
+         }
+}
+
+void main(){
+        Person p = Person();
+        print (p.sum(100,50));
+}    
     
-    
+
+voin main(){
+        int x =50;
+        int? y;
+        if(x>0){
+                y=x;
+        }
+        int value =y;  ==> int value = y!;   :  int value 값은 null 이 올수 없는 값이다  하지만 y 는 null 이 올
+                                                수있는 값이기때문에 y 에 ! 를 해주므로 걱정하지마 not null 이야 표시해야함  
+        print(value);
+}
+
+
+
+
+
+
 
 valiable   
 

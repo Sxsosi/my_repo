@@ -186,16 +186,16 @@ router 기초새팅
           (config)# hostname R1   :hostname 변경
           
           R1#  
-          (config)# enable secret  kk  :  R1> R1#  password config
+          (config)# enable secret  kk  :  R1>  R1#  password config
           R1>en
           password: kk
           R1#
 
           사용자 계정구성 
 
-          R1(config)#username admin privileges 15 password kk 
+          R1(config)#username admin privileges 15 secret kk 
           : 계정 admin 비번 kk 권한 15(최대)
-          R1(config)#username user1 password kk
+          R1(config)#username user1 secret kk
           : 계정 user1 비번 kk 권한 0 (최소)
 
           telnet mode 원격 접속
@@ -208,18 +208,18 @@ router 기초새팅
           R1(config)#line console 0  : console setting
           R1(config-line)#login local : 인증은 로컬로
           R1(config-line)#password kk  :console 비번 설정 kk 
+          R1(config-line)#exec-timeout 0 0 : console session time 설정 0분 0초
+          R1(config-line)#logging synchronous  :   동기화 설정
 
           R1# copy running-config startup-config =>메모리 실행하는것을 저장한다
           R1# copy r s 단축키
 
           
-          (config-line)#logging synchronous  :   동기화 설정
-          (config-line)#exec-timeout 0 0 : console session time 설정
-
-          show run =>설정 보여주기
-          no ip domain lookup =>conf 오타 오류 막기
-          copy running-config startup-config =>메모리 실행하는것을 저장한다
-          copy r s 단축키
+          show run             =>설정 보여주기
+          no ip domain lookup  =>conf 오타 오류 막기
+          show ip route
+          
+          
 
 
 
@@ -261,6 +261,9 @@ ip route 0.~0 1.1.1.2      < ip route 192.168.10.x 255.255.255.0 1.1.1.1    < ip
 
 
 
+
+
+
 Subneting
 
 ip 를 보고 network 아이디 를 알수가없다 클래스를 봐도 알수가 없다 
@@ -285,14 +288,114 @@ IP 주소 상세
 
 
 RIP (dynamic routeing)
+로컬 네트워크에 등록  다른 라우터로 라우팅 정보를 업데이트 하는방식
+경로가 자동으로 설정된다
+
 
 (R1 router) 1.1.1.1/8                               1.1.1.2/8 (R2 router)
 
 router rip                                          debug ip rip                <==                                        
 ver 2                                               undebug ip rip
 net 1.0.0.0
-net 192.168.10.0
-auto summery 
+net 192.168.10.0 
+network [local network addr]
+no auto summery (classful 로 자동 변환해서 전달하지 마라!)
 exit
 
 (_pc_) 192.168.10.1 /24                                (_pc_)192.168.1.1 /24 
+
+
+
+
+
+RIPv2
+distance vector routing protocol 
+소규모 네트워크 환경이나 서브넷과 네트워크 정보가 가변적이지 않은 환경에 적합
+가장단순한 동적 라우팅 방식이다
+라우터의 개수 를 보고 경로를 지정한다
+metric 값은 최대 15 까지 가능하다
+AD 값은 120 이다 ( 라우팅 프로토콜이 중복 되었을 경우 낮은 값이 우선한다)
+30초 마다 주기적으로 라우팅 정보를 업데이트 한다
+멀티 캐스트 주소인 224.0.0.9 로 라우팅 정보를 전송한다 
+
+
+
+
+
+
+
+
+DHCP  자동으로 ip 를 할당하는 기술
+4단계 과정을 거친다
+
+1단계 discover    DHCP 클라이언트는 네트워크가 시작 시  ip 주소 설정 tcp/ip 초기화 한다 DHCP 를 찼는다 
+2단계 offer      특정 ip 주소 받을 것인지 제의한다 discover 메시지 DHCP 서버는 사용가능한 ip 주소 포함한 DHCP 페킷을 boradcast 방식으로 송출
+3단계 requiest    ip 를 바로 설정하지않고  offer 에대해 응답을 한다
+4단계 ack         requiest 페킷을 받아 2가지 작업을 한다 자신의 offer 받은 DHCP 는 ip 임대기간 옵션 담은 ack 보내고 아닌 DHCP 는 유지
+
+
+
+
+ip dhcp pool  [영역 이름 isec_7f]
+network  network ID  s/mask
+default-router [GATEWAY addr]
+dns-server dns addr
+exit
+ip dhcp excluded-address [제외할 ip addr]
+
+삭제시 no ip dhcp pool  [영역 이름 isec_7f]
+       no ip dhcp excluded-address [제외할 ip addr]
+
+할당된 ip 주소 확인
+show ip dhcp binding
+
+
+
+window dhcp 
+ipconfig /release   =>ip 반납
+ipconfig /renew     =>ip 다시 받아옴
+
+
+
+DHCP Relay Agent
+
+DHCP 중계 역활  
+boradcast 는 router 를 넘기지 못한다 그래서 Relay Agent 필요 
+router 가 DHCP ip 할당도아주는 중계 역활을 한다 
+그때 라우터가 필요한 명령어가 ip helper-address 이다 
+
+int f0/0
+ip helper-address  DHCP ip addr
+
+
+(R1)                                              (R2) DHCP
+gateway 192.168.10.254                             1.1.1.2
+1.1.1.1
+
+int f0/0                                          int s0/0
+ip addr 192.168.10.254 255.255.25530              ip addr 1.1.1.2 255.0.0.0
+no sh                                             no sh
+int s0/0                                           
+
+                                                  dynamic routing
+ip addr 1.1.1.1 255.0.0.0                         router rip
+no sh                                             ver 2
+                                                  net 1.0.0.0
+dynamic routing                                   no au 
+router rip                                      
+ver 2                                             
+net 192.168.10.0                                                   
+net 1.0.0.0                                                  dhcp 세팅 
+no au                                             ip dhcp pool isec 
+                                                  network 192.168.10.0 255.255.255.0
+                                                  default-router 192.168.10.254
+                                                  dns-server 192.168.10.1
+                                                  exit
+                                                  ip dhcp excluded-address 192.168.10.254 
+DHCP Relay Agent                                  ip dhcp excluded-address 192.168.10.1
+int f0/0                                          show ip dhcp binding
+ip helper-address 1.1.1.2 
+
+(pc)
+
+
