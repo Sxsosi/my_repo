@@ -321,6 +321,53 @@ AD 값은 120 이다 ( 라우팅 프로토콜이 중복 되었을 경우 낮은 
 
 
 
+EIGRP
+
+distance vector routing protocol igrp 발전
+advanced distance vector routing protocol 이라한다
+중규모 네트워크 환경에 적합하다
+cisco 장비 전용 라우팅 프로토콜이었으나
+2016년 5 월 RFC 7868로 표준 라우팅 프로토콜이 되어 다른장비에도 적용가능하다
+
+RIOV2처럼 주기적으로 30초마다 업데이트 되지않고 네트워크 변화가 있을 때만 즉시 업데이트 된다
+즉 RIPv2 보다 경로 최적화가 빠르다
+DUAL 알고리즘을 사용해 successor 최적경로와 feasible successor  후석경로로 선출한다
+metric 값은 bandwidth 대역폭  load 부화 delay 지연 reliablility 신뢰도 mut 최대전송 단위 를 보고 계산하다
+10^10 /가장느린대역폭 + 통과경로의 모든 지연 값 /10 *256
+AD 값은 90 이다 (라우팅 프로토콜이 중복되었을 경우 낮은 값이 우선한다 )
+멀티캐스트 주소인 224.0.0.10 으로 라우팅 정보를 전송한다
+
+neighbor table : unicast 통신을 위해서 ip 정보를 담아둔 곳
+(hold:15sec , uptime: 장비 UP 시간 , SRTT(ms): Ack Message, RTO : 재 전송시간 Q cnt: 처리못한 정보를 버퍼에 쌓은것)
+Topology Table : 광고를 받은 모든 정보가 저장되는 공간
+ROuting TAble : 최적경로만 올라오는곳
+Successor : 받은경로 중 최적경로
+Feasible Successor: 받은 경로중 백업(최적경로가 안될 경우를 대비한 후속경로)
+
+-명령어
+router eigrp {AS Number(1~65535)}
+network [로컬 네트워크 주소 ] [와일드카드 마스크]
+no auto-summery
+
+* 와일드카드 마스크 (Wildcard mask) (0:검사 1:검사(x)=>범위)
+정확한 네트워크 정보를 등록하기 위한 마스크
+서브넷 마스크의 1의 보수를 취한다 (비트반전)
+255.0.0.0 일경우 서브넷 마스크의 비트는 11111111.00000000.00000000.00000000 이므로
+와일드카드 마스크의 비트는 00000000.11111111.11111111.11111111
+
+EIGRP 설정확인 명령어
+# show ip eigrp neghbors : neighbrs 테이블확인
+show ip eigrp topology :EIGRP Topology table 확인
+show ip route: routing table 확인한다
+
+와일드 마스크 = net mask revers
+
+
+
+
+
+
+
 
 
 
@@ -397,5 +444,35 @@ int f0/0                                          show ip dhcp binding
 ip helper-address 1.1.1.2 
 
 (pc)
+
+
+OSI 7 layer         PUD              tcp/ip 4계층          프로토콜 종류
+               (protocol data unit)
+
+
+7 응용              메시지                                    FTP.DNS.dhcp
+6 표현              메시지            4.응용계층                   jpg
+5 세션              메시지                                       전송모드
+
+
+4 전송             세그먼트           3.전송계층                  tcp  => 신뢰 즉 ack 보넴 은행 느리다
+                                                                 udp  =>  신뢰가 x  스트리밍  빠르다
+
+
+3 네트워크
+(L3 louter)          패킷             2.인터넷 계층                ip/4  => 비신뢰 단편화
+                                                                  ARP    => MAC 주소를 알기위한 프로토콜
+                                                                 ICMP    => ip  신뢰적특징 보안 프로토콜
+
+
+2 데이터 링크       프레임                                      이더넷  =>lan 환경 csma/cd
+L2 switch
+                                      1.네트워크 엑세스 
+
+1 물리            비트,시그널              
+L1 hub 
+  repeater 
+
+                       
 
 
