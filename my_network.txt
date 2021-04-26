@@ -355,111 +355,113 @@ AD 값은 120 이다 ( 라우팅 프로토콜이 중복 되었을 경우 낮은 
 
 EIGRP
 
-distance vector routing protocol igrp 발전
-advanced distance vector routing protocol 이라한다
-중규모 네트워크 환경에 적합하다
-cisco 장비 전용 라우팅 프로토콜이었으나
-2016년 5 월 RFC 7868로 표준 라우팅 프로토콜이 되어 다른장비에도 적용가능하다
+                    distance vector routing protocol igrp 발전
+                    advanced distance vector routing protocol 이라한다
+                    중규모 네트워크 환경에 적합하다
+                    cisco 장비 전용 라우팅 프로토콜이었으나
+                    2016년 5 월 RFC 7868로 표준 라우팅 프로토콜이 되어 다른장비에도 적용가능하다
 
-RIOV2처럼 주기적으로 30초마다 업데이트 되지않고 네트워크 변화가 있을 때만 즉시 업데이트 된다
-즉 RIPv2 보다 경로 최적화가 빠르다
-DUAL 알고리즘을 사용해 successor 최적경로와 feasible successor  후석경로로 선출한다
-metric 값은 bandwidth 대역폭  load 부화 delay 지연 reliablility 신뢰도 mut 최대전송 단위 를 보고 계산하다
-10^10 /가장느린대역폭 + 통과경로의 모든 지연 값 /10 *256
-AD 값은 90 이다 (라우팅 프로토콜이 중복되었을 경우 낮은 값이 우선한다 )
-멀티캐스트 주소인 224.0.0.10 으로 라우팅 정보를 전송한다
+                    RIOV2처럼 주기적으로 30초마다 업데이트 되지않고 네트워크 변화가 있을 때만 즉시 업데이트 된다
+                    즉 RIPv2 보다 경로 최적화가 빠르다
+                    DUAL 알고리즘을 사용해 successor 최적경로와 feasible successor  후석경로로 선출한다
+                    metric 값은 bandwidth 대역폭  load 부화 delay 지연 reliablility 신뢰도 mut 최대전송 단위 를 보고 계산하다
+                    10^10 /가장느린대역폭 + 통과경로의 모든 지연 값 /10 *256
+                    AD 값은 90 이다 (라우팅 프로토콜이 중복되었을 경우 낮은 값이 우선한다 )
+                    멀티캐스트 주소인 224.0.0.10 으로 라우팅 정보를 전송한다
 
-neighbor table : unicast 통신을 위해서 ip 정보를 담아둔 곳
-(hold:15sec , uptime: 장비 UP 시간 , SRTT(ms): Ack Message, RTO : 재 전송시간 Q cnt: 처리못한 정보를 버퍼에 쌓은것)
-Topology Table : 광고를 받은 모든 정보가 저장되는 공간
-ROuting TAble : 최적경로만 올라오는곳
-Successor : 받은경로 중 최적경로
-Feasible Successor: 받은 경로중 백업(최적경로가 안될 경우를 대비한 후속경로)
+                    neighbor table : unicast 통신을 위해서 ip 정보를 담아둔 곳
+                    (hold:15sec , uptime: 장비 UP 시간 , SRTT(ms): Ack Message, RTO : 재 전송시간 Q cnt: 처리못한 정보를 버퍼에 쌓은것)
+                    Topology Table : 광고를 받은 모든 정보가 저장되는 공간
+                    ROuting TAble : 최적경로만 올라오는곳
+                    Successor : 받은경로 중 최적경로
+                    Feasible Successor: 받은 경로중 백업(최적경로가 안될 경우를 대비한 후속경로)
 
--명령어
-router eigrp {AS Number(1~65535)}
-network [로컬 네트워크 주소 ] [와일드카드 마스크]
-no auto-summery
+                    -명령어
+                    router eigrp {AS Number(1~65535)}
+                    network [로컬 네트워크 주소 ] [와일드카드 마스크]
+                    no auto-summery
 
-* 와일드카드 마스크 (Wildcard mask) (0:검사 1:검사(x)=>범위)
-정확한 네트워크 정보를 등록하기 위한 마스크( 원하는 것만 통과시키는 거)
-서브넷 마스크의 1의 보수를 취한다 (비트반전)
-255.0.0.0 일경우 서브넷 마스크의 비트는 11111111.00000000.00000000.00000000 이므로
-와일드카드 마스크의 비트는 00000000.11111111.11111111.11111111
+                    * 와일드카드 마스크 (Wildcard mask) (0:검사 1:검사(x)=>범위)
+                    정확한 네트워크 정보를 등록하기 위한 마스크( 원하는 것만 통과시키는 거)
+                    서브넷 마스크의 1의 보수를 취한다 (비트반전)
+                    255.0.0.0 일경우 서브넷 마스크의 비트는 11111111.00000000.00000000.00000000 이므로
+                    와일드카드 마스크의 비트는 00000000.11111111.11111111.11111111
 
-EIGRP 설정확인 명령어
-# show ip eigrp neghbors : neighbrs 테이블확인
-show ip eigrp topology :EIGRP Topology table 확인
-show ip route: routing table 확인한다
+                    EIGRP 설정확인 명령어
+                    # show ip eigrp neghbors : neighbrs 테이블확인
+                    show ip eigrp topology :EIGRP Topology table 확인
+                    show ip route: routing table 확인한다
 
-와일드 마스크 = net mask revers
+                    와일드 마스크 = net mask revers
 
 
 
 OSPF(ipcv4 ver2 ipv6 ver3)
-link state routeing protocol 로 링크변화에 따라 업데이트 한다
-대규모 네트워크 환경에 적합하다
-표준 라우팅 프로토콜 이므로 모든장비에 적용 가능하다네트워크 변화가 있을 때만 즉시 업데이트 된다 
-rip 30초 eigrp 와 동일
-즉 ripv2 보다 경로 최적화가 빠르다 (eigrp 동일한 특징)
-SPF 알고리즘을 사용해 경로를 선출한다 
-metric 값은 대역폭(속도)를 계산하여 cost 값을 산출한다
-AD 값은 110 이다 (라우팅 프로토콜이 중복 되었을 경우 낮은 값이 우선하다)
-멀티 케스트 주소인 224.0.0.5  ~ 6 이로 라우팅 정보를 전송한다.
-백본영역 (area 0 ) 에 연결되어 있어야만 네트워크 경로 정보가 전송된다,.
-
-=명령어=
-router ospf {proecss-id}
-network [로컬 네트워크주소 ] [wildcard mask] area 번호
-
-OSPF 서정 확인 명령
-show ip protocol : total router 에 설정된 protocol확인
-show ip ospf interface : ospf interface 확인
-
-show ip ospf neighbors 
-show ip ospf database : LSDB 의 링크 상태 데이터 베이스 확인
-show ip ospf database router : 각 라우터 별로 링크상태 테이터 베이스 확인
-show ip route
-
-debug  ip ospf events : 특정 이벤트 확인
-debug  ip ospf pakcet : 매 10초마다 오고가는 hello packet 확인
-debug  ip ospf adj 인접 관계를 맺고 있는 연결과정 확인 (OSPF 가 네이버를 맺지않고 있을 때 확인해 볼것)
-nu all: debug 끄기
- 
 
 
+                    link state routeing protocol 로 링크변화에 따라 업데이트 한다
+                    대규모 네트워크 환경에 적합하다
+                    표준 라우팅 프로토콜 이므로 모든장비에 적용 가능하다네트워크 변화가 있을 때만 즉시 업데이트 된다 
+                    rip 30초 eigrp 와 동일
+                    즉 ripv2 보다 경로 최적화가 빠르다 (eigrp 동일한 특징)
+                    SPF 알고리즘을 사용해 경로를 선출한다 
+                    metric 값은 대역폭(속도)를 계산하여 cost 값을 산출한다
+                    AD 값은 110 이다 (라우팅 프로토콜이 중복 되었을 경우 낮은 값이 우선하다)
+                    멀티 케스트 주소인 224.0.0.5  ~ 6 이로 라우팅 정보를 전송한다.
+                    백본영역 (area 0 ) 에 연결되어 있어야만 네트워크 경로 정보가 전송된다,.
 
-AREA 0: 다른 AREA  의 data 를 운반하는 역활
+                    =명령어=
+                    router ospf {proecss-id}
+                    network [로컬 네트워크주소 ] [wildcard mask] area 번호
 
-ABR 영역이 다른 router
-ASBR : Router 성격이다른
+                    OSPF 서정 확인 명령
+                    show ip protocol : total router 에 설정된 protocol확인
+                    show ip ospf interface : ospf interface 확인
 
-R1
-router ospf 1
-net 1.1.1.1 0.0.0.0 area 0
-net 192.168.10.254 0.0.0.0 area 10
+                    show ip ospf neighbors 
+                    show ip ospf database : LSDB 의 링크 상태 데이터 베이스 확인
+                    show ip ospf database router : 각 라우터 별로 링크상태 테이터 베이스 확인
+                    show ip route
+
+                    debug  ip ospf events : 특정 이벤트 확인
+                    debug  ip ospf pakcet : 매 10초마다 오고가는 hello packet 확인
+                    debug  ip ospf adj 인접 관계를 맺고 있는 연결과정 확인 (OSPF 가 네이버를 맺지않고 있을 때 확인해 볼것)
+                    nu all: debug 끄기
+                    
 
 
 
-<R2>
-router ospf 1
-net 1.1.1.2 0.0.0.0 area0
-net 192.168.20.254 0.0.0.0 area 20
+                    AREA 0: 다른 AREA  의 data 를 운반하는 역활
+
+                    ABR 영역이 다른 router
+                    ASBR : Router 성격이다른
+
+                    R1
+                    router ospf 1
+                    net 1.1.1.1 0.0.0.0 area 0
+                    net 192.168.10.254 0.0.0.0 area 10
 
 
--같은 AREA :o
--다른 AREA : o IA
--재분배 : E1/E2 N1/N2
 
-r1  show ip route
-c 1.0.0.0
-c 192.168.10.0
-o IA 192.168.20.0 via 1.1.1.2
+                    <R2>
+                    router ospf 1
+                    net 1.1.1.2 0.0.0.0 area0
+                    net 192.168.20.254 0.0.0.0 area 20
 
-r2  show ip route
-c 2.0.0.0
-c 192.168.20.0
-o IA 192.168.10.0 via 2.1.1.1
+
+                    -같은 AREA :o
+                    -다른 AREA : o IA
+                    -재분배 : E1/E2 N1/N2
+
+                    r1  show ip route
+                    c 1.0.0.0
+                    c 192.168.10.0
+                    o IA 192.168.20.0 via 1.1.1.2
+
+                    r2  show ip route
+                    c 2.0.0.0
+                    c 192.168.20.0
+                    o IA 192.168.10.0 via 2.1.1.1
 
 
 
@@ -470,77 +472,77 @@ o IA 192.168.10.0 via 2.1.1.1
 
 
 DHCP  자동으로 ip 를 할당하는 기술
-4단계 과정을 거친다
+               4단계 과정을 거친다
 
-1단계 discover    DHCP 클라이언트는 네트워크가 시작 시  ip 주소 설정 tcp/ip 초기화 한다 DHCP 를 찼는다 
-2단계 offer      특정 ip 주소 받을 것인지 제의한다 discover 메시지 DHCP 서버는 사용가능한 ip 주소 포함한 DHCP 페킷을 boradcast 방식으로 송출
-3단계 requiest    ip 를 바로 설정하지않고  offer 에대해 응답을 한다
-4단계 ack         requiest 페킷을 받아 2가지 작업을 한다 자신의 offer 받은 DHCP 는 ip 임대기간 옵션 담은 ack 보내고 아닌 DHCP 는 유지
-
-
-
-
-ip dhcp pool  [영역 이름 isec_7f]
-network  network ID  s/mask
-default-router [GATEWAY addr]
-dns-server dns addr
-exit
-ip dhcp excluded-address [제외할 ip addr]
-
-삭제시 no ip dhcp pool  [영역 이름 isec_7f]
-       no ip dhcp excluded-address [제외할 ip addr]
-
-할당된 ip 주소 확인
-show ip dhcp binding
+               1단계 discover    DHCP 클라이언트는 네트워크가 시작 시  ip 주소 설정 tcp/ip 초기화 한다 DHCP 를 찼는다 
+               2단계 offer      특정 ip 주소 받을 것인지 제의한다 discover 메시지 DHCP 서버는 사용가능한 ip 주소 포함한 DHCP 페킷을 boradcast 방식으로 송출
+               3단계 requiest    ip 를 바로 설정하지않고  offer 에대해 응답을 한다
+               4단계 ack         requiest 페킷을 받아 2가지 작업을 한다 자신의 offer 받은 DHCP 는 ip 임대기간 옵션 담은 ack 보내고 아닌 DHCP 는 유지
 
 
 
-window dhcp 
-ipconfig /release   =>ip 반납
-ipconfig /renew     =>ip 다시 받아옴
+
+               ip dhcp pool  [영역 이름 isec_7f]
+               network  network ID  s/mask
+               default-router [GATEWAY addr]
+               dns-server dns addr
+               exit
+               ip dhcp excluded-address [제외할 ip addr]
+
+               삭제시 no ip dhcp pool  [영역 이름 isec_7f]
+                    no ip dhcp excluded-address [제외할 ip addr]
+
+               할당된 ip 주소 확인
+               show ip dhcp binding
+
+
+
+               window dhcp 
+               ipconfig /release   =>ip 반납
+               ipconfig /renew     =>ip 다시 받아옴
 
 
 
 DHCP Relay Agent
 
-DHCP 중계 역활  
-boradcast 는 router 를 넘기지 못한다 그래서 Relay Agent 필요 
-router 가 DHCP ip 할당도아주는 중계 역활을 한다 
-그때 라우터가 필요한 명령어가 ip helper-address 이다 
+               DHCP 중계 역활  
+               boradcast 는 router 를 넘기지 못한다 그래서 Relay Agent 필요 
+               router 가 DHCP ip 할당도아주는 중계 역활을 한다 
+               그때 라우터가 필요한 명령어가 ip helper-address 이다 
 
-int f0/0
-ip helper-address  DHCP ip addr
+               int f0/0
+               ip helper-address  DHCP ip addr
 
 
-(R1)                                              (R2) DHCP
-gateway 192.168.10.254                             1.1.1.2
-1.1.1.1
+               (R1)                                              (R2) DHCP
+               gateway 192.168.10.254                             1.1.1.2
+               1.1.1.1
 
-int f0/0                                          int s0/0
-ip addr 192.168.10.254 255.255.25530              ip addr 1.1.1.2 255.0.0.0
-no sh                                             no sh
-int s0/0                                           
+               int f0/0                                          int s0/0
+               ip addr 192.168.10.254 255.255.25530              ip addr 1.1.1.2 255.0.0.0
+               no sh                                             no sh
+               int s0/0                                           
 
-                                                  dynamic routing
-ip addr 1.1.1.1 255.0.0.0                         router rip
-no sh                                             ver 2
-                                                  net 1.0.0.0
-dynamic routing                                   no au 
-router rip                                      
-ver 2                                             
-net 192.168.10.0                                                   
-net 1.0.0.0                                                  dhcp 세팅 
-no au                                             ip dhcp pool isec 
-                                                  network 192.168.10.0 255.255.255.0
-                                                  default-router 192.168.10.254
-                                                  dns-server 192.168.10.1
-                                                  exit
-                                                  ip dhcp excluded-address 192.168.10.254 
-DHCP Relay Agent                                  ip dhcp excluded-address 192.168.10.1
-int f0/0                                          show ip dhcp binding
-ip helper-address 1.1.1.2 
+                                                                 dynamic routing
+               ip addr 1.1.1.1 255.0.0.0                         router rip
+               no sh                                             ver 2
+                                                                 net 1.0.0.0
+               dynamic routing                                   no au 
+               router rip                                      
+               ver 2                                             
+               net 192.168.10.0                                                   
+               net 1.0.0.0                                                  dhcp 세팅 
+               no au                                             ip dhcp pool isec 
+                                                                 network 192.168.10.0 255.255.255.0
+                                                                 default-router 192.168.10.254
+                                                                 dns-server 192.168.10.1
+                                                                 exit
+                                                                 ip dhcp excluded-address 192.168.10.254 
+               DHCP Relay Agent                                  ip dhcp excluded-address 192.168.10.1
+               int f0/0                                          show ip dhcp binding
+               ip helper-address 1.1.1.2 
 
-(pc)
+               (pc)
 
 
 OSI 7 layer         PUD              tcp/ip 4계층          프로토콜 종류
@@ -571,5 +573,47 @@ L1 hub
   repeater 
 
                        
+
+
+ACL  
+                    
+                    R1(config)#accesss-list [Number 1~99] permit(deny) ip w/m
+                    R1(config)#int f(해당라인)
+                    R1(config-line)#accesss-group [Number 1~99] in(out)
+
+
+                    telnet 접속 만
+                    R1(config)#accesss-list [Number 1~99] permit(deny) ip w/m
+                    R1(config)#line vty 0 4
+                    R1(config-line)#accesss-class [Number 1~99] in(out)
+
+                    삭제
+                    R1(config)#no accesss-list [Number 1~99] permit(deny) ip w/m
+                    R1(config)#line vty 0 4
+                    R1(config-line)#no accesss-class [Number 1~99] in (out)
+
+
+extended Access-List 
+
+ ip 가 192.168.20.2 pc 만 http 접속 불가 설정
+
+(R1) f0/1                               dns   168.126.63.1
+f0/0                              
+                                    naver server 168.126.63.2
+
+pc1            pc2
+192.168.10.1   192.168.10.2
+
+
+
+accesss-list 100 (extended Access-List 100~199)  deny (permit|deny)  tcp(tcp|udp|ip|icmp|ftp)  
+192.168.10.2(source addr)  0.0.0.0(w/m) 168.126.63.2(destination addr) 0.0.0.0(w/m)  eq(gt, lt, eq, neq) 80(port)
+
+(accesss-list 100 deny ip any any)    => 입력하지 않아도 숨어 존재함 그러므로 
+
+accesss-list 100 permit ip any any    => 168.20.2 만 선택하기 차단 하고 나머지 허용해야하기 때문 
+
+int f0/1
+ip accesss-group 100 out   =>  interface 0/1 로 나가는 data 를 ACL 100 번을 활용해서 관리해라 
 
 
