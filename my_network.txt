@@ -617,3 +617,147 @@ int f0/1
 ip accesss-group 100 out   =>  interface 0/1 로 나가는 data 를 ACL 100 번을 활용해서 관리해라 
 
 
+dynamic nAT  
+
+ ip not pool name start-ip end-ip (n/m |prefix)
+ 
+ access-list number permit] source-addr w/mask
+ 
+ ip nat inside source list number pool name [overload]
+
+
+
+
+
+
+ static NAT 
+
+ ip not inside source static local-ip global-ip
+
+ int f0/0
+ ip nat inside
+
+ int se0/0
+ip nat outside
+
+
+
+
+L2 switch
+
+  csma/cd
+
+   carrier sence multiple access / collision detector
+
+   switch 기본동장 5rkwl
+-----------------------------------------------------------------------------
+     mac-table x  1 flooding = 흗어뿌린다
+                2 learning = mac-address 를 배워온다
+
+
+     mac-table 0    1 forwarding = 정확한 포트에서 정확한 포트로 전송 0
+                    2 filtering - 전확하지않는 포트는 전송 X     
+                    3 aging = 300초 renewal
+
+-------------------------------------------------------------------------
+
+
+blocking = 20초
+BPDU 수신한다
+data frame 을 송수신하지 않는다
+20 초 이후 청취상태가 된다
+
+
+listening = 14초
+
+지정포트라면 청취 상태에서 BPDU 를 전송한다
+청취 상태에서 기본적으로 15초 지나면 학습상태로 변경된다
+( BR or DP 가 결정된 다음 차단에서 청추로 변경됨)
+
+
+learning = 15초
+
+학습 상태에서 mac 주소 테이블 채우기 시작한다
+학습상태에서 기본적으로 15 초가 경과하면 전송상태로 변경된다
+
+
+forwarding = 통신완료
+전송 상태에서는 data frame 송수신한다
+POST -> 지정/루트 포트결정 -> 청취상태 
+
+
+
+vlan 개년 및 특징
+
+
+a vlan = a boradcast domain = logical network = a lan
+
+물리적인 것을 논리적으로 쪼개기 위해 태어났다
+(여러 개의 boradcast domain 를 만들어 논리적으로 구분한다)
+
+vlan 하나 하나가 하나의 브로드캐스트 영역을 나타낸다
+
+(즉 vlan 1개의 네트워크 1개가 만들어진다)
+
+전체가 브로드케스트로 영역으로 구성되어 있는 vlan 은 구성할수 없다
+
+물리적 포트는 특정 vlan 맴버로만 들어갈수 있따
+
+vlan 같은 네트워크 네에서만 사용되어지므로 다른 네트워크에는 영향을 주지않는다
+(즉 다른 네트워크는 이름이 같아도 상관없다 )
+
+
+
+r1 
+int f0/0
+
+
+
+
+[sw1] fa0/1                             [sw2] f0/1
+
+f0/5  f0/15                          f0/6      f/16
+
+
+pc1       pc2                         pc3       pc4
+192.168.10.1  192.168.10.2           192.168.20.1  192.168.20.2
+vlan10   vlan20                     vlan10     vlan20
+
+
+
+
+switch
+
+vlan 10                                
+vlan 20
+int f0/5                                 int f0/6
+Switch mode access
+switchport acess vlan 10
+
+int f0/15                                int f0/16
+Switch mode access                          
+switchport acess vlan 20
+
+int f0/1
+switch mode trunk 
+
+
+가상으로 쪼개준다 핑은 안나려지지만 데이터 이동도 안되기 때문에 라우터가 필요하다
+
+
+Router
+
+int f0/0.10
+encapsulation  dot1q 10
+ip addr 192.168.10.254  255.255.255.0
+
+int f0/0.20
+encapsulation  dot1q 20
+ip addr 192.168.20.254  255.255.255.0
+
+
+
+
+
+
+
